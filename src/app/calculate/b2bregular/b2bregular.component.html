@@ -1,0 +1,41 @@
+<section>
+    <div class="container">
+      <form class="row">
+        <div class="col-3">
+  
+            <mat-form-field class="example-full-width">
+              <input type="number" (change)="someCalculate()" matInput [(ngModel)]="area" [ngModelOptions]="{standalone: true}" placeholder="Квадратура м2">
+            </mat-form-field>
+  
+        </div>
+        <div class="col-3">
+  
+          <mat-form-field>
+            <mat-select placeholder="Регулярность" (selectionChange)="someCalculate()" matInput [(ngModel)]="regularValue" [ngModelOptions]="{standalone: true}">
+              <mat-option *ngFor="let n of regular | keyvalue" [value]="n.value">
+                {{ n.key }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+  
+        <div class="col-3">
+            <mat-checkbox (change)="onChange($event)">Есть ли график?</mat-checkbox>
+            <mat-form-field *ngIf="checked">
+              <input type="number" (change)="someCalculate()" [(ngModel)]="timeValue" [ngModelOptions]="{standalone: true}"s matInput placeholder="Скольки часовой день">
+            </mat-form-field>
+        </div>
+        <div class="col-12">
+          <mat-checkbox>Нужно мыть несколько раз?</mat-checkbox>
+        </div>
+        <div class="col-12">
+          <p>ФОТ: {{fot}}</p>
+          <p>Упр: {{upr}}</p>
+          <p>Фонд для мытья окон: {{fond}}</p>
+          <p>Коммисия тинькова: {{tinkCom}}</p>
+          <p>Прибыль: {{profit}}</p>
+          <p>Итог: {{summ}}</p>
+        </div>
+      </form>
+    </div>
+  </section>

@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/dist/css/bootstrap-reboot.min.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+section 
+    padding 2rem 0px
+    display block
+.container
+    width: 1152px
+    margin 0 auto
+    & .row
+        width 100%
+        padding: 0 20px
+        display: flex;
+        flex-wrap: wrap;
+        for i in range(1, 12, 1)
+            & .col-{i}
+                width: i*(100%/12)
+                padding: 0 16px
+                display inline-block
