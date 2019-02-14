@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CalculateService } from 'src/app/services/calculate.service';
+import { CalculateService } from 'src/app/services/calculate/calculate.service';
+import { HTTPService } from 'src/app/services/HTTP/http.service';
 
 @Component({
   selector: 'app-b2bregular',
@@ -35,8 +36,16 @@ export class B2bregularComponent implements OnInit {
     { label: "Нужна ли для них ночная смена", id: "nightWork" }
   ];
 
-  constructor(private svc: CalculateService) {  }
+  constructor(
+    private svc: CalculateService,
+    private myHttp: HTTPService
+    ) {  }
 
+    doPDF() {
+      console.log('doPDF');
+      console.log(this.summ);
+      return this.myHttp.postMakePDF('/makePDF', this.summ);
+    }
   timeZeroing(value) {
     if (value === false) {
       return this.timeValue = NaN;

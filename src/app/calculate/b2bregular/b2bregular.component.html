@@ -26,9 +26,6 @@
             </mat-form-field>
         </div>
         <div class="col-12">
-          <mat-checkbox>Нужно мыть несколько раз?</mat-checkbox>
-        </div>
-        <div class="col-12">
           <p>ФОТ: {{fot}}</p>
           <p>Упр: {{upr}}</p>
           <p>Фонд для мытья окон: {{fond}}</p>
@@ -36,6 +33,7 @@
           <p>Прибыль: {{profit}}</p>
           <p>Итог: {{summ}}</p>
         </div>
+        <button (click)="doPDF()">Создать</button>
       </form>
     </div>
   </section>
