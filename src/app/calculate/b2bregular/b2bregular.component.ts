@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { CalculateService } from 'src/app/services/calculate/calculate.service';
-import { HTTPService } from 'src/app/services/HTTP/http.service';
+import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 
 @Component({
   selector: 'app-b2bregular',
@@ -9,6 +9,8 @@ import { HTTPService } from 'src/app/services/HTTP/http.service';
   styleUrls: ['./b2bregular.component.styl']
 })
 export class B2bregularComponent implements OnInit {
+  firmname: String;
+  address: String;
   area: Number;
   regularValue: Number;
   timeValue: Number;
@@ -38,14 +40,30 @@ export class B2bregularComponent implements OnInit {
 
   constructor(
     private svc: CalculateService,
-    private myHttp: HTTPService
+    private myHttp: myHTTPService
     ) {  }
-
+    adel() {
+      for (let key in this.regular) {
+        if (this.regularValue == this.regular[key]) {
+          return key;
+        }
+      }
+    }
     doPDF() {
       console.log('doPDF');
       console.log(this.summ);
-      return this.myHttp.postMakePDF('/makePDF', this.summ);
+      return this.myHttp.postHTTP('/makePDF', {
+        firmname: this.firmname,
+        address: this.address,
+        area: this.area,
+        regularValue: this.adel(),
+        itog: this.summ
+      });
     }
+    createLead() {
+      return this.myHttp.postHTTP('/newLead', {name: this.area});
+    }
+
   timeZeroing(value) {
     if (value === false) {
       return this.timeValue = NaN;

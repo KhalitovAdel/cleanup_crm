@@ -2,6 +2,7 @@ const express = require('express'),
 bodyParser    = require('body-parser');
 
 var app         = express(),
+db              = require('./serverapp/config/index'),
 router          = require('./serverapp/router/index');
 
 app.use( bodyParser.json() );
@@ -14,6 +15,12 @@ app.get('*', function(req, res) {
 
 app.use('/', router);
 
-app.listen(4200, function () {
-    console.log('API started');
-})
+const port = process.env.PORT || 4200;
+db.connect(function (err) {
+  if (err) {
+    return console.log(err);
+  }
+  app.listen(port, function () {
+    console.log(`Работаем на ${port} порту!`);
+  });
+});

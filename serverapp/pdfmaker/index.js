@@ -25,7 +25,7 @@ async function makePDF(data) {
         await page.setContent(content);
         await page.emulateMedia('screen');
         await page.pdf({
-            path: 'my-pdf.pdf',
+            path: `kp/КП ${data.firmname}.pdf`,
             format: 'A4',
             printBackground: true
         });

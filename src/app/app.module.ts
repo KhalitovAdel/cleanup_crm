@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 
 import { B2bregularComponent } from './calculate/b2bregular/b2bregular.component';
 import { CalculateService } from './services/calculate/calculate.service';
-import { HTTPService } from './services/HTTP/HTTP.service';
+import { myHTTPService } from './services/HTTP/myhttp.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import { HTTPService } from './services/HTTP/HTTP.service';
     MatCheckboxModule,
     FormsModule
   ],
-  providers: [CalculateService, HTTPService],
+  providers: [CalculateService, myHTTPService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

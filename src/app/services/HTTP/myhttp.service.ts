@@ -12,13 +12,12 @@ const httpOptions = {
   providedIn: 'root',
 })
 
-export class HTTPService {
+export class myHTTPService {
 
   constructor(private http: HttpClient) { }
 
-  postMakePDF(url, price: String) {
-    console.log('postMakePDF');
-    return this.http.post(url, {'itog': price}, httpOptions).subscribe(
+  postHTTP(url, info: any) {
+    return this.http.post(url, info, httpOptions).subscribe(
         data  => {
         console.log("POST Request is successful ", data);
         },
