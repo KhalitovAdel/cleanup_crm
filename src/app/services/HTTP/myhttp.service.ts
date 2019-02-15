@@ -16,14 +16,27 @@ export class myHTTPService {
 
   constructor(private http: HttpClient) { }
 
-  postHTTP(url, info: any) {
-    return this.http.post(url, info, httpOptions).subscribe(
-        data  => {
-        console.log("POST Request is successful ", data);
-        },
-        error  => {
-          console.log("Error", error);
-        }
-      );
+  // postHTTP(url, info: any) {
+  //   var some: any;
+  //   this.http.post(url, info, httpOptions).subscribe(
+  //       data  => {
+  //         some = data;
+  //         console.log("POST Request is successful ", some);
+  //       },
+  //       error  => {
+  //         console.log("Error", error);
+  //       }
+  //     );
+  //     return some;
+  // }
+  postHTTP(url, info) {
+    return new Promise((resolve, reject) => {
+      this.http.post(url, info, httpOptions).subscribe((data) => {
+        resolve(data);
+      }, (error) => {
+        reject(error);
+        console.log("Error", error);
+      });
+    });
   }
 }

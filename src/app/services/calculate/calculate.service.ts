@@ -37,6 +37,10 @@ export class CalculateService {
       return Math.ceil(num).toString().replace(/(\d{1,3})(?=((\d{3})*)$)/g, " $1") + " ₽";
     }
 
+    calculateMaterial(area, regularValue) {
+      return 4.08 * regularValue + regularValue * area * 0.09 + 718;
+    }
+
     setProfit(area, timeValue) {
       if ( isNaN(timeValue) && ( area <= 120 ) ) {
         return 1500;
@@ -58,6 +62,22 @@ export class CalculateService {
               + this.calculateManagerWage() 
               + this.calculateTinkoffCommission(area, regularValue, timeValue) 
               + this.calculateWindowsFond(area) 
+              + this.setProfit(area, timeValue) ) * 100 / 94
+      );
+    }
+
+    calculateItogMaterial(area, regularValue, timeValue) {
+
+      if ( isNaN(area) && isNaN(regularValue) ) {
+        return this.beautyPrice(0);
+      }
+
+      return this.beautyPrice(
+        ( this.calculateFot(area, regularValue, timeValue) 
+              + this.calculateManagerWage() 
+              + this.calculateTinkoffCommission(area, regularValue, timeValue) 
+              + this.calculateWindowsFond(area) 
+              + this.calculateMaterial(area, regularValue)
               + this.setProfit(area, timeValue) ) * 100 / 94
       );
     }

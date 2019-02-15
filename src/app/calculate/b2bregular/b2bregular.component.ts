@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { CalculateService } from 'src/app/services/calculate/calculate.service';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
+import { componentNeedsResolution } from '@angular/core/src/metadata/resource_loading';
 
 @Component({
   selector: 'app-b2bregular',
@@ -9,17 +10,31 @@ import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
   styleUrls: ['./b2bregular.component.styl']
 })
 export class B2bregularComponent implements OnInit {
-  firmname: String;
-  address: String;
-  area: Number;
-  regularValue: Number;
-  timeValue: Number;
+  Lead = {
+    firmName: '',
+    address: '',
+    contactNumber: [],
+    contactEmail: [],
+    contactName: '',
+    position: '',
+    lprsName: '',
+    parser2gis: ''
+  };
+  Deal = {
+    area: Number,
+    regularValue: Number,
+    timeValue: Number
+  };
+  
   fot: Number;
   summ: String;
   tinkCom: Number;
   upr: Number;
   fond: Number;
   profit: Number;
+  summMaterial: String;
+
+  
 
   checked: null;
 
@@ -33,56 +48,59 @@ export class B2bregularComponent implements OnInit {
     "Раз в месяц": 1
   };
 
-  data = [
-    { label: "Нужно мыть несколько раз?", id: "washTwoTime" },
-    { label: "Нужна ли для них ночная смена", id: "nightWork" }
-  ];
-
   constructor(
     private svc: CalculateService,
     private myHttp: myHTTPService
     ) {  }
     adel() {
       for (let key in this.regular) {
-        if (this.regularValue == this.regular[key]) {
+        if (this.Deal.regularValue == this.regular[key]) {
           return key;
         }
+      }
+    }
+    async pars2gisplease() {
+      var data = await this.myHttp.postHTTP('/pars2gis', {email: this.Lead.parser2gis});
+      for (let x in data) {
+		  if (data[x].indexOf('tel:') + 1 ) {
+			data[x] = data[x].split(':')[1];
+		  }
+		  for (let y in this.Lead) {
+			  if (x == y) {
+				  this.Lead[y] = data[x];
+			  }
+		  }
       }
     }
     doPDF() {
       console.log('doPDF');
       console.log(this.summ);
       return this.myHttp.postHTTP('/makePDF', {
-        firmname: this.firmname,
-        address: this.address,
-        area: this.area,
+        firmname: this.Lead.firmName,
+        address: this.Lead.address,
+        area: this.Deal.area,
         regularValue: this.adel(),
-        itog: this.summ
+        itog: this.summ,
+        itogMaterial: this.summMaterial
       });
     }
     createLead() {
-      return this.myHttp.postHTTP('/newLead', {name: this.area});
+      return this.myHttp.postHTTP('/newLead', this.Lead);
     }
-
-  timeZeroing(value) {
-    if (value === false) {
-      return this.timeValue = NaN;
-    }
-  }
 
   onChange(item) {
     this.checked = item.checked;
     item.checked = !item.checked;
-    this.timeZeroing(this.checked);
     return this.someCalculate();
   }
   someCalculate() {
-    this.fot = this.svc.calculateFot(this.area, this.regularValue, this.timeValue);
-    this.tinkCom = this.svc.calculateTinkoffCommission(this.area, this.regularValue, this.timeValue);
+    this.fot = this.svc.calculateFot(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
+    this.tinkCom = this.svc.calculateTinkoffCommission(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
     this.upr = this.svc.calculateManagerWage();
-    this.fond = this.svc.calculateWindowsFond(this.area);
-    this.profit = this.svc.setProfit(this.area, this.timeValue);
-    return this.summ = this.svc.calculateItog(this.area, this.regularValue, this.timeValue);
+    this.fond = this.svc.calculateWindowsFond(this.Deal.area);
+    this.profit = this.svc.setProfit(this.Deal.area, this.Deal.timeValue);
+    this.summMaterial = this.svc.calculateItogMaterial(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
+    return this.summ = this.svc.calculateItog(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
   }
   ngOnInit() {
   }
