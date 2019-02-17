@@ -1,0 +1,96 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <div class="row">
+            <div class="col-12">
+                <mat-form-field class="example-full-width">
+                  <input type="url" (change)="pars2gisplease()" matInput [(ngModel)]="Lead.parser2gis" [ngModelOptions]="{standalone: true}" placeholder="Ссылка 2gis">
+                </mat-form-field>
+            </div>
+          <div class="col-12">
+              <mat-form-field class="example-full-width">
+                <input type="text" matInput [(ngModel)]="Lead.firmName" [ngModelOptions]="{standalone: true}" placeholder="Название фирмы">
+              </mat-form-field>
+          </div>
+          <div class="col-12">
+              <mat-form-field class="example-full-width">
+                <input type="text" matInput [(ngModel)]="Lead.address" [ngModelOptions]="{standalone: true}" placeholder="Адрес">
+              </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field class="example-full-width">
+              <input type="tel" matInput [(ngModel)]="Lead.contactNumber" [ngModelOptions]="{standalone: true}" placeholder="Контактный номер">
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field class="example-full-width">
+              <input type="email" matInput [(ngModel)]="Lead.contactEmail" [ngModelOptions]="{standalone: true}" placeholder="Контактный email">
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput [(ngModel)]="Lead.contactName" [ngModelOptions]="{standalone: true}" placeholder="Имя с кем идет диалог">
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput [(ngModel)]="Lead.position" [ngModelOptions]="{standalone: true}" placeholder="Должность">
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput [(ngModel)]="Lead.lprsName" [ngModelOptions]="{standalone: true}" placeholder="Имя ЛПР">
+            </mat-form-field>
+          </div>      
+        </div>
+      </div>
+      <div class="col-8">
+          <div class="col-12">
+            <div class="row">
+                <div class="col-5">
+                    <mat-form-field class="example-full-width">
+                      <input type="number" (change)="someCalculate()" matInput [(ngModel)]="Deal.area" [ngModelOptions]="{standalone: true}" placeholder="Квадратура м2">
+                    </mat-form-field>
+                </div>
+                <div class="col-5">
+                  <mat-form-field>
+                    <mat-select placeholder="Регулярность" (selectionChange)="someCalculate()" matInput [(ngModel)]="Deal.regularValue" [ngModelOptions]="{standalone: true}">
+                      <mat-option *ngFor="let n of regular | keyvalue" [value]="n.value">
+                        {{ n.key }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-5">
+                <mat-checkbox (change)="onChange($event)">Есть ли график?</mat-checkbox>
+              </div>
+              <div class="col-5">
+                <mat-form-field *ngIf="checked">
+                  <input type="number" (change)="someCalculate()" [(ngModel)]="Deal.timeValue" [ngModelOptions]="{standalone: true}"s matInput placeholder="Скольки часовой день">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <p>ФОТ: {{fot}}</p>
+                <!-- <p>Упр: {{upr}}</p>
+                <p>Фонд для мытья окон: {{fond}}</p>
+                <p>Коммисия тинькова: {{tinkCom}}</p> -->
+                <p>Прибыль: {{profit}}</p>
+              </div>
+              <div class="col-6">
+                <p>Итог: {{summ}}</p>
+                <p>Итог с материалами: {{summMaterial}}</p>
+              </div>
+            </div>              
+          </div>
+
+          <button (click)="doPDF()">Создать PDF</button>
+          <button (click)="createLead()">Создать LeaD</button>
+      </div>
+    </div>
+  </div>
+  </section>

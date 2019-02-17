@@ -11,7 +11,7 @@ router.post('/makePDF', function(req, res) {
 });
 
 router.post('/pars2gis', async function(req, res) {
-    res.send( await parser.pars2gis(req.body.email) );
+    res.send( await parser.pars2gis(req.body.link) );
 });
 
 router.post('/newLead', function(req, res) {
@@ -22,6 +22,18 @@ router.post('/newLead', function(req, res) {
     lead.save(function(err) { 
        if (err) { return console.log('Save Lead error ', err); }
        res.status(200);//Обработать регистрацию
+    });
+});
+
+router.post('/getLeadInfo', function(req, res) {
+    db.Lead.findOne({_id: req.body._id}).then(function(leads) {
+        res.send(leads);
+    });
+});
+
+router.get('/getLeadList', function(req, res) {
+    db.Lead.find({}).then(function(leads) {
+        res.send(leads);
     });
 });
 

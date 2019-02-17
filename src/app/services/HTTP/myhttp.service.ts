@@ -39,4 +39,15 @@ export class myHTTPService {
       });
     });
   }
+  getHTTP(url) {
+    return new Promise((resolve, reject) => {
+      this.http.get(url)
+      .subscribe((data) => {
+        resolve(data);
+      }, (error) => {
+        reject(error);
+        console.log("Error", error);
+      });
+    });
+  }
 }
