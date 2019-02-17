@@ -1,0 +1,15 @@
+<mat-form-field>
+  <mat-select matInput [(ngModel)]="Task.actionValue" [ngModelOptions]="{standalone: true}">
+    <mat-option *ngFor="let n of action | keyvalue" [value]="n.key">
+      {{ n.value }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-form-field class="example-full-width">
+  <textarea matInput placeholder="Описание действия"></textarea>
+</mat-form-field>
+<mat-form-field>
+  <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { B2bregularComponent } from './calculate/b2bregular/b2bregular.component';
 import { CalculateService } from './services/calculate/calculate.service';
@@ -18,6 +19,7 @@ import { myHTTPService } from './services/HTTP/myhttp.service';
 import { LeadListComponent } from './CRM/Leads/lead-list/lead-list.component';
 import { LeadPageComponent } from './CRM/Leads/lead-page/lead-page.component';
 import { NewLeadComponent } from './CRM/Leads/new-lead/new-lead.component';
+import { NewTaskComponent } from './CRM/Tasks/new-task/new-task.component';
 
 const appRoutes = [
   { path: 'newlead', component: NewLeadComponent },
@@ -31,7 +33,8 @@ const appRoutes = [
     B2bregularComponent,
     LeadListComponent,
     LeadPageComponent,
-    NewLeadComponent
+    NewLeadComponent,
+    NewTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ const appRoutes = [
     MatSelectModule,
     MatCheckboxModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    MatDatepickerModule
   ],
   providers: [CalculateService, myHTTPService],
   bootstrap: [AppComponent]
