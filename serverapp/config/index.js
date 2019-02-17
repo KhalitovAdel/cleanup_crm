@@ -31,6 +31,14 @@ LeadSchema  = new mongoose.Schema({
     parser2gis: String
 });
 
+TaskSchema = new mongoose.Schema({
+  actionValue: '',
+  description: '',
+  taskWhenDo: Date,
+  lead_id: '',
+  createdDate: Date
+});
+
 DealSchema  = new mongoose.Schema({
     area: Number,
     regularValue: Number,
@@ -40,3 +48,4 @@ DealSchema  = new mongoose.Schema({
 exports.freshConnect = conn;
 exports.Lead = conn.model('Lead', LeadSchema);
 exports.Deal = conn.model('Deal', DealSchema);
+exports.Task = conn.model('Task', TaskSchema);

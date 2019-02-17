@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 
 import { B2bregularComponent } from './calculate/b2bregular/b2bregular.component';
 import { CalculateService } from './services/calculate/calculate.service';
@@ -46,9 +46,10 @@ const appRoutes = [
     MatCheckboxModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
-    MatDatepickerModule
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
   ],
-  providers: [CalculateService, myHTTPService],
+  providers: [CalculateService, myHTTPService, {provide: OWL_DATE_TIME_LOCALE, useValue: 'ru'},],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -32,7 +32,8 @@ export class myHTTPService {
   postHTTP(url, info) {
     return new Promise((resolve, reject) => {
       this.http.post(url, info, httpOptions).subscribe((data) => {
-        console.log(data);
+        //if (data) alert('Успешно!');
+        //console.log(data);
         resolve(data);
       }, (error) => {
         reject(error);

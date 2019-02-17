@@ -29,6 +29,7 @@
     "handlebars": "^4.1.0",
     "moment": "^2.24.0",
     "mongoose": "^5.4.12",
+    "ng-pick-datetime": "^7.0.0",
     "puppeteer": "^1.12.2",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
