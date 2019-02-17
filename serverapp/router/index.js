@@ -31,6 +31,13 @@ router.post('/getLeadInfo', function(req, res) {
     });
 });
 
+router.put('/updateLead', function(req, res) {
+    db.Lead.findOneAndUpdate({_id: req.body._id}, req.body, { useFindAndModify: false }, function(err, data) {
+        if (err) return console.log("Ошибка: " + err);
+        return res.status(200).send({'Успешно обновил информацию': data.firmName});
+    })
+});
+
 router.get('/getLeadList', function(req, res) {
     db.Lead.find({}).then(function(leads) {
         res.send(leads);

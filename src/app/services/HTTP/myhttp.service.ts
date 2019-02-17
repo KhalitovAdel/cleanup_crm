@@ -32,6 +32,7 @@ export class myHTTPService {
   postHTTP(url, info) {
     return new Promise((resolve, reject) => {
       this.http.post(url, info, httpOptions).subscribe((data) => {
+        console.log(data);
         resolve(data);
       }, (error) => {
         reject(error);
@@ -43,6 +44,18 @@ export class myHTTPService {
     return new Promise((resolve, reject) => {
       this.http.get(url)
       .subscribe((data) => {
+        resolve(data);
+      }, (error) => {
+        reject(error);
+        console.log("Error", error);
+      });
+    });
+  }
+  putHTTP(url, info: any) {
+    return new Promise((resolve, reject) => {
+      this.http.put(url, info, httpOptions)
+      .subscribe((data) => {
+        if (data) alert('Успешно обновил');// Криво отображаются запросы сервера
         resolve(data);
       }, (error) => {
         reject(error);

@@ -16,6 +16,7 @@ export class LeadPageComponent implements OnInit {
   id: any;
   private sub: any;
   Lead = {
+    _id: '',
     firmName: '',
     address: '',
     contactNumber: [],
@@ -47,6 +48,9 @@ export class LeadPageComponent implements OnInit {
 			  }
 		  }
     }
+  }
+  setUpdeteToLead() {
+    return this.myHttp.putHTTP('/updateLead', this.Lead);
   }
 
 }
