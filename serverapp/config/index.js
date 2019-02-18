@@ -28,7 +28,8 @@ LeadSchema  = new mongoose.Schema({
     contactName: String,
     position: String,
     lprsName: String,
-    parser2gis: String
+    parser2gis: String,
+    comment: []
 });
 
 TaskSchema = new mongoose.Schema({

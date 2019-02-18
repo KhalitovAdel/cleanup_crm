@@ -105,9 +105,9 @@ export class NewLeadComponent implements OnInit {
   someCalculate() {
     this.fot = this.svc.calculateFot(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
     this.tinkCom = this.svc.calculateTinkoffCommission(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
-    this.upr = this.svc.calculateManagerWage();
+    this.upr = this.svc.calculateManagerWage(this.Deal.area, this.Deal.regularValue);
     this.fond = this.svc.calculateWindowsFond(this.Deal.area);
-    this.profit = this.svc.setProfit(this.Deal.area, this.Deal.timeValue);
+    this.profit = this.svc.setProfit(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
     this.summMaterial = this.svc.calculateItogMaterial(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
     return this.summ = this.svc.calculateItog(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
   }

@@ -27,6 +27,25 @@ router.post('/newLead', function(req, res) {
     });
 });
 
+router.post('/createNewComment', function(req, res) {
+    db.Lead.findOne({_id: req.body._id}).then(function(lead) {
+        lead.comment.push({
+            description: req.body.comment,
+            createdDate: req.body.createdDate
+        });
+        lead.save(function(err) { 
+            if (err) { return console.log('Save Lead error ', err); }
+            res.status(200);//Обработать регистрацию
+         });
+    });
+});
+
+router.post('/getComments', function(req, res) {
+    db.Lead.findOne({_id: req.body._id}).then(function(lead) {
+        res.send(lead.comment).status(200);
+    });
+});
+
 router.post('/createNewTask', function(req, res) {
     var task = new db.Task();// Перед созданием проверить может существует
     for (let x in req.body) {
@@ -39,6 +58,8 @@ router.post('/createNewTask', function(req, res) {
 });
 router.post('/getTasks', function(req, res) {
     db.Task.find(req.body).then(function(task) {
+        console.log(req.body);
+        console.log(task);
         res.send(task);
     });
 });

@@ -13,12 +13,15 @@ export class CalculateService {
       if ( !isNaN(timeValue) ) { // Считается по часам
         return Math.ceil( regularValue * ( this.ONE_DAY_PRICE + timeValue * this.ONE_HOUR_PRICE ) );
       }
-      if ( isNaN(timeValue) ) { 
+      if ( isNaN(timeValue) ) { //Считаем по квадратуре
         return Math.ceil( regularValue * ( this.ONE_DAY_PRICE + area * this.ONE_METER_PRICE ) );
       }
     }
     
-    calculateManagerWage() {
+    calculateManagerWage(area, regularValue) {
+      if ( area < 120 && regularValue < 9 ) {
+        return 750;
+      }
       return 500 + 750;
     }
 
@@ -29,7 +32,7 @@ export class CalculateService {
     calculateTinkoffCommission(area, regularValue, timeValue) {
 
       return Math.ceil( ( this.calculateFot(area, regularValue, timeValue) 
-              + this.calculateManagerWage() 
+              + this.calculateManagerWage(area, regularValue) 
               + this.calculateWindowsFond(area) ) * 1.5 / 98.5 );
     }
 
@@ -41,10 +44,14 @@ export class CalculateService {
       return 4.08 * regularValue + regularValue * area * 0.09 + 718;
     }
 
-    setProfit(area, timeValue) {
+    setProfit(area, regularValue, timeValue) {
+      
+      if ( isNaN(timeValue) && ( area <= 120 ) && (regularValue < 9) ) {
+        return 1000;
+      }
       if ( isNaN(timeValue) && ( area <= 120 ) ) {
         return 1500;
-      }
+      } 
       if ( timeValue <= 2 ) {
         return 2000;
       }
@@ -59,10 +66,10 @@ export class CalculateService {
 
       return this.beautyPrice(
         ( this.calculateFot(area, regularValue, timeValue) 
-              + this.calculateManagerWage() 
+              + this.calculateManagerWage(area, regularValue) 
               + this.calculateTinkoffCommission(area, regularValue, timeValue) 
               + this.calculateWindowsFond(area) 
-              + this.setProfit(area, timeValue) ) * 100 / 94
+              + this.setProfit(area, regularValue, timeValue) ) * 100 / 94
       );
     }
 
@@ -74,11 +81,11 @@ export class CalculateService {
 
       return this.beautyPrice(
         ( this.calculateFot(area, regularValue, timeValue) 
-              + this.calculateManagerWage() 
+              + this.calculateManagerWage(area, regularValue) 
               + this.calculateTinkoffCommission(area, regularValue, timeValue) 
               + this.calculateWindowsFond(area) 
               + this.calculateMaterial(area, regularValue)
-              + this.setProfit(area, timeValue) ) * 100 / 94
+              + this.setProfit(area, regularValue, timeValue) ) * 100 / 94
       );
     }
   constructor() { }
