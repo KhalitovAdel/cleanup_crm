@@ -2,15 +2,17 @@ import { Component, OnInit } from '@angular/core';
 
 import { CalculateService } from 'src/app/services/calculate/calculate.service';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-new-lead',
   templateUrl: './new-lead.component.html',
-  styleUrls: ['./new-lead.component.styl']
+  styleUrls: ['./new-lead.component.styl'],
+  providers: [DatePipe]
 })
 export class NewLeadComponent implements OnInit {
-
   Lead = {
+    _id:'',
     firmName: '',
     address: '',
     contactNumber: [],
@@ -18,7 +20,8 @@ export class NewLeadComponent implements OnInit {
     contactName: '',
     position: '',
     lprsName: '',
-    parser2gis: ''
+    parser2gis: '',
+    createdDate: ''
   };
   Deal = {
     area: Number,
@@ -50,8 +53,10 @@ export class NewLeadComponent implements OnInit {
 
   constructor(
     private svc: CalculateService,
-    private myHttp: myHTTPService
-    ) { }
+    private myHttp: myHTTPService,
+    private datePipe: DatePipe
+    ) {
+     }
 
     adel() {
       for (let key in this.regular) {
@@ -87,6 +92,8 @@ export class NewLeadComponent implements OnInit {
       });
     }
     createLead() {
+      console.log(this.Lead);
+      this.Lead.createdDate = this.datePipe.transform(new Date(), "yyyy-MM-ddThh:mm:ss.SSS'Z'");
       return this.myHttp.postHTTP('/newLead', this.Lead);
     }
 
@@ -106,6 +113,7 @@ export class NewLeadComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
 }

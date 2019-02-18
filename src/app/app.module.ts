@@ -21,6 +21,7 @@ import { LeadPageComponent } from './CRM/Leads/lead-page/lead-page.component';
 import { NewLeadComponent } from './CRM/Leads/new-lead/new-lead.component';
 import { NewTaskComponent } from './CRM/Tasks/new-task/new-task.component';
 
+
 const appRoutes = [
   { path: 'newlead', component: NewLeadComponent },
   { path: 'leadlist', component: LeadListComponent },
@@ -49,7 +50,7 @@ const appRoutes = [
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
   ],
-  providers: [CalculateService, myHTTPService, {provide: OWL_DATE_TIME_LOCALE, useValue: 'ru'},],
+  providers: [CalculateService, myHTTPService, {provide: OWL_DATE_TIME_LOCALE, useValue: 'ru'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

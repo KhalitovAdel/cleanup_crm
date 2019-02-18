@@ -27,6 +27,6 @@
   <div class="col-12" *ngFor="let n of dataTasks" style="padding: 0.5rem; border: 1px solid red;">
     <p>{{n.actionValue}}</p>
     <p>{{n.description}}</p>
-    <p>{{n.taskWhenDo}}</p>
+    <p>{{n.taskWhenDo | date:'dd.MM.yyyy HH:mm'}}</p>
   </div>
 </div>

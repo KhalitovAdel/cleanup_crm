@@ -17,7 +17,9 @@ router.post('/pars2gis', async function(req, res) {
 router.post('/newLead', function(req, res) {
     var lead = new db.Lead();// Перед созданием проверить может существует
     for (let x in req.body) {
-        lead[x] = req.body[x];//Если req.body[x] массив элементов, то пушить массивом
+        if ( x !='_id') {
+            lead[x] = req.body[x];//Если req.body[x] массив элементов, то пушить массивом
+        }
     }
     lead.save(function(err) { 
        if (err) { return console.log('Save Lead error ', err); }
