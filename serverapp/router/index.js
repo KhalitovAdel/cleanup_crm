@@ -6,6 +6,7 @@ var db = require('../config/index'),
 parser = require('../pageparser/index');
 
 router.post('/makePDF', function(req, res) {
+    console.log('Тут');
     makePDF.makePDF(req.body);
     res.send({ status: 'SUCCESS' });
 });
@@ -78,7 +79,7 @@ router.put('/updateLead', function(req, res) {
 });
 
 router.get('/getLeadList', function(req, res) {
-    db.Lead.find({}).then(function(leads) {
+    db.Lead.find({}).then(function(leads) {;
         res.send(leads);
     });
 });

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 import { DatePipe } from '@angular/common';
-import { ShareService } from 'src/app/services/share.service';
 
 export class Comment {
   comment: string;
@@ -49,13 +48,11 @@ export class NewTaskComponent implements OnInit {
   constructor(
     private myHTTP: myHTTPService,
     private datePipe: DatePipe,
-    private share:ShareService
   ) {
     
   }
 
   ngOnInit() {
-    this.share.onChange.subscribe(cnt=>this.Task.lead_id = cnt);
     this.getTasks();
   }
   ngOnChanges() {

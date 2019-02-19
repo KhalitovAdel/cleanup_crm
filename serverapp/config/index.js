@@ -20,16 +20,17 @@ exports.connect = function (done) {
 };
 var conn    = mongoose.connection,
 LeadSchema  = new mongoose.Schema({
-    // id: String,
-    firmName: String,
-    address: String,
-    contactNumber: Array,
-    contactEmail: Array,
-    contactName: String,
-    position: String,
-    lprsName: String,
-    parser2gis: String,
-    comment: []
+  firmName: String,
+  address: String,
+  contactPhones: Array,
+  contactEmail: Array,
+  contactName: String,
+  position: String,
+  lprsName: String,
+  parser2gis: String,
+  comments: Array,
+  tasks: Array,
+  createdDate: Date,
 });
 
 TaskSchema = new mongoose.Schema({

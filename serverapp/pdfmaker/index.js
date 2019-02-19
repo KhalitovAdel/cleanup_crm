@@ -7,7 +7,8 @@ compile         = async function(templateName, data) {
     const filePath = path.join(process.cwd(), 'serverapp/pdfmaker/mailsendertemplate/', `${templateName}.hbs`);
     const html = await fs.readFile(filePath, 'utf-8');
     return hbs.compile(html)(data);
-};
+},
+sendKP = require('../mailer/index');
 
 hbs.registerHelper('dateFormat', function (value, format) {
     console.log('formatting', value, format);
@@ -31,6 +32,7 @@ async function makePDF(data) {
         });
 
         console.log('PDF created');
+        await sendKP.sendKP(data.email, `kp/КП ${data.firmname}.pdf`, `КП ${data.firmname}.pdf`)
         await browser.close();
         //process.exit();
 

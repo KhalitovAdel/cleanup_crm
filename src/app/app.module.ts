@@ -21,7 +21,6 @@ import { LeadPageComponent } from './CRM/Leads/lead-page/lead-page.component';
 import { NewLeadComponent } from './CRM/Leads/new-lead/new-lead.component';
 import { NewTaskComponent } from './CRM/Tasks/new-task/new-task.component';
 import { FiltersPipeCustom } from './filters.pipe';
-import { ShareService } from './services/share.service';
 
 
 const appRoutes = [
@@ -57,7 +56,6 @@ const appRoutes = [
     CalculateService, 
     myHTTPService, 
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'ru'},
-    ShareService
   ],
   bootstrap: [AppComponent]
 })

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { CalculateService } from 'src/app/services/calculate/calculate.service';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 import { DatePipe } from '@angular/common';
+import { Lead } from 'interfacess';
 
 @Component({
   selector: 'app-new-lead',
@@ -11,17 +12,19 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class NewLeadComponent implements OnInit {
-  Lead = {
-    _id:'',
+  Lead: Lead = {
+    _id: '',
     firmName: '',
     address: '',
-    contactNumber: [],
-    contactEmail: [],
+    contactPhones: [''],
+    contactEmail: '',
     contactName: '',
     position: '',
+    comments: [{description: String, createdDate: Date}],
+    tasks: [],
     lprsName: '',
     parser2gis: '',
-    createdDate: ''
+    createdDate: new Date
   };
   Deal = {
     area: Number,
@@ -36,8 +39,6 @@ export class NewLeadComponent implements OnInit {
   fond: Number;
   profit: Number;
   summMaterial: String;
-
-  
 
   checked: null;
 
@@ -57,7 +58,20 @@ export class NewLeadComponent implements OnInit {
     private datePipe: DatePipe
     ) {
      }
-
+  // Реализованно конечно не очень
+  setNewInput(e) {
+    e.preventDefault();
+    var target = e.currentTarget,
+    container = target.parentElement.className.split(' ');
+    for (let n in container) {
+      for (let x in this.Lead) {  
+        if (container[n] == x) {
+          this.Lead[x].push('');
+        }
+      }
+    }
+  }
+  // Реализованно конечно не очень
     adel() {
       for (let key in this.regular) {
         if (this.Deal.regularValue == this.regular[key]) {
@@ -65,8 +79,9 @@ export class NewLeadComponent implements OnInit {
         }
       }
     }
+    // Реализованно конечно не очень
     async pars2gisplease() {
-      var data = await this.myHttp.postHTTP('/pars2gis', {link: this.Lead.parser2gis});
+      var data = await this.myHttp.postHTTP('http://localhost:3000/pars2gis', {link: this.Lead.parser2gis});
       console.log(data);
       for (let x in data) {
 		  if (data[x].indexOf('tel:') + 1 ) {
@@ -82,19 +97,20 @@ export class NewLeadComponent implements OnInit {
     doPDF() {
       console.log('doPDF');
       console.log(this.summ);
-      return this.myHttp.postHTTP('/makePDF', {
+      return this.myHttp.postHTTP('http://localhost:3000/makePDF', {
         firmname: this.Lead.firmName,
         address: this.Lead.address,
         area: this.Deal.area,
         regularValue: this.adel(),
         itog: this.summ,
-        itogMaterial: this.summMaterial
+        itogMaterial: this.summMaterial,
+        email: this.Lead.contactEmail
       });
     }
     createLead() {
       console.log(this.Lead);
-      this.Lead.createdDate = this.datePipe.transform(new Date(), "yyyy-MM-ddThh:mm:ss.SSS'Z'");
-      return this.myHttp.postHTTP('/newLead', this.Lead);
+      //this.Lead.createdDate = this.datePipe.transform(new Date(), "yyyy-MM-ddThh:mm:ss.SSS'Z'");
+      return this.myHttp.postHTTP('http://localhost:3000/newLead', this.Lead);
     }
 
   onChange(item) {

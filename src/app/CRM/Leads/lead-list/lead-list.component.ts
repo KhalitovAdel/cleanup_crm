@@ -21,7 +21,9 @@ export class LeadListComponent implements OnInit {
   //   return this.Leads = data;
   // };
   async getLeadList() {
-    var data = await this.myHttp.getHTTP('/getLeadList');
+    console.log('Работаем');
+    var data = await this.myHttp.getHTTP('http://localhost:3000/getLeadList');
+    console.log(data);
     return this.Leads = data;
   }
 
