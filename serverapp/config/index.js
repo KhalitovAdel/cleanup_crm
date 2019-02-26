@@ -4,6 +4,7 @@ var state = {
   db: null
 };
 
+mongoose.set('useFindAndModify', false);
 exports.connect = function (done) {
   if (state.db) {
     return done();
@@ -19,35 +20,37 @@ exports.connect = function (done) {
   });
 };
 var conn    = mongoose.connection,
+
 LeadSchema  = new mongoose.Schema({
+  leadId: String,
+  leadStatus: String,
   firmName: String,
-  address: String,
-  contactPhones: Array,
-  contactEmail: Array,
+  contactPhones: [String],
   contactName: String,
   position: String,
+  contactEmail: String,
+  address: String,
   lprsName: String,
-  parser2gis: String,
-  comments: Array,
-  tasks: Array,
-  createdDate: Date,
+  comments: [{description: String, createdDate: String}],
+  tasks: [{
+    status: String,
+    action: String,
+    description: String,
+    createdDate: String,
+    deadLineDate: String
+  }],
+  link2gis: String,
+  createdDate: String
 });
 
-TaskSchema = new mongoose.Schema({
-  actionValue: '',
-  description: '',
-  taskWhenDo: Date,
-  lead_id: '',
-  createdDate: Date
-});
-
-DealSchema  = new mongoose.Schema({
+OfferSchema  = new mongoose.Schema({
+    LeadLink: String,
     area: Number,
     regularValue: Number,
-    timeValue: Number
+    timeValue: Number,
+    details: Object
 });
 
 exports.freshConnect = conn;
 exports.Lead = conn.model('Lead', LeadSchema);
-exports.Deal = conn.model('Deal', DealSchema);
-exports.Task = conn.model('Task', TaskSchema);
+exports.Offer = conn.model('Offer', OfferSchema);

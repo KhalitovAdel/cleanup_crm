@@ -2,134 +2,242 @@ import { Component, OnInit } from '@angular/core';
 
 import { CalculateService } from 'src/app/services/calculate/calculate.service';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
-import { DatePipe } from '@angular/common';
+import { Guid } from "guid-typescript";
+//import { DatePipe } from '@angular/common';
 import { Lead } from 'interfacess';
+import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-lead',
   templateUrl: './new-lead.component.html',
   styleUrls: ['./new-lead.component.styl'],
-  providers: [DatePipe]
+  //providers: [DatePipe]
 })
 export class NewLeadComponent implements OnInit {
-  Lead: Lead = {
-    _id: '',
-    firmName: '',
-    address: '',
-    contactPhones: [''],
-    contactEmail: '',
-    contactName: '',
-    position: '',
-    comments: [{description: String, createdDate: Date}],
-    tasks: [],
-    lprsName: '',
-    parser2gis: '',
-    createdDate: new Date
+
+  LeadControl: FormGroup;
+  OfferControl: FormGroup;
+  Result: Object = {
+    fot: Number,
+    itog: Number,
+    itogMaterial: Number,
+    managerWage: Number,
+    material: Number,
+    profit: Number,
+    tinkoffCommission: Number,
+    windowFond: Number,
   };
-  Deal = {
-    area: Number,
-    regularValue: Number,
-    timeValue: Number
-  };
+
+  RegularControl: Array<Object> = [
+    {days: '30', translate: 'Без выходных'},
+    {days: '25.8', translate: '6/1 - сб полный'},
+    {days: '23.7', translate: '6/1 - сб не полный'},
+    {days: '21.5', translate: '5/2'},
+    {days: '15', translate: '2/2'},
+    {days: '13', translate: '3 раза в неделю'},
+    {days: '8.6', translate: '2 раза в неделю'},
+    {days: '4.3', translate: 'Раз в неделю'},
+    {days: '1', translate: 'Раз в месяц'}
+  ];
   
-  fot: Number;
-  summ: String;
-  tinkCom: Number;
-  upr: Number;
-  fond: Number;
-  profit: Number;
-  summMaterial: String;
+  PanelControl: Array<Object> = [
+    {action: 'call', translate: 'Звонок'},
+    {action: 'meet', translate: 'Встреча'},
+    {action: 'task', translate: 'Задача'},
+  ];
 
-  checked: null;
-
-  regular: Object = {
-    "Без выходных": 30,
-    "5/2": 22,
-    "2/2": 15,
-    "3 раза в неделю": 13,
-    "2 раза в неделю": 8.6,
-    "Раз в неделю": 4.3,
-    "Раз в месяц": 1
-  };
+  LeadStatus: Array<Object> = [
+    {status: 'identifyLPR', translate: 'Выявление ЛПР'},
+    {status: 'attemptCommunicateLPR', translate: 'Попытка связаться с ЛПР'},
+    {status: 'identifyNeed', translate: 'Выявление потребности у ЛПР'},
+    {status: 'offerSended', translate: 'Отправленно КП'},
+  ];
 
   constructor(
+    private fb: FormBuilder,
     private svc: CalculateService,
     private myHttp: myHTTPService,
-    private datePipe: DatePipe
-    ) {
-     }
-  // Реализованно конечно не очень
-  setNewInput(e) {
-    e.preventDefault();
-    var target = e.currentTarget,
-    container = target.parentElement.className.split(' ');
-    for (let n in container) {
-      for (let x in this.Lead) {  
-        if (container[n] == x) {
-          this.Lead[x].push('');
-        }
-      }
-    }
-  }
-  // Реализованно конечно не очень
-    adel() {
-      for (let key in this.regular) {
-        if (this.Deal.regularValue == this.regular[key]) {
-          return key;
-        }
-      }
-    }
-    // Реализованно конечно не очень
-    async pars2gisplease() {
-      var data = await this.myHttp.postHTTP('http://localhost:3000/pars2gis', {link: this.Lead.parser2gis});
-      console.log(data);
-      for (let x in data) {
-		  if (data[x].indexOf('tel:') + 1 ) {
-			data[x] = data[x].split(':')[1];
-		  }
-		  for (let y in this.Lead) {
-			  if (x == y) {
-				  this.Lead[y] = data[x];
-			  }
-		  }
-      }
-    }
-    doPDF() {
-      console.log('doPDF');
-      console.log(this.summ);
-      return this.myHttp.postHTTP('http://localhost:3000/makePDF', {
-        firmname: this.Lead.firmName,
-        address: this.Lead.address,
-        area: this.Deal.area,
-        regularValue: this.adel(),
-        itog: this.summ,
-        itogMaterial: this.summMaterial,
-        email: this.Lead.contactEmail
-      });
-    }
-    createLead() {
-      console.log(this.Lead);
-      //this.Lead.createdDate = this.datePipe.transform(new Date(), "yyyy-MM-ddThh:mm:ss.SSS'Z'");
-      return this.myHttp.postHTTP('http://localhost:3000/newLead', this.Lead);
-    }
-
-  onChange(item) {
-    this.checked = item.checked;
-    item.checked = !item.checked;
-    return this.someCalculate();
-  }
-  someCalculate() {
-    this.fot = this.svc.calculateFot(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
-    this.tinkCom = this.svc.calculateTinkoffCommission(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
-    this.upr = this.svc.calculateManagerWage(this.Deal.area, this.Deal.regularValue);
-    this.fond = this.svc.calculateWindowsFond(this.Deal.area);
-    this.profit = this.svc.setProfit(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
-    this.summMaterial = this.svc.calculateItogMaterial(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
-    return this.summ = this.svc.calculateItog(this.Deal.area, this.Deal.regularValue, this.Deal.timeValue);
-  }
+    ) {}
 
   ngOnInit() {
-    
-  }
 
+    this.LeadControl = this.fb.group({
+      leadId: Guid.create().toString(),
+      leadStatus: ['', Validators.required],
+      firmName: ['', Validators.required],
+      contactPhones: this.fb.array([ ['', Validators.required] ]),
+      contactName: '',
+      position: '',
+      contactEmail: ['', Validators.email],
+      address: ['', Validators.required],
+      lprsName: '',
+      comments: this.fb.array([
+        this.fb.group({
+          description: '',
+          createdDate: new Date
+        })
+      ]),
+      tasks: this.fb.array([
+        this.fb.group({
+          status: 'started',
+          action: ['', Validators.required],
+          description: ['', Validators.required],
+          createdDate: new Date,
+          deadLineDate: ['', Validators.required]
+        })
+      ]),
+      link2gis: '',
+      createdDate: new Date
+    });
+
+    this.OfferControl = this.fb.group({
+      leadLink: this.LeadControl.get('leadId').value,
+      area: ['', Validators.required],
+      regular: ['', Validators.required],
+      time: '',
+      details: this.fb.group({
+        fot: ['', Validators.required],
+        managerWage: ['', Validators.required],
+        tinkoffCommission: ['', Validators.required],
+        windowFond: ['', Validators.required],
+        material: ['', Validators.required],
+        profit: ['', Validators.required],
+        itog: ['', Validators.required],
+        itogMaterial: ['', Validators.required],
+      })
+    });
+
+    this.LeadControl.valueChanges
+      .subscribe(
+        (value) => console.log(value)
+      );
+
+    this.OfferControl.valueChanges
+      .subscribe(
+        (value) => console.log(value)
+      );
+  } //ngOnInit finished
+
+  //methods to control contactPhone inputs
+  removeContactPhoneControl(index) {
+    if (( this.LeadControl.controls['contactPhones'] as FormArray ).length > 1 ) {
+      ( this.LeadControl.controls['contactPhones'] as FormArray ).removeAt(index);
+    }
+  }
+  addContactPhoneControl(e) {
+    e.preventDefault();
+    ( this.LeadControl.get('contactPhones') as FormArray ).push(new FormControl);
+  }
+  //methods to control contactPhone inputs
+  calculate() {
+    if ( this.OfferControl.get('area').value > 0 && this.OfferControl.get('regular').value > 0 ) {
+
+      this.OfferControl.get('details').setValue( this.svc.getCalculate(
+        this.OfferControl.get('area').value, 
+        this.OfferControl.get('regular').value,
+        this.OfferControl.get('time').value,
+      ));
+      this.Result = this.OfferControl.get('details').value;
+      return this.Result;
+
+    }
+  }
+  //https://material.angular.io/components/snack-bar/examples 
+  validator(formGroup: FormGroup) {
+    formGroup.reset();
+    Object.values(formGroup.controls).forEach( (control: any) => {
+      control.markAsTouched();
+      console.log(control);
+      if (control.controls) {
+          control.controls.forEach(c => this.validator(c));
+      }
+    });
+  }
+  pars2gis() {
+    return this.myHttp.postHTTP('http://localhost:3000/pars2gis', 
+                        {link: this.LeadControl.get('link2gis').value})
+      .subscribe(data =>  {
+        for (let x in this.LeadControl.value ) {
+          for (let y in data) {
+            if (x === y) {
+              if (x == 'contactPhones') {
+                console.log(data[y].length);
+                (this.LeadControl.get(x) as FormArray ).removeAt(0);
+                for (var i = 0; i < data[y].length; i++) {
+                  (this.LeadControl.get(x) as FormArray ).push(new FormControl(data[y][i]) );
+                }
+              } else {
+                this.LeadControl.get(x).setValue( data[y] );
+              }
+            }
+          }
+        }
+        console.log(data);
+      }, err => {
+        console.log(err);
+      }
+      );
+  }//pars2gis
+
+  createNewLead() {
+    this.LeadControl.valid
+    if (this.LeadControl.valid) {
+      var data = this.clearLead(this.LeadControl);
+      return this.myHttp.postHTTP('http://localhost:3000/newLead', data)
+        .subscribe(data => {
+          console.log(data);//Реализовать красивый ответ
+        }, err => {
+          console.log(err);
+        }
+      );
+      //Добавить отчистку объекта
+    } else {
+      this.LeadControl.invalid;
+    }
+  }//createNewLead
+  
+  createNewLeadOffer() {
+    if ( this.LeadControl.valid && this.OfferControl.valid ) {
+      var data = this.clearLead(this.LeadControl);
+      return this.myHttp.postHTTP('http://localhost:3000/newLeadOffer', {Lead: data, Offer: this.OfferControl.value})
+      .subscribe(data => {
+        console.log(data);//Реализовать красивый ответ
+      }, err => {
+        console.log(err);
+      }
+    )
+    }
+  }
+  createNewLeadOfferSend() {
+    if ( this.LeadControl.valid && this.OfferControl.valid ) {
+      var data = this.clearLead(this.LeadControl);
+      return this.myHttp.postHTTP('http://localhost:3000/newLeadOfferSend', {Lead: data, Offer: this.OfferControl.value})
+      .subscribe(data => {
+        console.log(data);//Реализовать красивый ответ
+      }, err => {
+        console.log(err);
+      }
+    )
+    }
+  }
+  clearLead(group: FormGroup) {
+    var copeLead: Object = group.value;
+    Object.keys(copeLead).forEach(key => {
+      if (typeof(copeLead[key]) === 'string' && 
+      (copeLead[key] === null || copeLead[key] === '') ) {
+        delete copeLead[key];
+      } else if ( Array.isArray(copeLead[key]) ) {
+        for (var x of copeLead[key]) {
+          if (x instanceof Object) {
+            for (let y in x) {
+              if ( x[y] === null || x[y] === '') {
+                copeLead[key] = [];
+              }
+            }
+          }
+        }
+      }
+    });
+    return copeLead;
+  } 
 }

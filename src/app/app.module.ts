@@ -10,8 +10,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material';
 
 import { B2bregularComponent } from './calculate/b2bregular/b2bregular.component';
 import { CalculateService } from './services/calculate/calculate.service';
@@ -19,7 +24,7 @@ import { myHTTPService } from './services/HTTP/myhttp.service';
 import { LeadListComponent } from './CRM/Leads/lead-list/lead-list.component';
 import { LeadPageComponent } from './CRM/Leads/lead-page/lead-page.component';
 import { NewLeadComponent } from './CRM/Leads/new-lead/new-lead.component';
-import { NewTaskComponent } from './CRM/Tasks/new-task/new-task.component';
+// import { NewTaskComponent } from './CRM/Tasks/new-task/new-task.component';
 import { FiltersPipeCustom } from './filters.pipe';
 
 
@@ -36,7 +41,7 @@ const appRoutes = [
     LeadListComponent,
     LeadPageComponent,
     NewLeadComponent,
-    NewTaskComponent,
+    // NewTaskComponent,
     FiltersPipeCustom
   ],
   imports: [
@@ -51,6 +56,12 @@ const appRoutes = [
     RouterModule.forRoot(appRoutes),
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule
   ],
   providers: [
     CalculateService, 

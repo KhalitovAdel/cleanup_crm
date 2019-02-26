@@ -2,7 +2,7 @@ export class Lead {
     _id: String;
     firmName: String;
     address: String;
-    contactPhones: Array<String>;
+    contactPhone: String;
     contactEmail: String;
     contactName: String;
     position: String;

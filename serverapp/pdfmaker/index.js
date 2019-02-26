@@ -26,13 +26,13 @@ async function makePDF(data) {
         await page.setContent(content);
         await page.emulateMedia('screen');
         await page.pdf({
-            path: `kp/КП ${data.firmname}.pdf`,
+            path: `kp/КП ${data.Lead.firmName}.pdf`,
             format: 'A4',
             printBackground: true
         });
 
         console.log('PDF created');
-        await sendKP.sendKP(data.email, `kp/КП ${data.firmname}.pdf`, `КП ${data.firmname}.pdf`)
+        await sendKP.sendKP(data.Lead.contactEmail, `kp/КП ${data.Lead.firmName}.pdf`, `КП ${data.Lead.firmName}.pdf`)
         await browser.close();
         //process.exit();
 

@@ -5,83 +5,120 @@ makePDF       = require('../pdfmaker/');
 var db = require('../config/index'),
 parser = require('../pageparser/index');
 
-router.post('/makePDF', function(req, res) {
-    console.log('Тут');
-    makePDF.makePDF(req.body);
-    res.send({ status: 'SUCCESS' });
-});
-
 router.post('/pars2gis', async function(req, res) {
     res.send( await parser.pars2gis(req.body.link) );
 });
 
 router.post('/newLead', function(req, res) {
-    var lead = new db.Lead();// Перед созданием проверить может существует
-    for (let x in req.body) {
-        if ( x !='_id') {
-            lead[x] = req.body[x];//Если req.body[x] массив элементов, то пушить массивом
-        }
-    }
-    lead.save(function(err) { 
-       if (err) { return console.log('Save Lead error ', err); }
-       res.status(200);//Обработать регистрацию
-    });
+    db.Lead.findOne({leadId: req.body.leadId})
+        .then(data => {
+            if (data === null) {
+                var lead = new db.Lead(req.body);
+                lead.save(function(err) { 
+                   if (err) { return console.log('Save Lead error ', err); }
+                   console.log('Lead added to db');
+                   return res.send('Лид успешно создан').status(200);
+                });
+            } else {
+                return res.send('Лид с таким ID уже существует').status(500);
+            }
+        })
+        .catch(err=> {
+            console.log('This error: ' + err);
+        })
 });
 
-router.post('/createNewComment', function(req, res) {
-    db.Lead.findOne({_id: req.body._id}).then(function(lead) {
-        lead.comment.push({
-            description: req.body.comment,
-            createdDate: req.body.createdDate
-        });
-        lead.save(function(err) { 
-            if (err) { return console.log('Save Lead error ', err); }
-            res.status(200);//Обработать регистрацию
-         });
-    });
+router.post('/newLeadOffer', function(req, res) {
+    db.Lead.findOne({leadId: req.body.Lead.leadId})
+        .then(data => {
+            if (data === null) {
+                var lead = new db.Lead(req.body.Lead);
+                lead.save(function(err) { 
+                   if (err) { return console.log('Save Lead error ', err); }
+                   console.log('Lead added to db');
+                });
+
+                var offer = new db.Offer(req.body.Offer);
+                offer.save(function(err) {
+                    if (err) { return console.log('Save Lead error ', err); }
+                    console.log('Offer added to db');
+                    return res.send('Лид и Предложение успешно созданы').status(200);
+                })
+            } else {
+                return res.send('Лид с таким ID уже существует').status(500);
+            }
+        })
+        .catch(err=> {
+            console.log('This error: ' + err);
+        })
+    
 });
 
-router.post('/getComments', function(req, res) {
-    db.Lead.findOne({_id: req.body._id}).then(function(lead) {
-        res.send(lead.comment).status(200);
-    });
-});
+router.post('/newLeadOfferSend', function(req, res) {
+    db.Lead.findOne({leadId: req.body.Lead.leadId})
+        .then(data => {
+            if (data === null) {
+                var lead = new db.Lead(req.body.Lead);
+                lead.save(function(err) { 
+                   if (err) { return console.log('Save Lead error ', err); }
+                   console.log('Lead added to db');
+                });
 
-router.post('/createNewTask', function(req, res) {
-    var task = new db.Task();// Перед созданием проверить может существует
-    for (let x in req.body) {
-        task[x] = req.body[x];//Если req.body[x] массив элементов, то пушить массивом
-    }
-    task.save(function(err) { 
-       if (err) { return console.log('Save Lead error ', err); }
-       res.status(200);//Обработать регистрацию
-    });
-});
-router.post('/getTasks', function(req, res) {
-    db.Task.find(req.body).then(function(task) {
-        console.log(req.body);
-        console.log(task);
-        res.send(task);
-    });
+                var offer = new db.Offer(req.body.Offer);
+                offer.save(function(err) {
+                    if (err) { return console.log('Save Lead error ', err); }
+                    console.log('Offer added to db');
+                    return res.send('Лид и Предложение успешно созданы').status(200);
+                })
+                makePDF.makePDF(req.body);
+            } else {
+                return res.send('Лид с таким ID уже существует').status(500);
+            }
+        })
+        .catch(err=> {
+            console.log('This error: ' + err);
+        })
+    
 });
 
 router.post('/getLeadInfo', function(req, res) {
-    db.Lead.findOne({_id: req.body._id}).then(function(leads) {
-        res.send(leads);
-    });
-});
+    db.Lead.findOne({leadId: req.body.id})
+        .then( data => {
+            res.send(data).status(200);
+        })
+        .catch(err=> {
+            console.log('Get all Leads error: ' + err);
+        });
+})
 
-router.put('/updateLead', function(req, res) {
-    db.Lead.findOneAndUpdate({_id: req.body._id}, req.body, { useFindAndModify: false }, function(err, data) {
-        if (err) return console.log("Ошибка: " + err);
-        return res.status(200).send({'Успешно обновил информацию': data.firmName});
-    })
-});
+router.post('/createNewComment', function(req, res) {
+    db.Lead.findOneAndUpdate({leadId: req.body.leadId},
+        {
+            '$push': {comments: [req.body.comment]}}, {new: true})
+            .then(data => {
+                res.send(data).status(200);
+            }, err => {
+                res.send(err).status(500);
+            })
+})
 
+router.post('/createNewTask', function(req, res) {
+    db.Lead.findOneAndUpdate({leadId: req.body.leadId},
+        {
+            '$push': {tasks: [req.body.task]}}, {new: true})
+            .then(data => {
+                res.send(data).status(200);
+            }, err => {
+                res.send(err).status(500);
+            })
+})
 router.get('/getLeadList', function(req, res) {
-    db.Lead.find({}).then(function(leads) {;
-        res.send(leads);
-    });
+    db.Lead.find({})
+        .then(data => {
+            res.send(data).status(200)
+        })
+        .catch(err=> {
+            console.log('Get all Leads error: ' + err);
+        });
 });
-
 module.exports = router;

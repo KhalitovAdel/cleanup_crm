@@ -199,20 +199,20 @@
                 <p class="text-center text-white">Стоимость/мес (без НДС)</p>
             </div>
             <div class="col-9">
-                <p class="text-center">Уборка помещения ~{{area}}м<sup>2</sup> в графике {{regularValue}}
+                <p class="text-center">Уборка помещения ~{{Offer.area}}м<sup>2</sup>
                     <br>уборочный инвентарь и химия для уборки приобретается Заказчиком
                 </p>
             </div>
             <div class="col-3">
-                <p class="text-center header"> {{itog}}</p>
+                <p class="text-center header"> {{Offer.details.itog}}</p>
             </div>
             <div class="col-9">
-                <p class="text-center">Уборка помещения ~{{area}}м<sup>2</sup> в графике {{regularValue}}
+                <p class="text-center">Уборка помещения ~{{Offer.area}}м<sup>2</sup>
                     <br>уборочный инвентарь и химия для уборки включены в стоимость
                 </p>
             </div>
             <div class="col-3">
-                <p class="text-center header"> {{itogMaterial}}</p>
+                <p class="text-center header"> {{Offer.details.itogMaterial}}</p>
             </div>
                     
         </div>
@@ -220,7 +220,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <p class="header">Адрес оказания услуги: {{address}}</p>
+                <p class="header">Адрес оказания услуги: {{Lead.address}}</p>
             </div>
         </div>
     </div>

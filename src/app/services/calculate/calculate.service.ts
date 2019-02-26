@@ -10,11 +10,11 @@ export class CalculateService {
     ONE_DAY_PRICE = 227;
 
     calculateFot(area, regularValue, timeValue) {
-      if ( !isNaN(timeValue) ) { // Считается по часам
-        return Math.ceil( regularValue * ( this.ONE_DAY_PRICE + timeValue * this.ONE_HOUR_PRICE ) );
+      if ( timeValue != '' ) { // Считается по часам
+        return this.beautyPrice( regularValue * ( this.ONE_DAY_PRICE + timeValue * this.ONE_HOUR_PRICE ) );
       }
-      if ( isNaN(timeValue) ) { //Считаем по квадратуре
-        return Math.ceil( regularValue * ( this.ONE_DAY_PRICE + area * this.ONE_METER_PRICE ) );
+      if ( timeValue == '' ) { //Считаем по квадратуре
+        return this.beautyPrice( regularValue * ( this.ONE_DAY_PRICE + area * this.ONE_METER_PRICE ) );
       }
     }
     
@@ -31,17 +31,17 @@ export class CalculateService {
 
     calculateTinkoffCommission(area, regularValue, timeValue) {
 
-      return Math.ceil( ( this.calculateFot(area, regularValue, timeValue) 
+      return this.beautyPrice( ( this.calculateFot(area, regularValue, timeValue) 
               + this.calculateManagerWage(area, regularValue) 
               + this.calculateWindowsFond(area) ) * 1.5 / 98.5 );
     }
 
     beautyPrice(num) {
-      return Math.ceil(num).toString().replace(/(\d{1,3})(?=((\d{3})*)$)/g, " $1") + " ₽";
+      return Math.ceil(num);
     }
 
     calculateMaterial(area, regularValue) {
-      return 4.08 * regularValue + regularValue * area * 0.09 + 718;
+      return this.beautyPrice( (4.08 * regularValue + regularValue * area * 0.09 + 718) );
     }
 
     setProfit(area, regularValue, timeValue) {
@@ -52,17 +52,10 @@ export class CalculateService {
       if ( isNaN(timeValue) && ( area <= 120 ) ) {
         return 1500;
       } 
-      if ( timeValue <= 2 ) {
-        return 2000;
-      }
       return 3000;
     }
 
     calculateItog(area, regularValue, timeValue) {
-
-      if ( isNaN(area) && isNaN(regularValue) ) {
-        return this.beautyPrice(0);
-      }
 
       return this.beautyPrice(
         ( this.calculateFot(area, regularValue, timeValue) 
@@ -75,10 +68,6 @@ export class CalculateService {
 
     calculateItogMaterial(area, regularValue, timeValue) {
 
-      if ( isNaN(area) && isNaN(regularValue) ) {
-        return this.beautyPrice(0);
-      }
-
       return this.beautyPrice(
         ( this.calculateFot(area, regularValue, timeValue) 
               + this.calculateManagerWage(area, regularValue) 
@@ -87,6 +76,19 @@ export class CalculateService {
               + this.calculateMaterial(area, regularValue)
               + this.setProfit(area, regularValue, timeValue) ) * 100 / 94
       );
+    }
+    getCalculate(area, regularValue, timeValue) {
+      var Offer: Object = {
+        fot: this.calculateFot(area, regularValue, timeValue),
+        managerWage: this.calculateManagerWage(area, regularValue),
+        tinkoffCommission: this.calculateTinkoffCommission(area, regularValue, timeValue),
+        windowFond: this.calculateWindowsFond(area),
+        material: this.calculateMaterial(area, regularValue),
+        profit: this.setProfit(area, regularValue, timeValue),
+        itog: this.calculateItog(area, regularValue, timeValue),
+        itogMaterial: this.calculateItogMaterial(area, regularValue, timeValue)
+      }
+      return Offer;
     }
   constructor() { }
 }

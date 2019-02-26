@@ -1,7 +1,49 @@
-<ul class="heroes">
-  <li *ngFor="let lead of Leads">
-    <a target="_blank" routerLink="{{lead._id}}">
-      {{lead.firmName}}
-    </a>
-  </li>
-</ul>
+<button (click)='allLeads()'>Все лиды</button>
+<button (click)="todayTasks()">Дела на сегодня</button>
+<button (click)="overDateTasks()">Просроченные дела</button>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Поиск лида">
+          </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+  <ng-container matColumnDef="firmName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Название </th>
+    <td mat-cell *matCellDef="let element"> 
+        <a target="_blank" routerLink="{{element.leadId}}">
+            {{element.firmName}}
+        </a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="tasks">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Задачи </th>
+    <td mat-cell *matCellDef="let element">
+      <div *ngFor="let x of element.tasks"> 
+        <span *ngIf='x.status=="started"'>{{x.deadLineDate | date: 'dd.MM.yyyy'}}</span> 
+        <br>
+        <span>{{x.deadLineDate | date: 'HH:mm'}}</span>
+      </div> 
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Адрес </th>
+    <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="createdDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Дата создания </th>
+    <td mat-cell *matCellDef="let element"> {{element.createdDate | date: 'dd.MM.yyyy'}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</table>
