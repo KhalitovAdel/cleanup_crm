@@ -32,8 +32,8 @@
           <td mat-cell *matCellDef="let element">
             <div *ngFor="let x of element.tasks"> 
               <span *ngIf='x.status=="started"'>{{x.deadLineDate | date: 'dd.MM.yyyy'}}</span> 
-              <br>
-              <span>{{x.deadLineDate | date: 'HH:mm'}}</span>
+              <br *ngIf='x.status=="started"'>
+              <span *ngIf='x.status=="started"'>{{x.deadLineDate | date: 'HH:mm'}}</span>
             </div> 
           </td>
         </ng-container>
