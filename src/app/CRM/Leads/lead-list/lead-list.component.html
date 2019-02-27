@@ -1,6 +1,8 @@
-<button (click)='allLeads()'>Все лиды</button>
-<button (click)="todayTasks()">Дела на сегодня</button>
-<button (click)="overDateTasks()">Просроченные дела</button>
+<mat-chip-list>
+  <mat-chip (click)='allLeads()'>Все лиды</mat-chip>
+  <mat-chip (click)="todayTasks()" color="accent">Дела на сегодня</mat-chip>
+  <mat-chip (click)="overDateTasks()" color="primary" selected>Просроченные дела</mat-chip>
+</mat-chip-list>
 <div class="container">
   <div class="row">
     <div class="col-12">

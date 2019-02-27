@@ -95,6 +95,9 @@ export class NewLeadComponent implements OnInit {
       area: ['', Validators.required],
       regular: ['', Validators.required],
       time: '',
+      status: '',
+      createdDate: new Date,
+      sentingDate: '',
       details: this.fb.group({
         fot: ['', Validators.required],
         managerWage: ['', Validators.required],
@@ -199,6 +202,7 @@ export class NewLeadComponent implements OnInit {
   createNewLeadOffer() {
     if ( this.LeadControl.valid && this.OfferControl.valid ) {
       var data = this.clearLead(this.LeadControl);
+      this.OfferControl.get('status').setValue('created');
       return this.myHttp.postHTTP('http://localhost:3000/newLeadOffer', {Lead: data, Offer: this.OfferControl.value})
       .subscribe(data => {
         console.log(data);//Реализовать красивый ответ
@@ -211,6 +215,8 @@ export class NewLeadComponent implements OnInit {
   createNewLeadOfferSend() {
     if ( this.LeadControl.valid && this.OfferControl.valid ) {
       var data = this.clearLead(this.LeadControl);
+      this.OfferControl.get('status').setValue('sent');
+      this.OfferControl.get('sentingDate').setValue(new Date);
       return this.myHttp.postHTTP('http://localhost:3000/newLeadOfferSend', {Lead: data, Offer: this.OfferControl.value})
       .subscribe(data => {
         console.log(data);//Реализовать красивый ответ

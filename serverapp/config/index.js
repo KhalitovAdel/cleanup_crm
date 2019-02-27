@@ -37,18 +37,31 @@ LeadSchema  = new mongoose.Schema({
     action: String,
     description: String,
     createdDate: String,
-    deadLineDate: String
+    deadLineDate: String,
+    finishedDate: String
   }],
   link2gis: String,
   createdDate: String
 });
 
 OfferSchema  = new mongoose.Schema({
-    LeadLink: String,
-    area: Number,
-    regularValue: Number,
-    timeValue: Number,
-    details: Object
+  leadLink: String,
+  area: Number,
+  regular: Number,
+  time: Number,
+  status: String,
+  createdDate: Date,
+  sentingDate: Date,
+  details: {
+    fot: Number,
+    managerWage: Number,
+    tinkoffCommission: Number,
+    windowFond: Number,
+    material: Number,
+    profit: Number,
+    itog: Number,
+    itogMaterial: Number,
+  }
 });
 
 exports.freshConnect = conn;

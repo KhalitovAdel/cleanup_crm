@@ -1,39 +1,42 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-6">
-                <div class="row">
-                    <div class="col-12">
-                        <h1>{{Lead.firmName}}</h1>
-                    </div>
-                    <div class="col-12">
-                        Тут вывести статус
-                    </div>
-                    <div class="col-12">
-                        <ul>
-                            <li *ngFor="let x of Lead.contactPhones">
-                                <a href='callto:{{x}}' title="{{x}}">{{x}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-12">
-                        <a href="mailto:{{Lead.contactEmail}}">{{Lead.contactEmail}}</a>
-                    </div>
-                    <div class="col-12">
-                        <p>{{Lead.address}}</p>
-                    </div>
-                    <div class="col-12">
-                        <p *ngIf="Lead.contactName">Имя собеседника: {{Lead.contactName}}</p>
-                    </div>
-                    <div class="col-12">
-                        <p *ngIf="Lead.position">Должность: {{Lead.position}}</p>
-                    </div>
-                    <div class="col-12">
-                        <p *ngIf="Lead.lprsName">Имя ЛПР: {{Lead.lprsName}}</p>
+            <div class="col-4">
+                <div class="wrapp">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>{{Lead.firmName}}</h1>
+                        </div>
+                        <div class="col-12">
+                            Тут вывести статус
+                        </div>
+                        <div class="col-12">
+                            <ul>
+                                <li *ngFor="let x of Lead.contactPhones">
+                                    <a href='callto:{{x}}' title="{{x}}">{{x}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12">
+                            <a href="mailto:{{Lead.contactEmail}}">{{Lead.contactEmail}}</a>
+                        </div>
+                        <div class="col-12">
+                            <p>{{Lead.address}}</p>
+                        </div>
+                        <div class="col-12">
+                            <p *ngIf="Lead.contactName">Имя собеседника: {{Lead.contactName}}</p>
+                        </div>
+                        <div class="col-12">
+                            <p *ngIf="Lead.position">Должность: {{Lead.position}}</p>
+                        </div>
+                        <div class="col-12">
+                            <p *ngIf="Lead.lprsName">Имя ЛПР: {{Lead.lprsName}}</p>
+                        </div>
                     </div>
                 </div>
+                <button mat-raised-button (click)="openDialog()">Предложения</button>
             </div>
-            <div class="col-6">
+            <div class="col-5">
                 <div class="wrapp" [formGroup]="taskDesk">
                     <mat-form-field>
                         <mat-select placeholder="Задача" formControlName="actions">
@@ -58,17 +61,11 @@
                     </div>
                     <button mat-raised-button color="primary" (click)='createNewTask()'>Сохранить</button>
                 </div>
-                <div class="wrapp">
-                    <ul>
-                        <li *ngFor='let x of TaskDesk'>
-                            <p *ngIf='x.action'>{{x.action}}</p>
-                            <p *ngIf='x.status'>{{x.status}}</p>
-                            <span>Описание</span>
-                            <p>{{x.description}}</p>
-                            <p>Дата создания: {{x.createdDate | date: 'dd.MM.yyyy HH:mm'}}</p>
-                            <p *ngIf='x.deadLineDate'>Дедлайн: {{x.deadLineDate | date: 'dd.MM.yyyy HH:mm'}}</p>
-                        </li>
-                    </ul>
+                <div class="wrapp" *ngFor='let x of TaskDesk'>
+                    <mat-checkbox *ngIf='x.status === "started"' (click)='changeTaskStatus(x)'>{{x.action}}<span class='deadline-date' *ngIf='x.deadLineDate'> {{x.deadLineDate | date: 'dd.MM.yyyy HH:mm'}}</span></mat-checkbox>
+                    <span *ngIf="x.finishedDate">{{x.finishedDate | date: 'dd.MM.yyyy HH:mm'}}</span>
+                    <p>{{x.description}}</p>
+                    <span class='created-date'>Дата создания: {{x.createdDate | date: 'dd.MM.yyyy HH:mm'}}</span>
                 </div>
                     
             </div>

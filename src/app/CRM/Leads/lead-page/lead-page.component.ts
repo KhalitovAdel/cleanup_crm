@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { OfferIntoLeadComponent } from '../../Offers/offer-into-lead/offer-into-lead.component';
 
 @Component({
   selector: 'app-lead-page',
   templateUrl: './lead-page.component.html',
   styleUrls: ['./lead-page.component.styl']
 })
+
 export class LeadPageComponent implements OnInit {
   id: String; //Полученный id из url
   private sub: any;
@@ -33,9 +36,26 @@ export class LeadPageComponent implements OnInit {
     private route: ActivatedRoute,
     private myHttp: myHTTPService,
     private fb: FormBuilder,
+    public dialog: MatDialog
   ) {
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id']; // (+) converts string 'id' to a number
+    });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(OfferIntoLeadComponent, {
+      position: {
+        'top': '0',
+        'right': '0'
+      },
+      maxWidth: 'none',
+      minWidth: '80vh',
+      height: '100vh',
+      data: {leadId: this.Lead.leadId}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
     });
   }
 
@@ -56,14 +76,14 @@ export class LeadPageComponent implements OnInit {
   }
   async getLeadInfo() {
       await this.myHttp.postHTTP('http://localhost:3000/getLeadInfo', {id: this.id} )
-      .subscribe( data=>{
-        console.log(data);
-        this.Lead = data;
-        this.sortTasks();
-        return;
-      }, err => {
-        console.log('Error to load Lead Page: ' + err);
-      });
+        .subscribe( data=>{
+          console.log(data);
+          this.Lead = data;
+          this.sortTasks();
+          return;
+        }, err => {
+          console.log('Error to load Lead Page: ' + err);
+        });
   }
   setUpdeteToLead() {
     return this.myHttp.putHTTP('/updateLead', this.Lead);
@@ -80,6 +100,19 @@ export class LeadPageComponent implements OnInit {
 
     return  (aStatus - bStatus) || Date.parse( bVal ) - Date.parse( aVal );
     });
+  }
+
+  changeTaskStatus(task) {
+    console.log(task);
+      this.myHttp.postHTTP('http://localhost:3000/changeStatus', {leadId: this.Lead.leadId, changedTask: task} )
+        .subscribe( data=>{
+          console.log(data);
+          this.Lead = data;
+          this.sortTasks();
+          return;
+        }, err => {
+          console.log('Error to load Lead Page: ' + err);
+        });
   }
   createNewTask() { //Проверка на заполняемость полей
     var data: Object;
@@ -117,5 +150,4 @@ export class LeadPageComponent implements OnInit {
         });
     }
   }
-
 }

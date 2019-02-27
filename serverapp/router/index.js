@@ -100,7 +100,7 @@ router.post('/createNewComment', function(req, res) {
             }, err => {
                 res.send(err).status(500);
             })
-})
+});
 
 router.post('/createNewTask', function(req, res) {
     db.Lead.findOneAndUpdate({leadId: req.body.leadId},
@@ -111,7 +111,29 @@ router.post('/createNewTask', function(req, res) {
             }, err => {
                 res.send(err).status(500);
             })
-})
+});
+
+router.post('/changeStatus', function(req, res) {
+    db.Lead.findOneAndUpdate({'leadId': req.body.leadId, 'tasks._id': req.body.changedTask._id},
+        {$set: {'tasks.$.status' : 'finished', 'tasks.$.finishedDate' : (new Date).toISOString() } }, {new: true}
+        ).then(data => {
+            res.send(data).status(200);
+        }, err => {
+            res.send(err).status(500);
+        })
+});
+
+
+router.post('/getAllOffersFromLead', function(req, res) {
+    db.Offer.find({leadLink: req.body.leadLink})
+        .then( data => {
+            res.send(data).status(200);
+        })
+        .catch(err=> {
+            console.log(err);
+        });
+});  
+
 router.get('/getLeadList', function(req, res) {
     db.Lead.find({})
         .then(data => {
