@@ -42,14 +42,18 @@ export class LeadListComponent implements OnInit {
     await this.myHttp.getHTTP('http://localhost:3000/getLeadList')
       .subscribe( (data: Lead[])=> {
         this.Leads = data;
-        this.dataSource = new MatTableDataSource(this.Leads);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator
+        this.refreshDataSource(this.Leads);
         return;
       }, err => {
         console.log('Get all Leads error: ' + err);
       });
   };
+
+  refreshDataSource(data) {
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -73,7 +77,7 @@ export class LeadListComponent implements OnInit {
       }
      }
     }
-    return this.dataSource = array;
+    this.refreshDataSource(array);
   }
 
   overDateTasks() {
@@ -90,11 +94,11 @@ export class LeadListComponent implements OnInit {
       }
      }
     }
-    return this.dataSource = array;
+    this.refreshDataSource(array);
   }
   
   allLeads() {
-    return this.dataSource = this.Leads;
+    this.refreshDataSource(this.Leads);
   }
   nulledDay(day: Date) {
     day.setHours(0); day.setMinutes(0);

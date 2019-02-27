@@ -49,7 +49,7 @@ export class CalculateService {
       if ( isNaN(timeValue) && ( area <= 120 ) && (regularValue < 9) ) {
         return 1000;
       }
-      if ( isNaN(timeValue) && ( area <= 120 ) ) {
+      if ( ( isNaN(timeValue) || timeValue === '' ) && ( area <= 120 ) && regularValue < 9) {
         return 1500;
       } 
       return 3000;

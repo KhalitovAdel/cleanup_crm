@@ -16,7 +16,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material';
+import { MatPaginatorModule, MatFormFieldModule } from '@angular/material';
 
 import { B2bregularComponent } from './calculate/b2bregular/b2bregular.component';
 import { CalculateService } from './services/calculate/calculate.service';
@@ -61,7 +61,8 @@ const appRoutes = [
     MatMenuModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatFormFieldModule
   ],
   providers: [
     CalculateService, 
