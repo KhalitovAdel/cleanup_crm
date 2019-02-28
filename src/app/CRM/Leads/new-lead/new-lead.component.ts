@@ -147,10 +147,8 @@ export class NewLeadComponent implements OnInit {
   }
   //https://material.angular.io/components/snack-bar/examples 
   validator(formGroup: FormGroup) {
-    formGroup.reset();
     Object.values(formGroup.controls).forEach( (control: any) => {
       control.markAsTouched();
-      console.log(control);
       if (control.controls) {
           control.controls.forEach(c => this.validator(c));
       }
@@ -183,7 +181,7 @@ export class NewLeadComponent implements OnInit {
   }//pars2gis
 
   createNewLead() {
-    this.LeadControl.valid
+    this.valid(this.LeadControl);
     if (this.LeadControl.valid) {
       var data = this.clearLead(this.LeadControl);
       return this.myHttp.postHTTP('http://localhost:3000/newLead', data)
@@ -195,11 +193,13 @@ export class NewLeadComponent implements OnInit {
       );
       //Добавить отчистку объекта
     } else {
-      this.LeadControl.invalid;
+      //вывод ошибки о том что нужно заполнить все поля
     }
   }//createNewLead
   
   createNewLeadOffer() {
+    this.valid(this.LeadControl);
+    this.valid(this.OfferControl);
     if ( this.LeadControl.valid && this.OfferControl.valid ) {
       var data = this.clearLead(this.LeadControl);
       this.OfferControl.get('status').setValue('created');
@@ -210,9 +210,15 @@ export class NewLeadComponent implements OnInit {
         console.log(err);
       }
     )
+    } else {
+      //вывод ошибки о том что нужно заполнить все поля
     }
   }
   createNewLeadOfferSend() {
+    this.LeadControl.get('contactEmail').setValidators([Validators.required]);
+    this.LeadControl.get('contactEmail').updateValueAndValidity();
+    this.valid(this.LeadControl);
+    this.valid(this.OfferControl);
     if ( this.LeadControl.valid && this.OfferControl.valid ) {
       var data = this.clearLead(this.LeadControl);
       this.OfferControl.get('status').setValue('sent');
@@ -224,6 +230,8 @@ export class NewLeadComponent implements OnInit {
         console.log(err);
       }
     )
+    } else {
+      //вывод ошибки о том что нужно заполнить все поля
     }
   }
   clearLead(group: FormGroup) {
@@ -246,4 +254,21 @@ export class NewLeadComponent implements OnInit {
     });
     return copeLead;
   } 
+
+  valid(group: FormGroup) {
+    var copeLead: Object = group.controls;
+    Object.keys(copeLead).forEach(key => {
+      if (copeLead[key] instanceof FormControl) {
+        copeLead[key].markAsTouched();
+      } else {
+        for (var x of copeLead[key].controls) {
+            x.markAsTouched();
+            for (let y in x.controls) {
+              x.controls[y].markAsTouched();
+            }
+        }
+      }
+    });
+  } 
+  
 }

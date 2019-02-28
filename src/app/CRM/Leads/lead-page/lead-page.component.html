@@ -53,7 +53,7 @@
                         </mat-form-field>
                     </div>
             
-                    <div class="w-100">
+                    <div class="w-100" *ngIf='taskDesk.get("actions").value != "comment"'>
                         <mat-form-field>
                             <input matInput formControlName="deadLineDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Дата задачи">
                             <owl-date-time #dt1></owl-date-time>
