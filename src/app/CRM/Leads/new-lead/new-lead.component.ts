@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { CalculateService } from 'src/app/services/calculate/calculate.service';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
@@ -6,6 +6,7 @@ import { Guid } from "guid-typescript";
 //import { DatePipe } from '@angular/common';
 import { Lead } from 'interfacess';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar, MAT_SNACK_BAR_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-new-lead',
@@ -54,6 +55,7 @@ export class NewLeadComponent implements OnInit {
   ];
 
   constructor(
+    private snackBar: MatSnackBar,
     private fb: FormBuilder,
     private svc: CalculateService,
     private myHttp: myHTTPService,
@@ -145,15 +147,7 @@ export class NewLeadComponent implements OnInit {
 
     }
   }
-  //https://material.angular.io/components/snack-bar/examples 
-  validator(formGroup: FormGroup) {
-    Object.values(formGroup.controls).forEach( (control: any) => {
-      control.markAsTouched();
-      if (control.controls) {
-          control.controls.forEach(c => this.validator(c));
-      }
-    });
-  }
+
   pars2gis() {
     return this.myHttp.postHTTP('http://localhost:3000/pars2gis', 
                         {link: this.LeadControl.get('link2gis').value})
@@ -180,20 +174,25 @@ export class NewLeadComponent implements OnInit {
       );
   }//pars2gis
 
+  resetForm() {
+    this.LeadControl.reset();
+    this.OfferControl.reset();
+  }
+
   createNewLead() {
     this.valid(this.LeadControl);
     if (this.LeadControl.valid) {
       var data = this.clearLead(this.LeadControl);
       return this.myHttp.postHTTP('http://localhost:3000/newLead', data)
-        .subscribe(data => {
-          console.log(data);//Реализовать красивый ответ
-        }, err => {
-          console.log(err);
+        .subscribe( (data: any) => {
+          this.openSnackBar( data.message );
+        }, ( err: any ) => {
+          this.openSnackBar( err );
         }
       );
       //Добавить отчистку объекта
     } else {
-      //вывод ошибки о том что нужно заполнить все поля
+      this.openSnackBar('🤦‍ Заполнены не все поля!');
     }
   }//createNewLead
   
@@ -204,14 +203,14 @@ export class NewLeadComponent implements OnInit {
       var data = this.clearLead(this.LeadControl);
       this.OfferControl.get('status').setValue('created');
       return this.myHttp.postHTTP('http://localhost:3000/newLeadOffer', {Lead: data, Offer: this.OfferControl.value})
-      .subscribe(data => {
-        console.log(data);//Реализовать красивый ответ
-      }, err => {
-        console.log(err);
+      .subscribe( (data: any) => {
+        this.openSnackBar( data.message );
+      }, ( err: any ) => {
+        this.openSnackBar( err );
       }
     )
     } else {
-      //вывод ошибки о том что нужно заполнить все поля
+      this.openSnackBar('🤦‍ Заполнены не все поля!');
     }
   }
   createNewLeadOfferSend() {
@@ -224,14 +223,14 @@ export class NewLeadComponent implements OnInit {
       this.OfferControl.get('status').setValue('sent');
       this.OfferControl.get('sentingDate').setValue(new Date);
       return this.myHttp.postHTTP('http://localhost:3000/newLeadOfferSend', {Lead: data, Offer: this.OfferControl.value})
-      .subscribe(data => {
-        console.log(data);//Реализовать красивый ответ
-      }, err => {
-        console.log(err);
+      .subscribe( (data: any) => {
+        this.openSnackBar( data.message );
+      }, ( err: any ) => {
+        this.openSnackBar( err );
       }
     )
     } else {
-      //вывод ошибки о том что нужно заполнить все поля
+      this.openSnackBar('🤦‍ Заполнены не все поля!');
     }
   }
   clearLead(group: FormGroup) {
@@ -269,6 +268,26 @@ export class NewLeadComponent implements OnInit {
         }
       }
     });
-  } 
+  };
+
+  openSnackBar(newData) {
+    this.snackBar.openFromComponent(AlertComponent, {
+      duration: 2000,
+      data: newData
+    });
+  };
   
+}
+
+@Component({
+  selector: 'snack-bar',
+  template: '<span class="alert">{{data}}</span>',
+  styles: [`
+    .alert {
+      color: hotpink;
+    }
+  `],
+})
+export class AlertComponent {
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
 }

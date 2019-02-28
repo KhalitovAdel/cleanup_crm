@@ -16,15 +16,14 @@ router.post('/newLead', function(req, res) {
                 var lead = new db.Lead(req.body);
                 lead.save(function(err) { 
                    if (err) { return console.log('Save Lead error ', err); }
-                   console.log('Lead added to db');
-                   return res.send('Лид успешно создан').status(200);
+                   return res.send({message: '🤟 Лид успешно создан!'}).status(200);
                 });
             } else {
-                return res.send('Лид с таким ID уже существует').status(500);
+                return res.send({success: false, error: {message: '👯 Лид с таким ID уже существует'}}).status(500);
             }
         })
         .catch(err=> {
-            console.log('This error: ' + err);
+            return res.send({success: false, error: {message: err}}).status(500);
         })
 });
 
@@ -35,21 +34,20 @@ router.post('/newLeadOffer', function(req, res) {
                 var lead = new db.Lead(req.body.Lead);
                 lead.save(function(err) { 
                    if (err) { return console.log('Save Lead error ', err); }
-                   console.log('Lead added to db');
                 });
 
                 var offer = new db.Offer(req.body.Offer);
                 offer.save(function(err) {
                     if (err) { return console.log('Save Lead error ', err); }
                     console.log('Offer added to db');
-                    return res.send('Лид и Предложение успешно созданы').status(200);
+                    return res.send({message: '🤟 Лид и Предложение успешно созданы!'}).status(200);
                 })
             } else {
-                return res.send('Лид с таким ID уже существует').status(500);
+                return res.send({success: false, error: {message: '👯 Лид с таким ID уже существует'}}).status(500);
             }
         })
         .catch(err=> {
-            console.log('This error: ' + err);
+            return res.send({success: false, error: {message: err}}).status(500);
         })
     
 });
@@ -61,22 +59,22 @@ router.post('/newLeadOfferSend', function(req, res) {
                 var lead = new db.Lead(req.body.Lead);
                 lead.save(function(err) { 
                    if (err) { return console.log('Save Lead error ', err); }
-                   console.log('Lead added to db');
                 });
 
                 var offer = new db.Offer(req.body.Offer);
                 offer.save(function(err) {
                     if (err) { return console.log('Save Lead error ', err); }
-                    console.log('Offer added to db');
-                    return res.send('Лид и Предложение успешно созданы').status(200);
                 })
-                makePDF.makePDF(req.body);
+                makePDF.makePDF(req.body)
+                    .then(data => {
+                        return res.send({message: '🤟 Лид и Предложение созданы и отправленны!'}).status(200);
+                    });
             } else {
-                return res.send('Лид с таким ID уже существует').status(500);
+                return res.send({success: false, error: {message: '👯 Лид с таким ID уже существует'}}).status(500);
             }
         })
         .catch(err=> {
-            console.log('This error: ' + err);
+            return res.send({success: false, error: {message: err}}).status(500);
         })
     
 });
@@ -98,7 +96,7 @@ router.post('/createNewComment', function(req, res) {
             .then(data => {
                 res.send(data).status(200);
             }, err => {
-                res.send(err).status(500);
+                return res.send({success: false, error: {message: err}}).status(500);
             })
 });
 
@@ -109,7 +107,7 @@ router.post('/createNewTask', function(req, res) {
             .then(data => {
                 res.send(data).status(200);
             }, err => {
-                res.send(err).status(500);
+                return res.send({success: false, error: {message: err}}).status(500);
             })
 });
 
@@ -119,7 +117,7 @@ router.post('/changeStatus', function(req, res) {
         ).then(data => {
             res.send(data).status(200);
         }, err => {
-            res.send(err).status(500);
+            return res.send({success: false, error: {message: err}}).status(500);
         })
 });
 
@@ -130,7 +128,7 @@ router.post('/getAllOffersFromLead', function(req, res) {
             res.send(data).status(200);
         })
         .catch(err=> {
-            console.log(err);
+            return res.send({success: false, error: {message: err}}).status(500);
         });
 });  
 
@@ -140,7 +138,7 @@ router.get('/getLeadList', function(req, res) {
             res.send(data).status(200)
         })
         .catch(err=> {
-            console.log('Get all Leads error: ' + err);
+            return res.send({success: false, error: {message: err}}).status(500);
         });
 });
 module.exports = router;
