@@ -52,6 +52,7 @@ export class NewLeadComponent implements OnInit {
     {status: 'attemptCommunicateLPR', translate: 'Попытка связаться с ЛПР'},
     {status: 'identifyNeed', translate: 'Выявление потребности у ЛПР'},
     {status: 'offerSended', translate: 'Отправленно КП'},
+    {status: 'DoesntReqFurtherWork', translate: 'Не требует дальнейшей работы'},
   ];
 
   constructor(
