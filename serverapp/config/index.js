@@ -49,6 +49,7 @@ OfferSchema  = new mongoose.Schema({
   area: Number,
   regular: Number,
   time: Number,
+  twice: Boolean,
   status: String,
   createdDate: Date,
   sentingDate: Date,

@@ -98,6 +98,7 @@ export class NewLeadComponent implements OnInit {
       area: ['', Validators.required],
       regular: ['', Validators.required],
       time: '',
+      twice: '',
       status: '',
       createdDate: new Date,
       sentingDate: '',
@@ -142,6 +143,7 @@ export class NewLeadComponent implements OnInit {
         this.OfferControl.get('area').value, 
         this.OfferControl.get('regular').value,
         this.OfferControl.get('time').value,
+        this.OfferControl.get('twice').value,
       ));
       this.Result = this.OfferControl.get('details').value;
       return this.Result;

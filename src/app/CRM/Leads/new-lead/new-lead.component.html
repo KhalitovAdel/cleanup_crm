@@ -95,7 +95,7 @@
     
     <form [formGroup]="OfferControl">
         <div class="wrapp">
-            <mat-form-field>
+                <mat-form-field>
                     <mat-select (selectionChange)="calculate()" placeholder="Регулярность" formControlName="regular">
                         <mat-option *ngFor="let x of RegularControl;" [value]="x.days">
                         {{x.translate}}
@@ -110,6 +110,9 @@
                 <mat-form-field>
                     <input matInput (change)="calculate()" type="number" formControlName="time" placeholder="Время на объекте">
                 </mat-form-field>
+
+                <mat-checkbox (change)="calculate()" formControlName="twice">Убираться 2 раза</mat-checkbox>
+
                 <p *ngIf="Result.fot > 1"> Фот: {{Result.fot}}</p>
                 <p *ngIf="Result.profit > 1">Прибыль: {{Result.profit}}</p>
                 <p *ngIf="Result.itog > 1">Итог: {{Result.itog}}</p>
