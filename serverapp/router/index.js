@@ -132,13 +132,23 @@ router.post('/getAllOffersFromLead', function(req, res) {
         });
 });  
 
+router.post('/changeLeadStatus', function (req, res) {
+    db.Lead.findOneAndUpdate({leadId: req.body.leadId},
+        {$set: {'leadStatus': req.body.leadStatus}})
+        .then( data => {
+            return res.send({message: '🤟 Статус изменен!'}).status(200);
+        }, err => {
+            return res.send({success: false, error: {message: err}}).status(500);
+        })
+})
+
 router.get('/getLeadList', function(req, res) {
     db.Lead.find({})
         .then(data => {
             res.send(data).status(200)
         })
         .catch(err=> {
-            return res.send({success: false, error: {message: err}}).status(500);
+            return res.send({success: false, error: {message: err}}).status(200);
         });
 });
 module.exports = router;

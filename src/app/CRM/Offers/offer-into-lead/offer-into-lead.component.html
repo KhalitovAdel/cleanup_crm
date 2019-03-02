@@ -23,14 +23,13 @@
 
     <div class="col-6">
       <div class="wrapp" *ngFor="let x of Offers">
-        <p>Площадь: {{x.area}}</p>
+        <p *ngIf='x.area'>Площадь: {{x.area}}</p>
         <p>Регулярность: {{x.regular}}</p>
-        <p>Время на объекте: {{x.time}}</p>
+        <p *ngIf='x.time'>Время на объекте: {{x.time}}</p>
         <p>Статус: {{x.status}}</p>
-        <p>Дата отправки: {{x.sentingDate}}</p>
+        <p *ngIf='x.sentingDate'>Дата отправки: {{x.sentingDate}}</p>
         <p>Дата создания: {{x.createdDate}}</p>
       </div>
     </div>
-
   </div>
 </div>

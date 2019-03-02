@@ -8,7 +8,13 @@
                             <h1>{{Lead.firmName}}</h1>
                         </div>
                         <div class="col-12">
-                            Тут вывести статус
+                            <mat-form-field>
+                                <mat-select placeholder="Статус" (selectionChange)="changeLeadStatus ()" [(ngModel)]='Lead.leadStatus'>
+                                    <mat-option *ngFor="let x of LeadStatus;" [value]="x.status">
+                                        {{x.translate}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
                         </div>
                         <div class="col-12">
                             <ul>
@@ -62,7 +68,12 @@
                     <button mat-raised-button color="primary" (click)='createNewTask()'>Сохранить</button>
                 </div>
                 <div class="wrapp" *ngFor='let x of TaskDesk'>
-                    <mat-checkbox *ngIf='x.status === "started"' (click)='changeTaskStatus(x)'>{{x.action}}<span class='deadline-date' *ngIf='x.deadLineDate'> {{x.deadLineDate | date: 'dd.MM.yyyy HH:mm'}}</span></mat-checkbox>
+                    <div *ngFor="let y of PanelControl">
+                        <mat-checkbox *ngIf='y.action === x.action && x.status === "started"'  (click)='changeTaskStatus(x)'>
+                            {{y.translate}}
+                            <span class='deadline-date' *ngIf='x.deadLineDate'> {{x.deadLineDate | date: 'dd.MM.yyyy HH:mm'}}</span>
+                        </mat-checkbox>
+                    </div>
                     <span *ngIf="x.finishedDate">{{x.finishedDate | date: 'dd.MM.yyyy HH:mm'}}</span>
                     <p>{{x.description}}</p>
                     <span class='created-date'>Дата создания: {{x.createdDate | date: 'dd.MM.yyyy HH:mm'}}</span>

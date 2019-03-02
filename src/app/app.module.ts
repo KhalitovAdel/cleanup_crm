@@ -26,9 +26,10 @@ import { CalculateService } from './services/calculate/calculate.service';
 import { myHTTPService } from './services/HTTP/myhttp.service';
 import { LeadListComponent } from './CRM/Leads/lead-list/lead-list.component';
 import { LeadPageComponent } from './CRM/Leads/lead-page/lead-page.component';
-import { NewLeadComponent, AlertComponent } from './CRM/Leads/new-lead/new-lead.component';
+import { NewLeadComponent } from './CRM/Leads/new-lead/new-lead.component';
 import { FiltersPipeCustom } from './filters.pipe';
 import { OfferIntoLeadComponent } from './CRM/Offers/offer-into-lead/offer-into-lead.component';
+import { AlertComponent } from './services/alert/alert.service';
 
 
 const appRoutes = [

@@ -4,6 +4,8 @@ import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { OfferIntoLeadComponent } from '../../Offers/offer-into-lead/offer-into-lead.component';
+import { AlertService } from 'src/app/services/alert/alert.service';
+
 
 @Component({
   selector: 'app-lead-page',
@@ -15,7 +17,23 @@ export class LeadPageComponent implements OnInit {
   id: String; //Полученный id из url
   private sub: any;
 
+  PanelControl: Array<Object> = [
+    {action: 'call', translate: 'Звонок'},
+    {action: 'meet', translate: 'Встреча'},
+    {action: 'task', translate: 'Задача'},
+  ];
+
+  LeadStatus: Array<Object> = [
+    {status: 'identifyLPR', translate: 'Выявление ЛПР'},
+    {status: 'attemptCommunicateLPR', translate: 'Попытка связаться с ЛПР'},
+    {status: 'identifyNeed', translate: 'Выявление потребности у ЛПР'},
+    {status: 'offerSended', translate: 'Отправленно КП'},
+    {status: 'DoesntReqFurtherWork', translate: 'Не требует дальнейшей работы'},
+  ];
+
   Lead: any = {
+    leadId: String,
+    leadStatus: String,
     contactPhones: [],
     comments: [],
     tasks: [] = []
@@ -33,6 +51,7 @@ export class LeadPageComponent implements OnInit {
   TaskDesk: Array<any>;
 
   constructor(
+    private alert: AlertService,
     private route: ActivatedRoute,
     private myHttp: myHTTPService,
     private fb: FormBuilder,
@@ -149,5 +168,19 @@ export class LeadPageComponent implements OnInit {
           console.log('Error to add new Comment: ' + err);
         });
     }
+  }
+
+  changeLeadStatus () {
+    this.myHttp.postHTTP('http://localhost:3000/changeLeadStatus', 
+    {
+      leadId: this.Lead.leadId,
+      leadStatus: this.Lead.leadStatus
+    })
+      .subscribe( (data: any) => {
+         this.alert.openSnackBar( data.message );
+      }, ( err: any ) => {
+        this.alert.openSnackBar( err );
+      }
+    );
   }
 }
