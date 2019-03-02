@@ -142,6 +142,23 @@ router.post('/changeLeadStatus', function (req, res) {
         })
 })
 
+router.post('/saveLeadChanges', function(req, res) {
+    db.Lead.findOneAndUpdate({leadId: req.body.leadId},
+        {$set: {'firmName': req.body.firmName,
+                'contactPhones': req.body.contactPhones,
+                'contactEmail': req.body.contactEmail,
+                'address': req.body.address,
+                'contactName': req.body.contactName,
+                'position': req.body.position,
+                'lprsName': req.body.lprsName,
+        }})
+        .then( data => {
+            return res.send({message: '🤟 Лид изменен!'}).status(200);
+        }, err => {
+            return res.send({success: false, error: {message: err}}).status(500);
+        })
+})
+
 router.get('/getLeadList', function(req, res) {
     db.Lead.find({})
         .then(data => {

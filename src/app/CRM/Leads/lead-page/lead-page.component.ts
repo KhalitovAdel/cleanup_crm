@@ -16,7 +16,7 @@ import { AlertService } from 'src/app/services/alert/alert.service';
 export class LeadPageComponent implements OnInit {
   id: String; //Полученный id из url
   private sub: any;
-
+  changeIndicator: Boolean = false;
   PanelControl: Array<Object> = [
     {action: 'call', translate: 'Звонок'},
     {action: 'meet', translate: 'Встреча'},
@@ -93,6 +93,7 @@ export class LeadPageComponent implements OnInit {
     );
 
   }
+
   async getLeadInfo() {
       await this.myHttp.postHTTP('http://localhost:3000/getLeadInfo', {id: this.id} )
         .subscribe( data=>{
@@ -104,6 +105,7 @@ export class LeadPageComponent implements OnInit {
           console.log('Error to load Lead Page: ' + err);
         });
   }
+
   setUpdeteToLead() {
     return this.myHttp.putHTTP('/updateLead', this.Lead);
   }
@@ -180,7 +182,39 @@ export class LeadPageComponent implements OnInit {
          this.alert.openSnackBar( data.message );
       }, ( err: any ) => {
         this.alert.openSnackBar( err );
-      }
-    );
+      });
   }
+
+  preChangeLead(e, boolean: Boolean) {
+    e.preventDefault();
+    if (boolean === true) {
+      return this.changeIndicator = true;
+    }
+    return this.changeIndicator = false;
+  }
+
+  addNewPhone(e) {
+    e.preventDefault();
+    return this.Lead.contactPhones.push('')
+  }
+
+  saveLeadChanges() {
+    this.myHttp.postHTTP('http://localhost:3000/saveLeadChanges', {
+      leadId: this.Lead.leadId,
+      firmName: this.Lead.firmName,
+      contactPhones: this.Lead.contactPhones,
+      contactEmail: this.Lead.contactEmail,
+      address: this.Lead.address,
+      contactName: this.Lead.contactName,
+      position: this.Lead.position,
+      lprsName: this.Lead.lprsName
+    })
+      .subscribe( (data: any) => {
+        this.alert.openSnackBar( data.message );
+        this.changeIndicator = false;
+      }, ( err: any ) => {
+        this.alert.openSnackBar( err );
+      });
+  }
+
 }
