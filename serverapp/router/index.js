@@ -140,7 +140,7 @@ router.post('/changeLeadStatus', function (req, res) {
         }, err => {
             return res.send({success: false, error: {message: err}}).status(500);
         })
-})
+});
 
 router.post('/saveLeadChanges', function(req, res) {
     db.Lead.findOneAndUpdate({leadId: req.body.leadId},
@@ -157,7 +157,25 @@ router.post('/saveLeadChanges', function(req, res) {
         }, err => {
             return res.send({success: false, error: {message: err}}).status(500);
         })
-})
+});
+
+router.post('/saveOfferDetailChanges', function(req, res) {
+    db.Offer.findOneAndUpdate({_id: req.body.data._id},
+        {$set: {'details.fot': req.body.data.details.fot,
+                'details.itog': req.body.data.details.itog,
+                'details.itogMaterial': req.body.data.details.itogMaterial,
+                'details.managerWage': req.body.data.details.managerWage,
+                'details.material': req.body.data.details.material,
+                'details.profit': req.body.data.details.profit,
+                'details.tinkoffCommission': req.body.data.details.tinkoffCommission,
+                'details.windowFond': req.body.data.details.windowFond,
+        }})
+        .then( data => {
+            return res.send({message: '🤟 Расчеты изменены!'}).status(200);
+        }, err => {
+            return res.send({success: false, error: {message: err}}).status(500);
+        })
+});
 
 router.get('/getLeadList', function(req, res) {
     db.Lead.find({})

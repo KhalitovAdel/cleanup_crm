@@ -20,6 +20,8 @@ import { MatPaginatorModule, MatFormFieldModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 import { B2bregularComponent } from './calculate/b2bregular/b2bregular.component';
 import { CalculateService } from './services/calculate/calculate.service';
@@ -28,7 +30,7 @@ import { LeadListComponent } from './CRM/Leads/lead-list/lead-list.component';
 import { LeadPageComponent } from './CRM/Leads/lead-page/lead-page.component';
 import { NewLeadComponent } from './CRM/Leads/new-lead/new-lead.component';
 import { FiltersPipeCustom } from './filters.pipe';
-import { OfferIntoLeadComponent } from './CRM/Offers/offer-into-lead/offer-into-lead.component';
+import { OfferIntoLeadComponent, BottomSheet } from './CRM/Offers/offer-into-lead/offer-into-lead.component';
 import { AlertComponent } from './services/alert/alert.service';
 
 
@@ -47,7 +49,8 @@ const appRoutes = [
     NewLeadComponent,
     FiltersPipeCustom,
     OfferIntoLeadComponent,
-    AlertComponent
+    AlertComponent,
+    BottomSheet
   ],
   imports: [
     BrowserModule,
@@ -70,9 +73,11 @@ const appRoutes = [
     MatFormFieldModule,
     MatChipsModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule,
+    MatBottomSheetModule
   ],
-  entryComponents: [OfferIntoLeadComponent, AlertComponent],
+  entryComponents: [OfferIntoLeadComponent, AlertComponent, BottomSheet],
   providers: [
     CalculateService, 
     myHTTPService, 

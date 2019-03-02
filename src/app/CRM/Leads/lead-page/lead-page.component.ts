@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatBottomSheet, MatBottomSheetRef } from '@angular/material';
 import { OfferIntoLeadComponent } from '../../Offers/offer-into-lead/offer-into-lead.component';
 import { AlertService } from 'src/app/services/alert/alert.service';
 
@@ -16,7 +16,9 @@ import { AlertService } from 'src/app/services/alert/alert.service';
 export class LeadPageComponent implements OnInit {
   id: String; //Полученный id из url
   private sub: any;
+  
   changeIndicator: Boolean = false;
+
   PanelControl: Array<Object> = [
     {action: 'call', translate: 'Звонок'},
     {action: 'meet', translate: 'Встреча'},
@@ -216,5 +218,4 @@ export class LeadPageComponent implements OnInit {
         this.alert.openSnackBar( err );
       });
   }
-
 }

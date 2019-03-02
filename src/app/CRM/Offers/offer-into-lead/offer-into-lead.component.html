@@ -21,14 +21,19 @@
         </form> -->
   <div class="row">
 
-    <div class="col-6">
-      <div class="wrapp" *ngFor="let x of Offers">
-        <p *ngIf='x.area'>Площадь: {{x.area}}</p>
+    <div class="col-4">
+      <div class="wrapp" *ngFor="let x of Offers; index as i">
+        <p *ngIf='x.area'>Площадь: {{x.area}} м<sup>2</sup></p>
         <p>Регулярность: {{x.regular}}</p>
         <p *ngIf='x.time'>Время на объекте: {{x.time}}</p>
         <p>Статус: {{x.status}}</p>
         <p *ngIf='x.sentingDate'>Дата отправки: {{x.sentingDate}}</p>
-        <p>Дата создания: {{x.createdDate}}</p>
+        <span class='created-date'>Дата создания: {{x.createdDate | date: 'dd.MM.yyyy HH:mm'}}</span>
+        <mat-icon [matMenuTriggerFor]="menu" class='offer-menu'>more_vert</mat-icon>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openBottomSheet(i)">Просмотр деталей</button>
+          <button mat-menu-item>Item 2</button>
+        </mat-menu>
       </div>
     </div>
   </div>

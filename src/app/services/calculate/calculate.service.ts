@@ -36,10 +36,10 @@ export class CalculateService {
 
       return this.beautyPrice( ( this.calculateFot(area, regularValue, timeValue, twice) 
               + this.calculateManagerWage(area, regularValue) 
-              + this.calculateWindowsFond(area) ) * 1.5 / 98.5 );
+              + this.calculateWindowsFond(area) ) * 1.5 / 98.5);
     }
 
-    beautyPrice(num) {
+    beautyPrice(num: number) {
       return Math.ceil(num);
     }
 
@@ -95,6 +95,20 @@ export class CalculateService {
         itogMaterial: this.calculateItogMaterial(area, regularValue, timeValue, twice)
       }
       return Offer;
+    }
+
+    getChangesCalculate(Offer) {
+      var rashodi: number = Number.parseInt(Offer.details.fot) 
+                  + Number.parseInt(Offer.details.managerWage)
+                  + Number.parseInt(Offer.details.windowFond);
+      var tinkoff: number = rashodi * 1.5 / 98.5;
+      var profit: number = Number.parseInt(Offer.details.profit),
+          material: number = Number.parseInt(Offer.details.material);
+      return {
+        tinkoffCommission: this.beautyPrice(tinkoff),
+        itog: this.beautyPrice( (rashodi + tinkoff + profit ) * 100 / 94 ),
+        itogMaterial: this.beautyPrice( (rashodi + tinkoff + profit + material ) * 100 / 94 )
+      }
     }
   constructor() { }
 }
