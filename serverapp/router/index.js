@@ -210,7 +210,7 @@ router.post('/sentOffer', function(req, res) {
                 Offer: req.body
             })
                 .then(data => {
-                    return res.send({message: '🤟 Лид и Предложение созданы и отправленны!'}).status(200);
+                    return res.send({message: '🤟 Предложение отправлено!'}).status(200);
                 });
         });
 });
