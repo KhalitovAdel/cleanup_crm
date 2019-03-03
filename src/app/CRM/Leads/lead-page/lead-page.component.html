@@ -21,10 +21,10 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-12" *ngFor="let x of Lead.contactPhones">
+                        <div class="col-12" *ngFor="let x of Lead.contactPhones; index as i">
                             <a *ngIf='!changeIndicator' href='callto:{{x}}' title="{{x}}">{{x}}</a>
                             <mat-form-field *ngIf='changeIndicator'>
-                                <input matInput placeholder="Номер телефона" [(ngModel)]='x'>
+                                <input matInput placeholder="Номер телефона" [(ngModel)]='Lead.contactPhones[i]'>
                             </mat-form-field>
                         </div>
                         <div class="col-12">

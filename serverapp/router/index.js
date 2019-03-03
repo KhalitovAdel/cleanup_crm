@@ -146,6 +146,7 @@ router.post('/saveLeadChanges', function(req, res) {
     db.Lead.findOneAndUpdate({leadId: req.body.leadId},
         {$set: {'firmName': req.body.firmName,
                 'contactPhones': req.body.contactPhones,
+                'contactPhones': req.body.contactPhones,
                 'contactEmail': req.body.contactEmail,
                 'address': req.body.address,
                 'contactName': req.body.contactName,
