@@ -10,10 +10,10 @@ export class CalculateService {
     ONE_DAY_PRICE = 227;
 
     calculateFot(area, regularValue, timeValue, twice) {
-      if ( timeValue != '' ) { // Считается по часам
+      if ( timeValue != '' && timeValue != null ) { // Считается по часам
+        console.log('Считается по часам');
         return this.beautyPrice( regularValue * ( this.ONE_DAY_PRICE + timeValue * this.ONE_HOUR_PRICE ) );
-      }
-      if ( timeValue == '' ) { //Считаем по квадратуре
+      } else { //Считаем по квадратуре
         if (twice === true) {
           return this.beautyPrice( regularValue * ( this.ONE_DAY_PRICE + area * this.ONE_METER_PRICE * 2 ) + 2000 );
         }
@@ -21,36 +21,37 @@ export class CalculateService {
       }
     }
     
-    calculateManagerWage(area, regularValue) {
+    calculateManagerWage(area, regularValue)  {
       if ( area < 120 && regularValue < 9 ) {
         return 750;
       }
       return 500 + 750;
     }
 
-    calculateWindowsFond(area) {
+    calculateWindowsFond(area)  {
       return 300;
     }
 
-    calculateTinkoffCommission(area, regularValue, timeValue, twice) {
+    calculateTinkoffCommission(area, regularValue, timeValue, twice)  {
 
       return this.beautyPrice( ( this.calculateFot(area, regularValue, timeValue, twice) 
               + this.calculateManagerWage(area, regularValue) 
               + this.calculateWindowsFond(area) ) * 1.5 / 98.5);
     }
 
-    beautyPrice(num: number) {
+    beautyPrice(num): number  {
+      Number.parseInt(num);
       return Math.ceil(num);
     }
 
-    calculateMaterial(area, regularValue, twice) {
+    calculateMaterial(area, regularValue, twice)  {
       if (twice === true) {
         return this.beautyPrice( (4.08 * regularValue + regularValue * area * 0.09 * 2 + 718) );
       }
       return this.beautyPrice( (4.08 * regularValue + regularValue * area * 0.09 + 718) );
     }
 
-    setProfit(area, regularValue, timeValue, twice) {
+    setProfit(area, regularValue, timeValue, twice)  {
       
       if ( isNaN(timeValue) && ( area <= 120 ) && (regularValue < 9) ) {
         return 1000;
@@ -61,7 +62,7 @@ export class CalculateService {
       return 3000;
     }
 
-    calculateItog(area, regularValue, timeValue, twice) {
+    calculateItog(area, regularValue, timeValue, twice)  {
 
       return this.beautyPrice(
         ( this.calculateFot(area, regularValue, timeValue, twice) 
@@ -72,7 +73,7 @@ export class CalculateService {
       );
     }
 
-    calculateItogMaterial(area, regularValue, timeValue, twice) {
+    calculateItogMaterial(area, regularValue, timeValue, twice)  {
 
       return this.beautyPrice(
         ( this.calculateFot(area, regularValue, timeValue, twice) 
@@ -83,7 +84,7 @@ export class CalculateService {
               + this.setProfit(area, regularValue, timeValue, twice) ) * 100 / 94
       );
     }
-    getCalculate(area, regularValue, timeValue, twice) {
+    getCalculate(area, regularValue, timeValue, twice)  {
       var Offer: Object = {
         fot: this.calculateFot(area, regularValue, timeValue, twice),
         managerWage: this.calculateManagerWage(area, regularValue),

@@ -11,36 +11,34 @@ import { AlertService } from 'src/app/services/alert/alert.service';
   styleUrls: ['./offer-into-lead.component.styl']
 })
 export class OfferIntoLeadComponent implements OnInit {
-  OfferControl: FormGroup;
 
-  Offers: Array<Object> [];
+  changeIndicator: Number = -1;
+
+  Offers: Array<any> = [
+    {details: Object}
+  ];
+
+  RegularControl: Array<Object> = [
+    {days: 30, translate: 'Без выходных'},
+    {days: 25.8, translate: '6/1 - сб полный'},
+    {days: 23.7, translate: '6/1 - сб не полный'},
+    {days: 21.5, translate: '5/2'},
+    {days: 15, translate: '2/2'},
+    {days: 13, translate: '3 раза в неделю'},
+    {days: 8.6, translate: '2 раза в неделю'},
+    {days: 4.3, translate: 'Раз в неделю'},
+    {days: 1, translate: 'Раз в месяц'}
+  ];
 
   constructor(
     private bottomSheet: MatBottomSheet,
     private fb: FormBuilder, 
     @Inject(MAT_DIALOG_DATA) public data: any,
     private svc: CalculateService,
-    private myHttp: myHTTPService,) { }
+    private myHttp: myHTTPService,
+    private alert: AlertService,) { }
 
   ngOnInit() {
-
-    this.OfferControl = this.fb.group({
-      leadLink: this.data.leadId,
-      area: ['', Validators.required],
-      regular: ['', Validators.required],
-      time: '',
-      details: this.fb.group({
-        fot: ['', Validators.required],
-        managerWage: ['', Validators.required],
-        tinkoffCommission: ['', Validators.required],
-        windowFond: ['', Validators.required],
-        material: ['', Validators.required],
-        profit: ['', Validators.required],
-        itog: ['', Validators.required],
-        itogMaterial: ['', Validators.required],
-      })
-    });
-
     this.getLeadOffers();
   }
 
@@ -52,6 +50,31 @@ export class OfferIntoLeadComponent implements OnInit {
       }, err => {
         console.log(err);
       })
+  }
+
+  preChangeOffer(index) {
+    if (index > -1) {
+      return this.changeIndicator = index;
+    }
+    return this.changeIndicator = index;
+  }
+  calculate(index) {
+    var offer: any = this.Offers[index];
+    this.Offers[index].details = this.svc.getCalculate(
+      offer.area, 
+      offer.regular, 
+      offer.time, 
+      offer.twice);
+  }
+
+  saveOfferChanges(index) {
+    this.changeIndicator = -1;
+    this.myHttp.postHTTP('http://localhost:3000/saveOfferChanges', this.Offers[index])
+      .subscribe( (data: any) => {
+        this.alert.openSnackBar( data.message );
+      }, ( err: any ) => {
+        this.alert.openSnackBar( err );
+      });
   }
 
   openBottomSheet(i): void {

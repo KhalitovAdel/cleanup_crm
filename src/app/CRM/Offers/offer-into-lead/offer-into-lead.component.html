@@ -23,14 +23,37 @@
 
     <div class="col-4">
       <div class="wrapp" *ngFor="let x of Offers; index as i">
-        <p *ngIf='x.area'>Площадь: {{x.area}} м<sup>2</sup></p>
-        <p>Регулярность: {{x.regular}}</p>
-        <p *ngIf='x.time'>Время на объекте: {{x.time}}</p>
+        <p *ngIf='x.area && changeIndicator != i'>Площадь: {{x.area}} м<sup>2</sup></p>
+        <mat-form-field *ngIf='changeIndicator === i'>
+            <input matInput placeholder="Площадь" (change)="calculate(i)" [(ngModel)]='x.area'>
+        </mat-form-field>
+        <p *ngIf='changeIndicator != i'>Регулярность: {{x.regular}}</p>
+
+        <mat-form-field *ngIf='changeIndicator === i'>
+            <mat-select (selectionChange)="calculate(i)" placeholder="Регулярность" [(ngModel)]='x.regular'>
+                <mat-option *ngFor="let y of RegularControl;" [value]="y.days">
+                {{y.translate}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <p *ngIf='x.time && changeIndicator != i'>Время на объекте: {{x.time}}</p>
+        <mat-form-field *ngIf='changeIndicator === i'>
+            <input matInput placeholder="Время на объекте" (change)="calculate(i)" [(ngModel)]='x.time'>
+        </mat-form-field>
+        <p *ngIf='x.twice === true && changeIndicator != i'>Уборка 2 раза в день</p>
+        <mat-checkbox *ngIf='changeIndicator === i' (change)="calculate(i)" [(ngModel)]='x.twice'>Уборка 2 раза в день</mat-checkbox>
+        <br>
+        <button mat-raised-button color="primary" *ngIf='changeIndicator === i' (click)='saveOfferChanges(i)'>Сохранить</button>
         <p>Статус: {{x.status}}</p>
+        
         <p *ngIf='x.sentingDate'>Дата отправки: {{x.sentingDate}}</p>
+        <p class="font-weight-bold">Итог: {{x.details.itog}} ₽</p>
+        <p class="font-weight-bold">Итог с материалами: {{x.details.itogMaterial}} ₽</p>
         <span class='created-date'>Дата создания: {{x.createdDate | date: 'dd.MM.yyyy HH:mm'}}</span>
         <mat-icon [matMenuTriggerFor]="menu" class='offer-menu'>more_vert</mat-icon>
         <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)='preChangeOffer(i)'>Изменить</button>
           <button mat-menu-item (click)="openBottomSheet(i)">Просмотр деталей</button>
           <button mat-menu-item>Item 2</button>
         </mat-menu>

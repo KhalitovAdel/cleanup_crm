@@ -159,6 +159,29 @@ router.post('/saveLeadChanges', function(req, res) {
         })
 });
 
+router.post('/saveOfferChanges', function(req, res) {
+    db.Offer.findOneAndUpdate({_id: req.body._id},
+        {$set: {'area': req.body.area,
+                'regular': req.body.regular,
+                'time': req.body.time,
+                'twice': req.body.twice,
+                'details.fot': req.body.details.fot,
+                'details.itog': req.body.details.itog,
+                'details.itogMaterial': req.body.details.itogMaterial,
+                'details.managerWage': req.body.details.managerWage,
+                'details.material': req.body.details.material,
+                'details.profit': req.body.details.profit,
+                'details.tinkoffCommission': req.body.details.tinkoffCommission,
+                'details.windowFond': req.body.details.windowFond,
+                }})
+                .then( data => {
+                    return res.send({message: '🤟 Предложение и расчеты изменены!'}).status(200);
+                }, err => {
+                    console.log(err)
+                    return res.send({success: false, error: {message: err}}).status(500);
+                })
+});
+
 router.post('/saveOfferDetailChanges', function(req, res) {
     db.Offer.findOneAndUpdate({_id: req.body.data._id},
         {$set: {'details.fot': req.body.data.details.fot,
