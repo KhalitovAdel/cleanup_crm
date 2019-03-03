@@ -83,6 +83,15 @@ export class OfferIntoLeadComponent implements OnInit {
     });
   }
 
+  sentOffer(index) {
+    this.myHttp.postHTTP('http://localhost:3000/sentOffer', this.Offers[index])
+      .subscribe( (data: any) => {
+        this.alert.openSnackBar( data.message );
+      }, ( err: any ) => {
+        this.alert.openSnackBar( err );
+      });
+  }
+
 }
 
 

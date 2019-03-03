@@ -201,6 +201,20 @@ router.post('/saveOfferDetailChanges', function(req, res) {
         })
 });
 
+router.post('/sentOffer', function(req, res) {
+    db.Lead.findOne({leadId: req.body.leadLink})
+        .then(data => {
+            console.log(data.contactEmail);
+            makePDF.makePDF({
+                Lead: data,
+                Offer: req.body
+            })
+                .then(data => {
+                    return res.send({message: '🤟 Лид и Предложение созданы и отправленны!'}).status(200);
+                });
+        });
+});
+
 router.get('/getLeadList', function(req, res) {
     db.Lead.find({})
         .then(data => {
