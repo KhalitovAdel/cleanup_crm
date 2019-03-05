@@ -95,7 +95,7 @@ export class NewLeadComponent implements OnInit {
       area: ['', Validators.required],
       regular: ['', Validators.required],
       time: '',
-      twice: '',
+      twice: false,
       status: '',
       createdDate: new Date,
       sentingDate: '',
