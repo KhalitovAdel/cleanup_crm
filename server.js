@@ -2,12 +2,13 @@ const express = require('express'),
 bodyParser    = require('body-parser'),
 path          = require('path'),
 cors          = require('cors'),
-session       = require("express-session");
+session       = require("express-session"),
+passport      = require('passport');
 
 var app         = express(),
 db              = require('./serverapp/config/index'),
-router          = require('./serverapp/router/index'),
-passport        = require('./serverapp/passport/index');
+router          = require('./serverapp/router/index');
+require('./serverapp/passport/index');
 
 app.use(session({
   secret: '1',
