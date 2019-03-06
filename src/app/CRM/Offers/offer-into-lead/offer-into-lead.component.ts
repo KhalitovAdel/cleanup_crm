@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { CalculateService } from 'src/app/services/calculate/calculate.service';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
@@ -14,9 +14,22 @@ export class OfferIntoLeadComponent implements OnInit {
 
   changeIndicator: Number = -1;
 
+  OfferControl: FormGroup;
+
   Offers: Array<any> = [
     {details: Object}
   ];
+
+  Result: Object = {
+    fot: Number,
+    itog: Number,
+    itogMaterial: Number,
+    managerWage: Number,
+    material: Number,
+    profit: Number,
+    tinkoffCommission: Number,
+    windowFond: Number,
+  };
 
   RegularControl: Array<Object> = [
     {days: 30, translate: 'Без выходных'},
@@ -31,16 +44,97 @@ export class OfferIntoLeadComponent implements OnInit {
   ];
 
   constructor(
-    private bottomSheet: MatBottomSheet,
-    private fb: FormBuilder, 
+    private bottomSheet: MatBottomSheet, 
     @Inject(MAT_DIALOG_DATA) public data: any,
     private svc: CalculateService,
     private myHttp: myHTTPService,
-    private alert: AlertService,) { }
+    private alert: AlertService,
+    private fb: FormBuilder,) { }
 
   ngOnInit() {
     this.getLeadOffers();
+
+    this.OfferControl = this.fb.group({
+      leadLink: this.data.leadId,
+      area: ['', Validators.required],
+      regular: ['', Validators.required],
+      time: '',
+      twice: false,
+      status: '',
+      createdDate: new Date,
+      sentingDate: '',
+      details: this.fb.group({
+        fot: ['', Validators.required],
+        managerWage: ['', Validators.required],
+        tinkoffCommission: ['', Validators.required],
+        windowFond: ['', Validators.required],
+        material: ['', Validators.required],
+        profit: ['', Validators.required],
+        itog: ['', Validators.required],
+        itogMaterial: ['', Validators.required],
+      })
+    });
   }
+
+  newCalculate() {
+    if ( this.OfferControl.get('area').value > 0 && this.OfferControl.get('regular').value > 0 ) {
+
+      this.OfferControl.get('details').setValue( this.svc.getCalculate(
+        this.OfferControl.get('area').value, 
+        this.OfferControl.get('regular').value,
+        this.OfferControl.get('time').value,
+        this.OfferControl.get('twice').value,
+      ));
+      this.Result = this.OfferControl.get('details').value;
+      return this.getLeadOffers();
+
+    }
+  }
+
+  createNewOffer() {
+    this.valid(this.OfferControl);
+    if ( this.OfferControl.valid ) {
+      this.OfferControl.get('status').setValue('created');
+      console.log(this.OfferControl.value)
+      return this.myHttp.postHTTP('http://localhost:3000/newOffer', this.OfferControl.value)
+        .subscribe( (data: any) => {
+          this.alert.openSnackBar( data.message );
+          this.getLeadOffers();
+        }, ( err: any ) => {
+          this.alert.openSnackBar( err );
+        }
+    )
+    } else {
+      this.alert.openSnackBar('🤦‍ Заполнены не все поля!');
+    }
+  }
+
+  deleteOffer(index) {
+    console.log(this.Offers[index]);
+    return this.myHttp.postHTTP('http://localhost:3000/deleteOffer', this.Offers[index])
+      .subscribe( (data: any) => {
+        this.alert.openSnackBar( data.message );
+        this.getLeadOffers();
+      }, ( err: any ) => {
+        this.alert.openSnackBar( err );
+      });
+  };
+
+  valid(group: FormGroup) {
+    var copeLead: Object = group.controls;
+    Object.keys(copeLead).forEach(key => {
+      if (copeLead[key] instanceof FormControl) {
+        copeLead[key].markAsTouched();
+      } else {
+        for (var x of copeLead[key].controls) {
+            x.markAsTouched();
+            for (let y in x.controls) {
+              x.controls[y].markAsTouched();
+            }
+        }
+      }
+    });
+  };
 
   getLeadOffers() {
     this.myHttp.postHTTP('http://localhost:3000/getAllOffersFromLead', {leadLink: this.data.leadId})
@@ -84,9 +178,11 @@ export class OfferIntoLeadComponent implements OnInit {
   }
 
   sentOffer(index) {
+    this.Offers[index].status = 'created';
     this.myHttp.postHTTP('http://localhost:3000/sentOffer', this.Offers[index])
       .subscribe( (data: any) => {
         this.alert.openSnackBar( data.message );
+        this.getLeadOffers();
       }, ( err: any ) => {
         this.alert.openSnackBar( err );
       });

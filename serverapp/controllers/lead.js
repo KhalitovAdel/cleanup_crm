@@ -220,3 +220,28 @@ module.exports.getLeadList = function(req, res) {
             return sendJSONresponse(res, 404, err);
         });
 }
+
+module.exports.newOffer = function(req, res) {
+    var offer = new db.Offer(req.body);
+    offer.save(function(err) {
+        if(err) {
+            sendJSONresponse(res, 404, err)
+        } else {
+            sendJSONresponse(res, 200, {
+                message: '🤟 Предложение создано!'
+            })
+        }
+    });
+}
+
+module.exports.deleteOffer = function(req, res) {
+    db.Offer.findByIdAndRemove(req.body._id)
+        .then(data => {
+            return sendJSONresponse(res, 200, {
+                message: '🤟 Предложение удалено!'
+            });
+        })
+        .catch(err=> {
+            return sendJSONresponse(res, 404, err);
+        });
+}

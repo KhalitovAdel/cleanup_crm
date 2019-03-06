@@ -1,4 +1,33 @@
 <div class="row" style='max-width: 500px; position: relative; padding: 10px;'>
+    <div class="col-6">
+        <form [formGroup]="OfferControl">
+            <div class="wrapp">
+                    <mat-form-field>
+                        <mat-select (selectionChange)="calculate()" placeholder="Регулярность" formControlName="regular">
+                            <mat-option *ngFor="let x of RegularControl;" [value]="x.days">
+                            {{x.translate}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+            
+                    <mat-form-field>
+                        <input matInput (change)="calculate()" type="number" formControlName="area" placeholder="Площадь">
+                    </mat-form-field>
+            
+                    <mat-form-field>
+                        <input matInput (change)="calculate()" type="number" formControlName="time" placeholder="Время на объекте">
+                    </mat-form-field>
+    
+                    <mat-checkbox (change)="calculate()" formControlName="twice">Убираться 2 раза</mat-checkbox>
+    
+                    <p *ngIf="Result.fot > 1"> Фот: {{Result.fot}}</p>
+                    <p *ngIf="Result.profit > 1">Прибыль: {{Result.profit}}</p>
+                    <p *ngIf="Result.itog > 1">Итог: {{Result.itog}}</p>
+                    <p *ngIf="Result.itogMaterial > 1">Итог мат: {{Result.itogMaterial}}</p>
+            </div>   
+    
+        </form>
+    </div>
     <a href="#" (click)='preChangeLead($event, true)' style="position: absolute; top: 10px; right: 10px;">Изменить</a>
     <div class="col-6">
         <p *ngIf='!changeIndicator'>ФОТ: {{Offer.details.fot}} м<sup>2</sup></p>

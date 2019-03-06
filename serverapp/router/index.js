@@ -35,6 +35,8 @@ router.post('/saveLeadChanges', ctrlLead.saveLeadChanges);
 router.post('/saveOfferChanges', ctrlLead.saveOfferChanges);
 router.post('/saveOfferDetailChanges', ctrlLead.saveOfferDetailChanges);
 router.post('/sentOffer', ctrlLead.sentOffer);
+router.post('/newOffer', ctrlLead.newOffer);
+router.post('/deleteOffer', ctrlLead.deleteOffer)
 
 router.get('/getLeadList', ctrlLead.getLeadList);
 

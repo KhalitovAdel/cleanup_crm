@@ -1,24 +1,35 @@
 <div class="container">
-    <!-- <form [formGroup]="OfferControl">
-            <div class="wrapp">
-                <mat-form-field>
-                        <mat-select (selectionChange)="calculate()" placeholder="Регулярность" formControlName="regular">
-                            <mat-option *ngFor="let x of RegularControl;" [value]="x.days">
-                            {{x.translate}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-            
-                    <mat-form-field>
-                        <input matInput (change)="calculate()" type="number" formControlName="area" placeholder="Площадь">
-                    </mat-form-field>
-            
-                    <mat-form-field>
-                        <input matInput (change)="calculate()" type="number" formControlName="time" placeholder="Время на объекте">
-                    </mat-form-field>
-
-            </div>   
-        </form> -->
+    <div class="row">
+      <div class="col-6">
+        <form [formGroup]="OfferControl">
+          <mat-form-field>
+              <mat-select (selectionChange)="newCalculate()" placeholder="Регулярность" formControlName="regular">
+                  <mat-option *ngFor="let x of RegularControl;" [value]="x.days">
+                  {{x.translate}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field><br>
+  
+          <mat-form-field>
+              <input matInput (change)="newCalculate()" type="number" formControlName="area" placeholder="Площадь">
+          </mat-form-field><br>
+  
+          <mat-form-field>
+              <input matInput (change)="newCalculate()" type="number" formControlName="time" placeholder="Время на объекте">
+          </mat-form-field><br>
+          <mat-checkbox (change)="newCalculate()" formControlName="twice">Убираться 2 раза</mat-checkbox><br>
+          <button mat-raised-button color="primary" (click)='createNewOffer()'>Сохранить</button>
+        
+  
+      </form>
+      </div>
+      <div class="col-6">
+        <p *ngIf="Result.fot > 1"> Фот: {{Result.fot}}</p>
+        <p *ngIf="Result.profit > 1">Прибыль: {{Result.profit}}</p>
+        <p *ngIf="Result.itog > 1">Итог: {{Result.itog}}</p>
+        <p *ngIf="Result.itogMaterial > 1">Итог мат: {{Result.itogMaterial}}</p>
+      </div>
+    </div>
   <div class="row">
 
     <div class="col-4">
@@ -56,6 +67,7 @@
           <button mat-menu-item (click)='preChangeOffer(i)'>Изменить</button>
           <button mat-menu-item (click)="openBottomSheet(i)">Просмотр деталей</button>
           <button mat-menu-item (click)="sentOffer(i)">Отправить</button>
+          <button mat-menu-item (click)="deleteOffer(i)">Удалить</button>
         </mat-menu>
       </div>
     </div>
