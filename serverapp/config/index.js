@@ -65,6 +65,12 @@ OfferSchema  = new mongoose.Schema({
   }
 });
 
+UserSchema = new mongoose.Schema({
+  email: String,
+  password: String,
+  fullName: String
+});
 exports.freshConnect = conn;
-exports.Lead = conn.model('Lead', LeadSchema);
+exports.Lead  = conn.model('Lead', LeadSchema);
 exports.Offer = conn.model('Offer', OfferSchema);
+exports.User  = conn.model('User', UserSchema);

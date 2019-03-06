@@ -1,18 +1,31 @@
 const express = require('express'),
 bodyParser    = require('body-parser'),
 path          = require('path'),
-cors          = require('cors');
+cors          = require('cors'),
+session       = require("express-session");
 
 var app         = express(),
 db              = require('./serverapp/config/index'),
-router          = require('./serverapp/router/index');
+router          = require('./serverapp/router/index'),
+passport        = require('./serverapp/passport/index');
 
+app.use(session({
+  secret: '1',
+  //name: cookie_name,
+  //store: sessionStore, // connect-mongo session store
+  proxy: true,
+  resave: true,
+  saveUninitialized: true
+}));
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: false }) );
+app.use(passport.initialize());
+app.use(passport.session());
 
 var originsWhitelist = [
   'http://localhost:4200',
 ];
+
 var corsOptions = {
   origin: function(origin, callback){
         var isWhitelisted = originsWhitelist.indexOf(origin) !== -1;

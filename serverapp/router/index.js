@@ -2,8 +2,9 @@ const express = require('express'),
 router        = express.Router(),
 makePDF       = require('../pdfmaker/');
 
-var db = require('../config/index'),
-parser = require('../pageparser/index');
+var db      = require('../config/index'),
+parser      = require('../pageparser/index'),
+passport    = require('../passport/index');
 
 router.post('/pars2gis', async function(req, res) {
     res.send( await parser.pars2gis(req.body.link) );
@@ -121,7 +122,6 @@ router.post('/changeStatus', function(req, res) {
         })
 });
 
-
 router.post('/getAllOffersFromLead', function(req, res) {
     db.Offer.find({leadLink: req.body.leadLink})
         .then( data => {
@@ -224,4 +224,5 @@ router.get('/getLeadList', function(req, res) {
             return res.send({success: false, error: {message: err}}).status(200);
         });
 });
+
 module.exports = router;
