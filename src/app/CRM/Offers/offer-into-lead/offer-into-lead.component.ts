@@ -178,7 +178,7 @@ export class OfferIntoLeadComponent implements OnInit {
   }
 
   sentOffer(index) {
-    this.Offers[index].status = 'created';
+    this.Offers[index].status = 'sent';
     this.myHttp.postHTTP('http://localhost:3000/sentOffer', this.Offers[index])
       .subscribe( (data: any) => {
         this.alert.openSnackBar( data.message );
