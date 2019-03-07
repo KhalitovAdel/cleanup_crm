@@ -3,25 +3,30 @@ bodyParser    = require('body-parser'),
 path          = require('path'),
 cors          = require('cors'),
 session       = require("express-session"),
-passport      = require('passport');
+MongoStore    = require('connect-mongo')(session),
+cookieParser  = require('cookie-parser');
 
 var app         = express(),
 db              = require('./serverapp/config/index'),
+passport        = require('./serverapp/passport/index'),
 router          = require('./serverapp/router/index');
-require('./serverapp/passport/index');
 
-app.use(session({
-  secret: '1',
-  //name: cookie_name,
-  //store: sessionStore, // connect-mongo session store
-  proxy: true,
-  resave: true,
-  saveUninitialized: true
-}));
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: false }) );
-app.use(passport.initialize());
-app.use(passport.session());
+app.use( cookieParser() );
+app.use(session({
+  secret: 'thisIsSecret',
+  store: new MongoStore({
+    mongooseConnection: db.freshConnect,
+    collection: 'session'
+  }),
+  proxy: true,
+  resave: true,
+  saveUninitialized: false,
+  cookie : { secure : false, maxAge : (4 * 60 * 60 * 1000) }, // 4 hours
+}));
+app.use( passport.initialize() );
+app.use( passport.session() );
 
 var originsWhitelist = [
   'http://localhost:4200',

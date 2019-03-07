@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open",
-    "build": "ng build --prod --build-optimizer=false && nodemon server",
+    "build": "ng build --prod && nodemon server",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -23,6 +23,8 @@
     "@angular/router": "~7.2.0",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.2.1",
+    "connect-mongo": "^2.0.3",
+    "cookie-parser": "^1.4.4",
     "core-js": "^2.5.4",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",

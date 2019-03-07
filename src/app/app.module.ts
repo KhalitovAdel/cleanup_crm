@@ -75,7 +75,7 @@ const appRoutes = [
     MatDialogModule,
     MatSnackBarModule,
     MatIconModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
   ],
   entryComponents: [OfferIntoLeadComponent, AlertComponent, BottomSheet],
   providers: [

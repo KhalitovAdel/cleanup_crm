@@ -6,7 +6,7 @@ var db = require('../config/index');
 passport.use(new LocalStrategy({
       usernameField: 'email'  
     },
-    function(username, password, done) {
+    function(email, password, done) {
       db.User.findOne({ email: email }, function (err, user) {
         if (err) { return done(err); }
         if (!user) {
@@ -21,11 +21,15 @@ passport.use(new LocalStrategy({
   ));
 
   passport.serializeUser(function(user, done) {
+    console.log('ser');
     done(null, user.id);
   });
   
   passport.deserializeUser(function(id, done) {
+    console.log('deser');
     User.findById(id, function(err, user) {
       done(err, user);
     });
   });
+
+  module.exports = passport;
