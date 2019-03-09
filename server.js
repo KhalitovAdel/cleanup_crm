@@ -23,8 +23,8 @@ app.use( session({
     collection: 'session'
   }),
   proxy: true,
-  resave: true,
-  saveUninitialized: true,
+  resave: false,
+  saveUninitialized: false,
   cookie : { secure : false, maxAge : (4 * 60 * 60 * 1000) }, // 4 hours
 }));
 app.use( passport.initialize() );

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,6 +34,7 @@ import { OfferIntoLeadComponent, BottomSheet } from './CRM/Offers/offer-into-lea
 import { AlertComponent } from './services/alert/alert.service';
 import { LoginComponent } from './CRM/auth/login/login.component';
 import { AuthGuard } from './services/auth/auth.guard';
+import { TokenInterceptorService } from './services/token/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,12 @@ import { AuthGuard } from './services/auth/auth.guard';
     CalculateService, 
     myHTTPService, 
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'ru'},
-    AuthGuard
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

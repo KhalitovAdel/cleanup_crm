@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface Lead {
   firmName: String;

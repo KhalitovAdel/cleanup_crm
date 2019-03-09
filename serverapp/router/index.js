@@ -1,6 +1,5 @@
 const express = require('express'),
 router        = express.Router(),
-jwt           = require('express-jwt'),
 makePDF       = require('../pdfmaker/');
 
 var db      = require('../config/index'),
@@ -9,11 +8,6 @@ passport    = require('../passport/index');
 
 var ctrlAuth    = require('../controllers/auth'),
     ctrlLead    = require('../controllers/lead');
-
-var auth = jwt({ //запросы толко для аутентифицированных https://www.youtube.com/watch?v=6or8Fj-6NaE
-    secret: 'thisIsSecret',
-    userProperty: 'payload'
-})
 
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login); 

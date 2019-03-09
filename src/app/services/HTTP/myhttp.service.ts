@@ -17,12 +17,12 @@ export class myHTTPService {
   constructor(private http: HttpClient) { }
 
   postHTTP(url, info) {
-    return this.http.post(url, info, httpOptions);
+    return this.http.post(url, info);
   }
   getHTTP(url) {
-    return this.http.get(url, httpOptions);
+    return this.http.get(url);
   }
   putHTTP(url, info: any) {
-    return this.http.put(url, info, httpOptions);
+    return this.http.put(url, info);
   }
 }

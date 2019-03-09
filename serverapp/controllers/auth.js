@@ -1,6 +1,7 @@
 const mongoose      = require('mongoose'),
 passport = require('passport'),
-User        = require('../models/user');
+User        = require('../models/user'),
+jwt           = require('jsonwebtoken');
 
 var sendJSONresponse = function(res, status, content) {
     res.status(status);
@@ -34,6 +35,7 @@ module.exports.register = function(req, res) {
 };
 
 module.exports.login = function(req, res) {
+    console.log(req.session);
     if(!req.body.email || !req.body.password) {
         sendJSONresponse(res, 400, {
             message: 'Все поля обязательны'
