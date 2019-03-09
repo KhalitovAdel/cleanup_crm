@@ -32,13 +32,8 @@ import { NewLeadComponent } from './CRM/Leads/new-lead/new-lead.component';
 import { FiltersPipeCustom } from './filters.pipe';
 import { OfferIntoLeadComponent, BottomSheet } from './CRM/Offers/offer-into-lead/offer-into-lead.component';
 import { AlertComponent } from './services/alert/alert.service';
-
-
-const appRoutes = [
-  { path: 'newlead', component: NewLeadComponent },
-  { path: 'leadlist', component: LeadListComponent },
-  { path: 'leadlist/:id', component: LeadPageComponent },
-];
+import { LoginComponent } from './CRM/auth/login/login.component';
+import { AuthGuard } from './services/auth/auth.guard';
 
 @NgModule({
   declarations: [
@@ -50,7 +45,8 @@ const appRoutes = [
     FiltersPipeCustom,
     OfferIntoLeadComponent,
     AlertComponent,
-    BottomSheet
+    BottomSheet,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +57,6 @@ const appRoutes = [
     MatSelectModule,
     MatCheckboxModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes),
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
     ReactiveFormsModule,
@@ -82,6 +77,7 @@ const appRoutes = [
     CalculateService, 
     myHTTPService, 
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'ru'},
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

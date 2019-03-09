@@ -3,18 +3,20 @@ bodyParser    = require('body-parser'),
 path          = require('path'),
 cors          = require('cors'),
 session       = require("express-session"),
+passport      = require('passport'),
 MongoStore    = require('connect-mongo')(session),
 cookieParser  = require('cookie-parser');
 
 var app         = express(),
 db              = require('./serverapp/config/index'),
-passport        = require('./serverapp/passport/index'),
 router          = require('./serverapp/router/index');
+//passport config
+require('./serverapp/passport/index')(passport);
 
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: false }) );
 app.use( cookieParser() );
-app.use(session({
+app.use( session({
   secret: 'thisIsSecret',
   store: new MongoStore({
     mongooseConnection: db.freshConnect,
@@ -22,7 +24,7 @@ app.use(session({
   }),
   proxy: true,
   resave: true,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie : { secure : false, maxAge : (4 * 60 * 60 * 1000) }, // 4 hours
 }));
 app.use( passport.initialize() );

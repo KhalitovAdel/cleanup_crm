@@ -1,7 +1,6 @@
 const mongoose      = require('mongoose'),
-db                  = require('../config/index');
-
-var passport = require('../passport/index');
+passport = require('passport'),
+User        = require('../models/user');
 
 var sendJSONresponse = function(res, status, content) {
     res.status(status);
@@ -9,23 +8,24 @@ var sendJSONresponse = function(res, status, content) {
 }
 
 module.exports.register = function(req, res) {
+    console.log(req.body)
     if(!req.body.email || !req.body.password) {
         sendJSONresponse(res, 400, {
             message: 'Все поля обязательны'
-        });
+        }); 
         return;
     }
-    var user = new db.User();
-    user.fullName = req.body.fullName,
-    user.email = req.body.email;
+    var user = new User();
+    user.username = req.body.email;
 
     user.setPassword(req.body.password);
     user.save(function(err) {
         var token;
         if(err) {
+            console.log(err);
             return sendJSONresponse(res, 404, err)
         } else {
-            token = user.generateJwt;
+            token = user.generateJwt();
             return sendJSONresponse(res, 200, {
                 'token': token
             });
