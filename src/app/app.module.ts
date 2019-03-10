@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { CookieService } from 'ngx-cookie-service';
 
 import { B2bregularComponent } from './calculate/b2bregular/b2bregular.component';
 import { CalculateService } from './services/calculate/calculate.service';
@@ -34,7 +35,6 @@ import { OfferIntoLeadComponent, BottomSheet } from './CRM/Offers/offer-into-lea
 import { AlertComponent } from './services/alert/alert.service';
 import { LoginComponent } from './CRM/auth/login/login.component';
 import { AuthGuard } from './services/auth/auth.guard';
-import { TokenInterceptorService } from './services/token/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -79,11 +79,7 @@ import { TokenInterceptorService } from './services/token/token-interceptor.serv
     myHTTPService, 
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'ru'},
     AuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptorService,
-      multi: true
-    }
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

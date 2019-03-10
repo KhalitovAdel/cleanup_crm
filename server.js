@@ -10,22 +10,20 @@ cookieParser  = require('cookie-parser');
 var app         = express(),
 db              = require('./serverapp/config/index'),
 router          = require('./serverapp/router/index');
-//passport config
+
 require('./serverapp/passport/index')(passport);
 
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: false }) );
-app.use( cookieParser() );
 app.use( session({
   secret: 'thisIsSecret',
   store: new MongoStore({
     mongooseConnection: db.freshConnect,
     collection: 'session'
   }),
-  proxy: true,
   resave: false,
   saveUninitialized: false,
-  cookie : { secure : false, maxAge : (4 * 60 * 60 * 1000) }, // 4 hours
+  cookie : { httpOnly: false, secure : false, maxAge : ( 24 * 60 * 60 * 1000 * 180 ), }, 
 }));
 app.use( passport.initialize() );
 app.use( passport.session() );

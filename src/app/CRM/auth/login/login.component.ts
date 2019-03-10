@@ -21,13 +21,17 @@ export class LoginComponent implements OnInit {
   }
 
   register(){
-
+    return this.auth.registerNewEmployee(this.User)
+      .subscribe( (data: any) => {
+        this._routes.navigate(['/newlead']);
+      }, err => {
+        this.alert.openSnackBar(err);
+      })
   }
 
   login(){
     return this.auth.loginByEmployee(this.User)
       .subscribe( (data: any) => {
-        localStorage.setItem('token', data.token);
         this._routes.navigate(['/newlead']);
       }, err => {
         this.alert.openSnackBar(err);

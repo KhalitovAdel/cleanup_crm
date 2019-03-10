@@ -1,10 +1,9 @@
 const express = require('express'),
 router        = express.Router(),
-makePDF       = require('../pdfmaker/');
+passport      = require('passport');
 
 var db      = require('../config/index'),
-parser      = require('../pageparser/index'),
-passport    = require('../passport/index');
+parser      = require('../pageparser/index');
 
 var ctrlAuth    = require('../controllers/auth'),
     ctrlLead    = require('../controllers/lead');
@@ -32,6 +31,6 @@ router.post('/sentOffer', ctrlLead.sentOffer);
 router.post('/newOffer', ctrlLead.newOffer);
 router.post('/deleteOffer', ctrlLead.deleteOffer)
 
-router.get('/getLeadList', ctrlLead.getLeadList);
+router.get('/getLeadList', ctrlAuth.mustAuthenticatedMw, ctrlLead.getLeadList);
 
 module.exports = router;

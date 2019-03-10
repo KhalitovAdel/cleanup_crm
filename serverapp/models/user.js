@@ -1,6 +1,5 @@
 const mongoose          = require('mongoose'),
-crypto                  = require('crypto'),
-jwt                     = require('jsonwebtoken');
+crypto                  = require('crypto');
 
 UserSchema = new mongoose.Schema({
     username: String,
@@ -18,11 +17,6 @@ UserSchema = new mongoose.Schema({
     return this.hash === hash;
   };
   
-  UserSchema.methods.generateJwt = function() {
-    var payload = {subject: this._id}
-  
-    return jwt.sign(payload, 'thisIsSecret');
-  };
 
   var User  = mongoose.model('User', UserSchema);
 

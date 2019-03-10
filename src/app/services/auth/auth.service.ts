@@ -17,12 +17,5 @@ export class AuthService {
   loginByEmployee(employee) {
     return this.myHttp.postHTTP('http://localhost:3000/login', employee);
   }
-
-  loggedId() {
-    return !!localStorage.getItem('token');
-  }
-
-  getToken() {
-    return localStorage.getItem('token');
-  }
+  
 }
