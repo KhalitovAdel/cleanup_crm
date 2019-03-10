@@ -32,5 +32,11 @@ router.post('/newOffer', ctrlLead.newOffer);
 router.post('/deleteOffer', ctrlLead.deleteOffer)
 
 router.get('/getLeadList', ctrlAuth.mustAuthenticatedMw, ctrlLead.getLeadList);
-
+router.get('/detect', function( req, res) {
+    if ( req.isAuthenticated() ) {
+        res.status(200).send({ detect: true })
+    } else {
+        res.status(401).send({ detect: false })
+    }
+})
 module.exports = router;
