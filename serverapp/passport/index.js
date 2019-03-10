@@ -10,7 +10,6 @@ module.exports = function(passport) {
       },
       function(username, password, done) {
         User.findOne({ username: username }, function (err, user) {
-          console.log('yes'); //Вызывается
           if (err) { return done(err); }
           if (!user) {
             return done(null, false, { message: 'Неправельный почтовый адресс' });
@@ -24,12 +23,10 @@ module.exports = function(passport) {
     ));
 
   passport.serializeUser(function(user, done) {
-    console.log('ser'); //Не вызывается
     done(null, user.id);
   });
   
   passport.deserializeUser(function(id, done) {
-    console.log('deser');//Не вызывается
     User.findById(id, function(err, user) {
       done(err, user);
     });

@@ -18,7 +18,6 @@ export class AuthGuard implements CanActivate {
       .subscribe( (data: any) => {
         if (data.detect === true) {
           this.detect = true;
-          this._router.navigate(['/newlead']);
         }
       }, err => {
         console.log(err);

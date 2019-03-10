@@ -11,25 +11,25 @@ var ctrlAuth    = require('../controllers/auth'),
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login); 
 
-router.post('/pars2gis', async function(req, res) {
+router.post('/pars2gis', ctrlAuth.mustAuthenticatedMw, async function(req, res) {
     res.send( await parser.pars2gis(req.body.link) );
 });
 
-router.post('/newLead', ctrlLead.newLead);
-router.post('/newLeadOffer', ctrlLead.newLeadOffer);
-router.post('/newLeadOfferSend', ctrlLead.newLeadOfferSent);
-router.post('/getLeadInfo', ctrlLead.getLeadInfo);
-router.post('/createNewComment', ctrlLead.createNewComment);
-router.post('/createNewTask', ctrlLead.createNewTask);
-router.post('/changeStatus', ctrlLead.changeStatus);
-router.post('/getAllOffersFromLead', ctrlLead.getAllOffersFromLead);  
-router.post('/changeLeadStatus', ctrlLead.changeLeadStatus);
-router.post('/saveLeadChanges', ctrlLead.saveLeadChanges);
-router.post('/saveOfferChanges', ctrlLead.saveOfferChanges);
-router.post('/saveOfferDetailChanges', ctrlLead.saveOfferDetailChanges);
-router.post('/sentOffer', ctrlLead.sentOffer);
-router.post('/newOffer', ctrlLead.newOffer);
-router.post('/deleteOffer', ctrlLead.deleteOffer)
+router.post('/newLead', ctrlAuth.mustAuthenticatedMw, ctrlLead.newLead);
+router.post('/newLeadOffer', ctrlAuth.mustAuthenticatedMw, ctrlLead.newLeadOffer);
+router.post('/newLeadOfferSend', ctrlAuth.mustAuthenticatedMw, ctrlLead.newLeadOfferSent);
+router.post('/getLeadInfo', ctrlAuth.mustAuthenticatedMw, ctrlLead.getLeadInfo);
+router.post('/createNewComment', ctrlAuth.mustAuthenticatedMw, ctrlLead.createNewComment);
+router.post('/createNewTask', ctrlAuth.mustAuthenticatedMw, ctrlLead.createNewTask);
+router.post('/changeStatus', ctrlAuth.mustAuthenticatedMw, ctrlLead.changeStatus);
+router.post('/getAllOffersFromLead', ctrlAuth.mustAuthenticatedMw, ctrlLead.getAllOffersFromLead);  
+router.post('/changeLeadStatus', ctrlAuth.mustAuthenticatedMw, ctrlLead.changeLeadStatus);
+router.post('/saveLeadChanges', ctrlAuth.mustAuthenticatedMw, ctrlLead.saveLeadChanges);
+router.post('/saveOfferChanges', ctrlAuth.mustAuthenticatedMw, ctrlLead.saveOfferChanges);
+router.post('/saveOfferDetailChanges', ctrlAuth.mustAuthenticatedMw, ctrlLead.saveOfferDetailChanges);
+router.post('/sentOffer', ctrlAuth.mustAuthenticatedMw, ctrlLead.sentOffer);
+router.post('/newOffer', ctrlAuth.mustAuthenticatedMw, ctrlLead.newOffer);
+router.post('/deleteOffer', ctrlAuth.mustAuthenticatedMw, ctrlLead.deleteOffer)
 
 router.get('/getLeadList', ctrlAuth.mustAuthenticatedMw, ctrlLead.getLeadList);
 router.get('/detect', function( req, res) {
