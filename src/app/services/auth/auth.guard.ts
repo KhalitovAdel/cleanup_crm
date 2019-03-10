@@ -2,29 +2,31 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { myHTTPService } from '../HTTP/myhttp.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs/internal/Observable';
+import { map, catchError } from 'rxjs/operators';
+
 
 @Injectable()
 
 export class AuthGuard implements CanActivate {
-  detect: boolean = false;
+
   constructor(
     private _router: Router,
     private cookieService: CookieService,
     private myHttp: myHTTPService
   ) {}
 
-  canActivate(): boolean {
-    this.myHttp.getHTTP('http://localhost:3000/detect')
-      .subscribe( (data: any) => {
+  canActivate():Observable<boolean>|boolean {
+    return this.myHttp.getHTTP('http://localhost:3000/detect')
+      .pipe(map( (data: any) => {
         if (data.detect === true) {
-          this.detect = true;
+          return true;
         }
-      }, err => {
-        console.log(err);
-      })
-      if (this.detect === false) {
+      }),
+      catchError( (err: HttpErrorResponse) => {
         this._router.navigate(['/login']);
-      }
-      return this.detect;
-  }
+        return Observable.throw(err.statusText);
+      })
+    )}
 }
