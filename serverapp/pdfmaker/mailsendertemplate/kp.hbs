@@ -7,6 +7,7 @@
     <title>CleanUp service offer</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-grid.min.css">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    <script src="js/handlebars.js"></script>
     <style> 
     body {
         padding: 48px;
@@ -199,7 +200,7 @@
                 <p class="text-center text-white">Стоимость/мес (без НДС)</p>
             </div>
             <div class="col-9">
-                <p class="text-center">Уборка помещения ~{{Offer.area}}м<sup>2</sup>
+                <p class="text-center">Уборка помещения ~{{Offer.area}}м<sup>2</sup> регулярность {{Offer.regular}}
                     <br>уборочный инвентарь и химия для уборки приобретается Заказчиком
                 </p>
             </div>
