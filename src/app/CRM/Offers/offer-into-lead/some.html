@@ -1,5 +1,5 @@
 <div class="row" style='max-width: 500px; position: relative; padding: 10px;'>
-    <a href="#" (click)='preChangeLead($event, true)' style="position: absolute; top: 10px; right: 10px;">Изменить</a>
+    <a href="#" (click)='preChangeLead($event, true)' style="position: absolute; top: 10px; right: 10px; z-index: 10">Изменить</a>
     <div class="col-6">
         <p *ngIf='!changeIndicator'>ФОТ: {{Offer.details.fot}} м<sup>2</sup></p>
         <mat-form-field *ngIf='changeIndicator'>

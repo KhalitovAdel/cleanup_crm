@@ -16,7 +16,10 @@ export class NewLeadComponent implements OnInit {
   LeadControl: FormGroup;
   OfferControl: FormGroup;
   Result: Object = {
-    fot: Number,
+    whiteFot: Number,
+    blackFot: Number,
+    fotOnHand: Number,
+    zpNalog: Object,
     itog: Number,
     itogMaterial: Number,
     managerWage: Number,
@@ -100,7 +103,10 @@ export class NewLeadComponent implements OnInit {
       createdDate: new Date,
       sentingDate: '',
       details: this.fb.group({
-        fot: ['', Validators.required],
+        whiteFot: ['', Validators.required],
+        blackFot: ['', Validators.required],
+        fotOnHand: ['', Validators.required],
+        zpNalog: ['', Validators.required], //хз
         managerWage: ['', Validators.required],
         tinkoffCommission: ['', Validators.required],
         windowFond: ['', Validators.required],

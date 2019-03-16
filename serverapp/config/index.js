@@ -54,7 +54,10 @@ OfferSchema  = new mongoose.Schema({
   createdDate: Date,
   sentingDate: Date,
   details: {
-    fot: Number,
+    whiteFot: Number,
+    blackFot: Number,
+    fotOnHand: Number,
+    zpNalog: Object,
     managerWage: Number,
     tinkoffCommission: Number,
     windowFond: Number,

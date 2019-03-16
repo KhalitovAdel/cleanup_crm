@@ -8,6 +8,37 @@ export class CalculateService {
     ONE_HOUR_PRICE = 59;
     ONE_METER_PRICE = 0.455;
     ONE_DAY_PRICE = 227;
+    MROT = 12000;
+
+    getOfficialFot(area, regularValue, timeValue, twice):number {  
+      if ( timeValue != '' && timeValue != null ) { // Считается по часам
+
+        return this.MROT * ( timeValue * regularValue / (30/7) ) / 40;
+
+      } else { //Считаем по квадратуре
+        if (twice === true) {
+          
+          return this.MROT * ( ( area * 2 / 150 ) * regularValue / (30/7) ) / 40;
+
+        }
+        return this.MROT * ( ( area / 150 ) * regularValue / (30/7) ) / 40;
+      }
+    }
+
+    getOfficialFotNalog(area, regularValue, timeValue, twice) {
+      var offFot = this.getOfficialFot(area, regularValue, timeValue, twice);
+      var itog = {
+        NDFL: parseFloat( (offFot* 0.13).toFixed(2) ),
+        PS: parseFloat( (offFot * 0.22).toFixed(2) ),
+        MS: parseFloat( (offFot * 0.051).toFixed(2) ),
+        Other: parseFloat( (offFot * 0.029).toFixed(2) ),
+        Travm: parseFloat( (offFot * 0.002).toFixed(2) ),
+        Summ: 1
+      }
+      var itogSumm = itog.NDFL + itog.PS + itog.MS + itog.Other + itog.Travm;
+      itog.Summ = parseFloat( itogSumm.toFixed(2) );
+      return itog;
+    }
 
     calculateFot(area, regularValue, timeValue, twice) {
       if ( timeValue != '' && timeValue != null ) { // Считается по часам
@@ -21,6 +52,12 @@ export class CalculateService {
       }
     }
     
+    calculateBlackFot(area, regularValue, timeValue, twice) {
+      return  this.calculateFot(area, regularValue, timeValue, twice)
+              - this.getOfficialFot(area, regularValue, timeValue, twice) 
+              + this.getOfficialFotNalog(area, regularValue, timeValue, twice).NDFL;
+    }
+
     calculateManagerWage(area, regularValue)  {
       if ( area < 120 && regularValue < 9 ) {
         return 750;
@@ -34,7 +71,8 @@ export class CalculateService {
 
     calculateTinkoffCommission(area, regularValue, timeValue, twice)  {
 
-      return this.beautyPrice( ( this.calculateFot(area, regularValue, timeValue, twice) 
+      return this.beautyPrice( 
+              ( this.calculateBlackFot(area, regularValue, timeValue, twice) 
               + this.calculateManagerWage(area, regularValue) 
               + this.calculateWindowsFond(area) ) * 1.5 / 98.5);
     }
@@ -65,7 +103,10 @@ export class CalculateService {
     calculateItog(area, regularValue, timeValue, twice)  {
 
       return this.beautyPrice(
-        ( this.calculateFot(area, regularValue, timeValue, twice) 
+        (     this.getOfficialFot(area, regularValue, timeValue, twice)
+              + this.calculateBlackFot(area, regularValue, timeValue, twice)
+              + this.getOfficialFotNalog(area, regularValue, timeValue, twice).Summ
+              - this.getOfficialFotNalog(area, regularValue, timeValue, twice).NDFL
               + this.calculateManagerWage(area, regularValue) 
               + this.calculateTinkoffCommission(area, regularValue, timeValue, twice) 
               + this.calculateWindowsFond(area) 
@@ -76,7 +117,10 @@ export class CalculateService {
     calculateItogMaterial(area, regularValue, timeValue, twice)  {
 
       return this.beautyPrice(
-        ( this.calculateFot(area, regularValue, timeValue, twice) 
+              ( this.getOfficialFot(area, regularValue, timeValue, twice)
+              + this.calculateBlackFot(area, regularValue, timeValue, twice)
+              + this.getOfficialFotNalog(area, regularValue, timeValue, twice).Summ
+              - this.getOfficialFotNalog(area, regularValue, timeValue, twice).NDFL
               + this.calculateManagerWage(area, regularValue) 
               + this.calculateTinkoffCommission(area, regularValue, timeValue, twice) 
               + this.calculateWindowsFond(area) 
@@ -86,7 +130,12 @@ export class CalculateService {
     }
     getCalculate(area, regularValue, timeValue, twice)  {
       var Offer: Object = {
-        fot: this.calculateFot(area, regularValue, timeValue, twice),
+        whiteFot: parseFloat( this.getOfficialFot(area, regularValue, timeValue, twice).toFixed(2) ),
+        blackFot: parseFloat( this.calculateBlackFot(area, regularValue, timeValue, twice).toFixed(2) ),
+        fotOnHand:  parseFloat( this.getOfficialFot(area, regularValue, timeValue, twice).toFixed(2) )
+                    + parseFloat( this.calculateBlackFot(area, regularValue, timeValue, twice).toFixed(2) )
+                    - this.getOfficialFotNalog(area, regularValue, timeValue, twice).NDFL,
+        zpNalog: this.getOfficialFotNalog(area, regularValue, timeValue, twice),
         managerWage: this.calculateManagerWage(area, regularValue),
         tinkoffCommission: this.calculateTinkoffCommission(area, regularValue, timeValue, twice),
         windowFond: this.calculateWindowsFond(area),

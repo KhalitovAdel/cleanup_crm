@@ -1,0 +1,40 @@
+<section class="base">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="calculate w-100 h-100">
+          <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">Расчитай стоимость уборки</h1>
+            </div>
+          </div>
+          <form class="row" [formGroup]="CalculateControl">
+            <div class="col-6">
+                <mat-form-field>
+                    <input (change)="calculate()" matInput type="text" formControlName='area' placeholder="Площадь помещения">
+                </mat-form-field>  
+            </div>
+            <div class="col-6">
+                <mat-form-field>
+                    <mat-select (selectionChange)="calculate()" formControlName='regular' placeholder="Регулярность">
+                        <mat-option *ngFor="let x of RegularControl;" [value]="x.days">
+                        {{x.translate}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-checkbox (change)="calculate()" formControlName="twice">Убираться 2 раза</mat-checkbox>
+            </div>
+            <div class="col-6">
+                <mat-form-field>
+                    <input (change)="calculate()" matInput formControlName='time' type="text" placeholder="Время на объекте">
+                </mat-form-field>  
+            </div>
+            <div class="col-6">
+                <button type='submit' mat-raised-button color="primary">Заказать <span *ngIf='Result.itog > 1'> от {{displayeditog}} ₽/неделя</span> </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
