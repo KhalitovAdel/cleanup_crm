@@ -13,9 +13,7 @@ import { AlertService } from 'src/app/services/alert/alert.service';
 export class RegularComponent implements OnInit {
   CalculateControl: FormGroup;
   phoneMask = [ '+','7',' ','(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  
-  mySlideImages = [1,2,3] .map ((i) => `https://picsum.photos/640/480?image=${i}`);
-  myCarouselImages = [1,2,3,4,5,6] .map ((i) => `https://picsum.photos/640/480?image=${i}`);
+
   mySlideOptions = {items: 1, dots: true, nav: false, autoHeight:true};
   partnersSliderOption = {
     loop:true,
@@ -39,14 +37,14 @@ export class RegularComponent implements OnInit {
     }
   }; 
   partners = [
-    {img: 'http://xn--80apfeln.xn--p1ai/assets/templates/cleanup/content/logo_partners/taif1.png'},
-    {img: 'http://xn--80apfeln.xn--p1ai/assets/templates/cleanup/content/logo_partners/bilyar.svg'},
-    {img: 'http://xn--80apfeln.xn--p1ai/assets/templates/cleanup/content/logo_partners/марани.png'},
-    {img: 'http://xn--80apfeln.xn--p1ai/assets/templates/cleanup/content/logo_partners/neofit.png'},
-    {img: 'http://xn--80apfeln.xn--p1ai/assets/templates/cleanup/content/logo_partners/big_funny.png'},
-    {img: 'http://xn--80apfeln.xn--p1ai/assets/templates/cleanup/content/logo_partners/aktash.svg'},
-    {img: 'http://xn--80apfeln.xn--p1ai/assets/templates/cleanup/content/logo_partners/augustina.svg'},
-    {img: 'http://xn--80apfeln.xn--p1ai/assets/templates/cleanup/content/logo_partners/sberbank.svg'},
+    {img: './assets/img/b2b/partners/taif1.png'},
+    {img: './assets/img/b2b/partners/bilyar.svg'},
+    {img: './assets/img/b2b/partners/marani.png'},
+    {img: './assets/img/b2b/partners/neofit.png'},
+    {img: './assets/img/b2b/partners/big_funny.png'},
+    {img: './assets/img/b2b/partners/aktash.svg'},
+    {img: './assets/img/b2b/partners/augustina.svg'},
+    {img: './assets/img/b2b/partners/sberbank.svg'},
   ]
   myCarouselOptions = {items: 3, dots: true, nav: true};
 
@@ -63,25 +61,25 @@ export class RegularComponent implements OnInit {
   displayeditog: String;
   displayeditogLast: String;
   Objects = [
-    {photo: 'http://xn--80apfeln.xn--p1ai/assets/components/phpthumbof/cache/2955487277065045_8e21.7a365d223125f77b759ffd04384af4f9.jpg',
+    {photo: './assets/img/b2b/objects/technoavia.jpg',
     name: 'Казань, Декабристов 203, Техноавиа-Казань',
     tasks: 'Регулярная уборка помещений офисного типа, небольшого склада и комнаты приёма пиши организации в вечернее время..',
     itogs: 'Компания Техноавиа-Казань, до сих пор является постоянным клиентом компании КлинАп, и полностью довольная всеми производимыми услугами. На сегодняшний день идёт активное расширение сотрудничества и масштабов оказания клининговых услуг в других городах России.'
   },
 
-    {photo: 'http://xn--80apfeln.xn--p1ai/assets/components/phpthumbof/cache/SRAM20.b3d40e8212ff5c13d35c25733b0c5f6e.jpg',
+    {photo: './assets/img/b2b/objects/autodoriya.jpg',
     name: 'Казань, Мазита Гафури 50, Автодория',
     tasks: 'Производить регулярную уборку небольшого офисного помещения и основного склада организации.',
     itogs: 'Компания Автодория, является постоянным клиентом нашей компании. На данный момент принимаем активное участие в расширении областей сотрудничества и продолжении вектора развития деловых отношений.'
   },
 
-    {photo: 'http://xn--80apfeln.xn--p1ai/assets/components/phpthumbof/cache/scale_1200.0d8f8619c6755f344b790e26803812c0.jpg',
+    {photo: './assets/img/b2b/objects/vault.jpg',
     name: 'Казань, Сеть компьютерных клубов VAULT',
     tasks: 'Регулярное поддержание чистоты, ежедневная уборка, сбор и вынос мусора, в помещениях компьютерного клуба.',
     itogs: 'Основной особенностью регулярного поддержания чистоты в компьютерном клубе, является его режим работы, он круглосуточный. Исходя из этого, была введена определённая схема и график работы исполнителей на объекте. Заказчик полностью доволен производимыми услугами.'
   },
   
-    {photo: 'http://xn--80apfeln.xn--p1ai/assets/components/phpthumbof/cache/d9fa118a9261c58bec4b74060083107800.20de9cda4f68b17d16d31a7bf71957ea.jpg',
+    {photo: './assets/img/b2b/objects/medtehatomproject.jpg',
     name: 'Казань, Волгоградская 49, MTA-GROUP',
     tasks: 'Ежедневная, регулярная уборка офиса лаборатории радиационного контроля МТА.',
     itogs: 'Компания МТА-GROUP достаточно долго сменяла подрядчиков по организации уборочных работ в их офисе. Начиная от частных уборщиц и штатниц, до местных клининговых компаний. Мы закрыли все те проблемы, с которым они сталкивались с другими подрядчиками. Теперь компания является постоянным клиентом сервиса CleanUP. Заказчик полностью доволен качеством производимых услуг.'
