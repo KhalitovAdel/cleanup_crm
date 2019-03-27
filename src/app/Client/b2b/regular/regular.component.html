@@ -78,7 +78,7 @@
 </section>
 
 <section style="padding-top: 0" id="objects">
-  <owl-carousel [options]="mySlideOptions" [items]="images" [carouselClasses]="['owl-theme', 'slip']"> 
+  <owl-carousel [options]="mySlideOptions" [carouselClasses]="['owl-theme', 'slip']"> 
     <div class="item" style="padding: 20px 0" *ngFor="let i of Objects;" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly"> 
       <div class="image" [style.background]="dangerFile(i.photo)"></div>
       <div class="wrapp" fxLayout="column" fxLayoutAlign="center">
@@ -152,7 +152,7 @@
       <h2 class="title text-center">Отзывы клиентов</h2>
     </div>
     
-    <owl-carousel [options]="mySlideOptions" [items]="images" [carouselClasses]="['owl-theme', 'slip']">
+    <owl-carousel [options]="mySlideOptions" [carouselClasses]="['owl-theme', 'slip']">
 
       <div class="comments" fxLayout="column" fxLayout.lt-md="column" fxLayoutAlign="center center"> 
         <div class="image" style="background: url(http://xn--80apfeln.xn--p1ai/assets/components/phpthumbof/cache/1tykXFt8jYA.10630702ec89e09a6d5fd7ac3a23f4d1.jpg) 50% 50% no-repeat / cover"></div>
@@ -183,7 +183,7 @@
       </div> 
     </owl-carousel>
 
-    <owl-carousel style="margin-top: 3rem;" [options]="partnersSliderOption" [items]="images" [carouselClasses]="['owl-theme', 'slip']">
+    <owl-carousel style="margin-top: 3rem;" [options]="partnersSliderOption" [carouselClasses]="['owl-theme', 'slip']">
       <div class="partners" *ngFor="let i of partners" fxLayout="row" fxLayoutAlign="center center">
         <img src="{{i.img}}" alt="CleanUp partner">
       </div>

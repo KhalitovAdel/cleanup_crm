@@ -3,14 +3,18 @@ import { AlertService } from 'src/app/services/alert/alert.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
+interface UserTemplate {
+  email: String,
+  password: String
+}
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.styl']
 })
 export class LoginComponent implements OnInit {
-  User = {
-  }
+  User: UserTemplate;
   constructor(
     private alert: AlertService,
     private _routes: Router,

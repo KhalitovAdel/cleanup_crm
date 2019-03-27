@@ -6,6 +6,20 @@ import { Guid } from "guid-typescript";
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert/alert.service';
 
+interface calculateResult {
+  whiteFot: Number,
+  blackFot: Number,
+  fotOnHand: Number,
+  zpNalog: Object,
+  itog: Number,
+  itogMaterial: Number,
+  managerWage: Number,
+  material: Number,
+  profit: Number,
+  tinkoffCommission: Number,
+  windowFond: Number,
+}
+
 @Component({
   selector: 'app-new-lead',
   templateUrl: './new-lead.component.html',
@@ -15,19 +29,8 @@ export class NewLeadComponent implements OnInit {
 
   LeadControl: FormGroup;
   OfferControl: FormGroup;
-  Result: Object = {
-    whiteFot: Number,
-    blackFot: Number,
-    fotOnHand: Number,
-    zpNalog: Object,
-    itog: Number,
-    itogMaterial: Number,
-    managerWage: Number,
-    material: Number,
-    profit: Number,
-    tinkoffCommission: Number,
-    windowFond: Number,
-  };
+
+  Result: calculateResult;
 
   RegularControl: Array<Object> = [
     {days: '30', translate: 'Без выходных'},
