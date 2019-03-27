@@ -50,3 +50,24 @@ module.exports.sendKP = async function(email, urlToPath, fileName){
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   fs.unlinkSync(urlToPath);
 }
+
+module.exports.sendSomeMessage = async function(email, sometext, somesubject) {
+  let transporter = nodemailer.createTransport({
+    host: "smtp.yandex.ru",
+    port: 465,
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: 'cleanupkzn@yandex.ru', // generated ethereal user
+      pass: 'Benq1234' // generated ethereal password
+    }
+  });
+
+  let mailOptions = {
+    from: '"CleanUp service 👻" <cleanupkzn@yandex.ru>',
+    to: (email === undefined)? 'cleanupkzn@yandex.ru' : email,
+    subject: (somesubject === undefined)? 'Хотят уборку' : somesubject,
+    html: sometext,
+  };
+
+  return await transporter.sendMail(mailOptions);
+}

@@ -1,4 +1,32 @@
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <a class="navbar-brand" href="#">CleanUp CRM</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+      
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li> -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                CRM
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" [routerLink]="['newlead']">Создать лид</a>
+                <a class="dropdown-item" [routerLink]="['leadlist']">Список лидов</a>
+              </div>
+            </li>
+          </ul>
+          <span class="navbar-text">
+            <a href="tel:+7(843)207-02-96">+7 (843) 207-02-96</a>
+          </span>
+        </div>
+      </nav>
+
 <input type="email" [(ngModel)]='User.email' placeholder="email">
 <input type="password" [(ngModel)]='User.password' placeholder="pass">
 <button (click)='login()'>Войти</button>
 <button (click)='register()'>Регистрация</button>
+<router-outlet></router-outlet>

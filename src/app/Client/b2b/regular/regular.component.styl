@@ -1,3 +1,203 @@
-.calculate
-    border-radius: 10px
-    border 1px solid black
+.main-b2b-calc
+    background: transparent url('http://xn--80apfeln.xn--p1ai/assets/components/phpthumbof/cache/regular.7f6515920b5729a767a4ef1cd138f27e.jpg') 50% 90% no-repeat / cover;
+    width: 100%
+    height: 40vh
+    min-height: 250px
+    padding: 0;
+    position relative
+    &:before
+        content: ''
+        position: absolute
+        top 0 
+        left: 0
+        width: 100%
+        height 100%
+        background-color: rgba(0,0,0,.3)
+    & .calc
+        width: 90%;
+        max-width: 700px;
+        padding: 10px;
+        background-color rgba(255,255,255,1)
+        border-radius: 5px
+        border 1px solir #eee
+:host /deep/ .calculate
+    width: 100%
+    padding 10px 0
+    background-color rgb(179, 192, 211)
+    & .mat-form-field-outline
+        background-color white
+        border-radius: 5px
+    & .mat-form-field-wrapper
+        padding 0
+    & .mat-form-field-infix
+        padding: 1em 0 1.3em 0;
+#window
+    position relative
+    background url(https://garantevrostroy.ru/wp-content/uploads/2017/02/building-wallpaper-6.jpg) 50% 50% no-repeat /cover
+    padding 50px 0
+    &:after
+        position: absolute
+        content: ''
+        top 0
+        left 0
+        width 100%
+        height 100%
+        background-color rgba(0,0,0,.65)
+    & *
+        z-index 1
+        color white
+owl-carousel        
+    & .item 
+        min-height: 500px;
+        & .image 
+            width 45%
+        & .wrapp
+            width 35%
+    & .comments
+        & .image
+            width 250px
+            height 250px
+            border-radius: 50%
+        & .wrapp
+            width 50%; 
+            & .name 
+                font-size: 1.5rem
+                font-weight bold
+    & .partners
+        width: 200px
+        height 200px
+:host ::ng-deep owl-carousel
+    & .owl-item
+        display: flex
+        align-items: center
+        justify-content: center
+    & .owl-dots
+        display flex
+        flex-direction: row
+        align-items: center
+        justify-content center
+        position relative
+        bottom: -10px
+        & button.owl-dot
+            width: 10px
+            height 10px
+            margin 0 3px
+            & span 
+                margin 0
+                border-radius: 0
+                border 1px solid #004
+                background-color #fff
+            &.active
+                width: 20px
+                height 20px
+                & span
+                    width: 20px
+                    height 20px
+                    background-color #004 
+@media (max-width: 1100px)
+    owl-carousel 
+        & .item 
+            min-height: 500px;
+            position relative
+            & .image
+                padding: 10px 0
+                position absolute
+                width 100%!important;
+                height: 100%
+                top 0
+                left 0
+                &:after
+                    content: ''
+                    position: absolute
+                    top: 0
+                    left: 0
+                    width: 100%
+                    height 100%
+                    background-color rgba(255,255,255, 0.65)
+            & .wrapp
+                z-index 1
+                margin: 0 auto
+                width 95%!important
+        & :host ::ng-deep .owl-dots
+            margin-top 0
+            position relative
+        & .comments
+            & .wrapp
+                width: 100%
+#statistic
+    & .container
+            & .wrap
+                width: 25%
+                & i.material-icons
+                    font-size: 4rem
+                    margin-right 10px
+                & .details
+                    margin-bottom 10px
+                    & .number
+                        font-size: 2.5rem
+                        font-weight bold
+                        margin-bottom 0
+                    & .description
+                        color inherit
+                        font-weight normal 
+                        text-shadow: none
+                        font-size: 1rem
+@media (max-width: 984px)
+    #statistic
+        & .container
+            & .wrap
+                width 50%
+                & i.material-icons
+                    font-size: 2rem
+                & .details
+                    & .number
+                        font-size: 1.5rem
+                    & .description
+                        font-size: 0.8rem
+#about
+    & .item 
+        min-height: 500px;
+        & .image 
+            width 55%
+        & .wrapp
+            width 35%
+@media (max-width: 984px)
+    #about
+        & .item
+            padding: 2rem 0
+            position relative
+            & .image
+                position: absolute
+                top 0 
+                left 0
+                width 100%!important
+                height 100%!important
+                &:after
+                    content: ''
+                    position: absolute
+                    top 0 
+                    left 0
+                    width: 100%
+                    height 100%
+                    background-color rgba(255,255,255,.65)
+            & .wrapp
+                margin 0 auto
+                z-index: 1
+                width 95%!important
+#otzovi
+    background url(http://xn--80apfeln.xn--p1ai/assets/components/phpthumbof/cache/background2.b9e5220b088ae7388f27104b60dc196a.jpg) 50% 50% no-repeat / cover;
+    position relative
+    &:after
+        content: ''
+        position absolute
+        width 100%
+        height 100%
+        top 0
+        left 0
+        background-color rgba(255,255,255,0.8)
+    .head-wrapper
+        z-index: 1
+    & .comments
+        & .image
+            max-width 200px
+            max-height: 200px

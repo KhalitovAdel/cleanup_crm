@@ -6,10 +6,14 @@ var db      = require('../config/index'),
 parser      = require('../pageparser/index');
 
 var ctrlAuth    = require('../controllers/auth'),
-    ctrlLead    = require('../controllers/lead');
+    ctrlLead    = require('../controllers/lead'),
+    ctrlClient  = require('../controllers/client');
 
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login); 
+
+router.post('/sentOfferByClient', ctrlClient.b2bOffer);
+
 
 router.post('/pars2gis', ctrlAuth.mustAuthenticatedMw, async function(req, res) {
     res.send( await parser.pars2gis(req.body.link) );

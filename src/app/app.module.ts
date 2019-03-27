@@ -23,6 +23,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { CookieService } from 'ngx-cookie-service';
+import { TextMaskModule } from 'angular2-text-mask';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { OwlModule } from 'ngx-owl-carousel';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { B2bregularComponent } from './calculate/b2bregular/b2bregular.component';
 import { CalculateService } from './services/calculate/calculate.service';
@@ -35,6 +39,7 @@ import { OfferIntoLeadComponent, BottomSheet } from './CRM/Offers/offer-into-lea
 import { AlertComponent } from './services/alert/alert.service';
 import { LoginComponent } from './CRM/auth/login/login.component';
 import { AuthGuard } from './services/auth/auth.guard';
+import { RegularComponent } from './Client/b2b/regular/regular.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +52,8 @@ import { AuthGuard } from './services/auth/auth.guard';
     OfferIntoLeadComponent,
     AlertComponent,
     BottomSheet,
-    LoginComponent
+    LoginComponent,
+    RegularComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +78,10 @@ import { AuthGuard } from './services/auth/auth.guard';
     MatSnackBarModule,
     MatIconModule,
     MatBottomSheetModule,
+    TextMaskModule,
+    FlexLayoutModule,
+    OwlModule,
+    MatSidenavModule
   ],
   entryComponents: [OfferIntoLeadComponent, AlertComponent, BottomSheet],
   providers: [
