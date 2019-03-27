@@ -97,7 +97,7 @@ export class LeadPageComponent implements OnInit {
   }
 
   async getLeadInfo() {
-      await this.myHttp.postHTTP('http://localhost:3000/getLeadInfo', {id: this.id} )
+      await this.myHttp.postHTTP('/getLeadInfo', {id: this.id} )
         .subscribe( data=>{
           console.log(data);
           this.Lead = data;
@@ -127,7 +127,7 @@ export class LeadPageComponent implements OnInit {
 
   changeTaskStatus(task) {
     console.log(task);
-      this.myHttp.postHTTP('http://localhost:3000/changeStatus', {leadId: this.Lead.leadId, changedTask: task} )
+      this.myHttp.postHTTP('/changeStatus', {leadId: this.Lead.leadId, changedTask: task} )
         .subscribe( data=>{
           console.log(data);
           this.Lead = data;
@@ -144,7 +144,7 @@ export class LeadPageComponent implements OnInit {
         description: this.taskDesk.value.description,
         createdDate: new Date
       }
-      this.myHttp.postHTTP('http://localhost:3000/createNewComment', {leadId: this.Lead.leadId, comment: data})
+      this.myHttp.postHTTP('/createNewComment', {leadId: this.Lead.leadId, comment: data})
         .subscribe( updatedLead=> {
           this.Lead = updatedLead;
           this.sortTasks();
@@ -162,7 +162,7 @@ export class LeadPageComponent implements OnInit {
         deadLineDate: this.taskDesk.value.deadLineDate,
         createdDate: new Date
       }
-      this.myHttp.postHTTP('http://localhost:3000/createNewTask', {leadId: this.Lead.leadId, task: data})
+      this.myHttp.postHTTP('/createNewTask', {leadId: this.Lead.leadId, task: data})
         .subscribe( updatedLead=> {
           this.Lead = updatedLead;
           this.sortTasks();
@@ -175,7 +175,7 @@ export class LeadPageComponent implements OnInit {
   }
 
   changeLeadStatus () {
-    this.myHttp.postHTTP('http://localhost:3000/changeLeadStatus', 
+    this.myHttp.postHTTP('/changeLeadStatus', 
     {
       leadId: this.Lead.leadId,
       leadStatus: this.Lead.leadStatus
@@ -201,7 +201,7 @@ export class LeadPageComponent implements OnInit {
   }
 
   saveLeadChanges() {
-    this.myHttp.postHTTP('http://localhost:3000/saveLeadChanges', {
+    this.myHttp.postHTTP('/saveLeadChanges', {
       leadId: this.Lead.leadId,
       firmName: this.Lead.firmName,
       contactPhones: this.Lead.contactPhones,

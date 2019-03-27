@@ -158,7 +158,7 @@ export class NewLeadComponent implements OnInit {
   }
 
   pars2gis() {
-    return this.myHttp.postHTTP('http://localhost:3000/pars2gis', 
+    return this.myHttp.postHTTP('/pars2gis', 
                         {link: this.LeadControl.get('link2gis').value})
       .subscribe(data =>  {
         for (let x in this.LeadControl.value ) {
@@ -192,7 +192,7 @@ export class NewLeadComponent implements OnInit {
     this.valid(this.LeadControl);
     if (this.LeadControl.valid) {
       var data = this.clearLead(this.LeadControl);
-      return this.myHttp.postHTTP('http://localhost:3000/newLead', data)
+      return this.myHttp.postHTTP('/newLead', data)
         .subscribe( (data: any) => {
           this.alert.openSnackBar( data.message );
         }, ( err: any ) => {
@@ -211,7 +211,7 @@ export class NewLeadComponent implements OnInit {
     if ( this.LeadControl.valid && this.OfferControl.valid ) {
       var data = this.clearLead(this.LeadControl);
       this.OfferControl.get('status').setValue('created');
-      return this.myHttp.postHTTP('http://localhost:3000/newLeadOffer', {Lead: data, Offer: this.OfferControl.value})
+      return this.myHttp.postHTTP('/newLeadOffer', {Lead: data, Offer: this.OfferControl.value})
         .subscribe( (data: any) => {
           this.alert.openSnackBar( data.message );
         }, ( err: any ) => {
@@ -231,7 +231,7 @@ export class NewLeadComponent implements OnInit {
       var data = this.clearLead(this.LeadControl);
       this.OfferControl.get('status').setValue('sent');
       this.OfferControl.get('sentingDate').setValue(new Date);
-      return this.myHttp.postHTTP('http://localhost:3000/newLeadOfferSend', {Lead: data, Offer: this.OfferControl.value})
+      return this.myHttp.postHTTP('/newLeadOfferSend', {Lead: data, Offer: this.OfferControl.value})
       .subscribe( (data: any) => {
         this.alert.openSnackBar( data.message );
       }, ( err: any ) => {

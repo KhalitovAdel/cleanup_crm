@@ -48,7 +48,7 @@ app.get('*', function(req, res) {
 });
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 db.connect(function (err) {
   if (err) {
     return console.log(err);

@@ -40,7 +40,7 @@ export class LeadListComponent implements OnInit {
     this.getLeadList();
   }
   async getLeadList() {
-    await this.myHttp.getHTTP('http://localhost:3000/getLeadList')
+    await this.myHttp.getHTTP('/getLeadList')
       .subscribe( (data: Lead[])=> {
         this.Leads = data;
         this.refreshDataSource(this.Leads);

@@ -98,7 +98,7 @@ export class OfferIntoLeadComponent implements OnInit {
     if ( this.OfferControl.valid ) {
       this.OfferControl.get('status').setValue('created');
       console.log(this.OfferControl.value)
-      return this.myHttp.postHTTP('http://localhost:3000/newOffer', this.OfferControl.value)
+      return this.myHttp.postHTTP('/newOffer', this.OfferControl.value)
         .subscribe( (data: any) => {
           this.alert.openSnackBar( data.message );
           this.getLeadOffers();
@@ -113,7 +113,7 @@ export class OfferIntoLeadComponent implements OnInit {
 
   deleteOffer(index) {
     console.log(this.Offers[index]);
-    return this.myHttp.postHTTP('http://localhost:3000/deleteOffer', this.Offers[index])
+    return this.myHttp.postHTTP('/deleteOffer', this.Offers[index])
       .subscribe( (data: any) => {
         this.alert.openSnackBar( data.message );
         this.getLeadOffers();
@@ -139,7 +139,7 @@ export class OfferIntoLeadComponent implements OnInit {
   };
 
   getLeadOffers() {
-    this.myHttp.postHTTP('http://localhost:3000/getAllOffersFromLead', {leadLink: this.data.leadId})
+    this.myHttp.postHTTP('/getAllOffersFromLead', {leadLink: this.data.leadId})
       .subscribe( ( data: []) => {
         this.Offers = data;
         console.log(data);
@@ -165,7 +165,7 @@ export class OfferIntoLeadComponent implements OnInit {
 
   saveOfferChanges(index) {
     this.changeIndicator = -1;
-    this.myHttp.postHTTP('http://localhost:3000/saveOfferChanges', this.Offers[index])
+    this.myHttp.postHTTP('/saveOfferChanges', this.Offers[index])
       .subscribe( (data: any) => {
         this.alert.openSnackBar( data.message );
       }, ( err: any ) => {
@@ -181,7 +181,7 @@ export class OfferIntoLeadComponent implements OnInit {
 
   sentOffer(index) {
     this.Offers[index].status = 'sent';
-    this.myHttp.postHTTP('http://localhost:3000/sentOffer', this.Offers[index])
+    this.myHttp.postHTTP('/sentOffer', this.Offers[index])
       .subscribe( (data: any) => {
         this.alert.openSnackBar( data.message );
         this.getLeadOffers();
@@ -232,7 +232,7 @@ export class BottomSheet {
 
   saveOfferDetailChanges() {
     this.changeIndicator = false;
-    this.myHttp.postHTTP('http://localhost:3000/saveOfferDetailChanges', {data: this.Offer})
+    this.myHttp.postHTTP('/saveOfferDetailChanges', {data: this.Offer})
       .subscribe( (data: any) => {
         this.alert.openSnackBar( data.message );
       }, ( err: any ) => {

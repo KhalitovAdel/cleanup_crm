@@ -11,11 +11,11 @@ export class AuthService {
   ) { }
 
   registerNewEmployee(employee) {
-    return this.myHttp.postHTTP( 'http://localhost:3000/register', employee );
+    return this.myHttp.postHTTP( '/register', employee );
   }
 
   loginByEmployee(employee) {
-    return this.myHttp.postHTTP('http://localhost:3000/login', employee);
+    return this.myHttp.postHTTP('/login', employee);
   }
   
 }
