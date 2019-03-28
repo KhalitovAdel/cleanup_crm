@@ -8,7 +8,7 @@ import { AuthGuard } from './services/auth/auth.guard';
 import { RegularComponent } from './Client/b2b/regular/regular.component';
 const baseCrmPath = 'crm';
 const routes: Routes = [
-  { path: '', component: RegularComponent },
+  { path: '', component: RegularComponent, pathMatch: 'full' },
   { path: baseCrmPath, component: LoginComponent, children: [
     { path: 'newlead', component: NewLeadComponent, canActivate: [AuthGuard] },
     { path: 'leadlist', component: LeadListComponent, canActivate: [AuthGuard] },

@@ -14,7 +14,10 @@ interface UserTemplate {
   styleUrls: ['./login.component.styl']
 })
 export class LoginComponent implements OnInit {
-  User: UserTemplate;
+  User: UserTemplate = {
+    email: '',
+    password: ''
+  };
   constructor(
     private alert: AlertService,
     private _routes: Router,

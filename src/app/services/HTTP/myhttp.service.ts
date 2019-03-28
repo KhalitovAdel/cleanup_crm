@@ -13,17 +13,17 @@ const httpOptions = {
 })
 
 export class myHTTPService {
-  base_href: 'http://localhost:3001';
+  base_href:String = 'http://localhost:3001';
 
   constructor(private http: HttpClient) { }
 
-  postHTTP(url, info) {
+  postHTTP(url:string, info) {
     return this.http.post(this.base_href.concat(url), info, {withCredentials: true});
   }
-  getHTTP(url) {
+  getHTTP(url:string) {
     return this.http.get(this.base_href.concat(url), {withCredentials: true});
   }
-  putHTTP(url, info: any) {
+  putHTTP(url:string, info: any) {
     return this.http.put(this.base_href.concat(url), info, {withCredentials: true});
   }
 }

@@ -18,14 +18,14 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate():Observable<boolean>|boolean {
-    return this.myHttp.getHTTP('http://localhost:3000/detect')
+    return this.myHttp.getHTTP('/detect')
       .pipe(map( (data: any) => {
         if (data.detect === true) {
           return true;
         }
       }),
       catchError( (err: HttpErrorResponse) => {
-        this._router.navigate(['/login']);
+        this._router.navigate(['crm']);
         return Observable.throw(err.statusText);
       })
     )}

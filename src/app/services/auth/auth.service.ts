@@ -17,5 +17,4 @@ export class AuthService {
   loginByEmployee(employee) {
     return this.myHttp.postHTTP('/login', employee);
   }
-  
 }
