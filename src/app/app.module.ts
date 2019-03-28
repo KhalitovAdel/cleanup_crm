@@ -93,4 +93,6 @@ import { RegularComponent } from './Client/b2b/regular/regular.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  
+}

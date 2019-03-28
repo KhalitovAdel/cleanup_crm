@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import "~bootstrap/dist/css/bootstrap-reboot.min.css";
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "~bootstrap/dist/css/bootstrap-grid.min.css";
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 @import 'style/varibles.styles.styl';
 body
@@ -36,8 +35,6 @@ h4
         width: 10px;
         background-color: $secondary-color;
 .base-button
-    width 204px
-    height 59.5px
     background-color $button-color
     color: $insert-text-color
 .p-0
@@ -61,24 +58,16 @@ nav
         color: $insert-text-color
         &:hover
             text-decoration: none
+    & .wrap
+        width: 100
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        align-items: center
 
 section 
     padding 2rem 0px
     display block
-.container
-    max-width: 1152px
-    margin 0 auto
-    padding: 0 20px;
-.row
-    width 100%
-    padding: 0 20px
-    display: flex;
-    flex-wrap: wrap;
-    for i in range(1, 12, 1)
-        & .col-{i}
-            width: i*(100%/12)
-            padding: 0 16px
-            display inline-block
 footer 
     padding: 2rem 0
     & img.logo
@@ -97,4 +86,94 @@ footer
             color $insert-text-color
     & .wrap
         margin-bottom 10px
+        display: flex
+        flex-direction: row
+input, button, select
+    font-size: 1rem
+    padding: 6px 10px
+    background-color white
+    border 0 solid transparent
+    border-radius: 3px
+    min-width 221px
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+    &:focus
+        outline: 0;
+input, button, .dropdown
+    margin-bottom .5rem
+/*Styling Selectbox*/
+.dropdown
+    min-width 221px
+    display: inline-block;
+    padding: 5px 0
+    position: relative;
+    border-radius: 3px
+    background-color white
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+    &:before
+        content: '';
+        position: absolute;
+        z-index: 2;
+        top: 12px;
+        right: 10px;
+        width: 0;
+        height: 0;
+        border: 4px dashed;
+        border-color: #888888 transparent;
+        pointer-events: none;
+        border-bottom-style: solid;
+        border-top: none;
+    &:after
+        content: '';
+        position: absolute;
+        z-index: 2;
+        top: 15px;
+        right: 10px;
+        width: 0;
+        height: 0;
+        border: 4px dashed;
+        border-color: #888888 transparent;
+        pointer-events: none;
+        margin-top: 7px;
+        border-top-style: solid;
+        border-bottom: none;
+    & .dropdown-select
+        position: relative
+        width: 130%
+        margin: 0
+        line-height: 14px
+        box-shadow: none
+        color: #62717a
+        background: #f2f2f2; /* Fallback for IE 8 */
+        background: rgba(0, 0, 0, 0) !important; /* "transparent" doesn't work with Opera */
+        border: 0;
+        border-radius: 0;
+        -webkit-appearance: none;
+
+        &:focus 
+            z-index: 3;
+            width: 100%;
+.dropdown-select > option {
+  margin: 5px;
+  padding: 10px 8px;
+  text-shadow: none;
+  background: #f2f2f2;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.lt-ie9 .dropdown {
+  z-index: 1;
+}
+.lt-ie9 .dropdown-select {
+  z-index: -1;
+}
+.lt-ie9 .dropdown-select:focus {
+  z-index: 3;
+}
+@-moz-document url-prefix() {
+  .dropdown-select {
+    padding-left: 6px;
+  }
+}
+
 @import 'style/media.styles.styl';

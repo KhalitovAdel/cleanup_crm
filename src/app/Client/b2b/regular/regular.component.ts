@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 import { AlertService } from 'src/app/services/alert/alert.service';
 
+
 @Component({
   selector: 'app-regular',
   templateUrl: './regular.component.html',
@@ -120,7 +121,6 @@ export class RegularComponent implements OnInit {
     .subscribe(
       (value) => value
     );
-
   }
 
   sentOffer() {

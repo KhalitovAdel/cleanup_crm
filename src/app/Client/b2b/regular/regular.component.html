@@ -1,53 +1,66 @@
 <nav class="bg-main">
-  <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
-    <a href="#">
-        <img class="logo" src="./assets/logotype-alt.svg" alt="CleanUp logo">
-    </a>
-    <a class="tel" href="tel:+7 (843) 207-02-96">+7 (843) 207-02-96</a>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+          <div class="wrap">
+              <a href="#">
+                  <img class="logo" src="./assets/logotype-alt.svg" alt="CleanUp logo">
+              </a>
+              <a class="tel" href="tel:+7 (843) 207-02-96">+7 (843) 207-02-96</a>
+          </div>
+      </div>
+    </div>
   </div>
 </nav>
 
-<section class="main-b2b-calc"  fxLayout="row wrap" fxLayoutAlign="center center">
-  <div class="container" fxLayout="column" fxLayoutAlign="center center" fxFlex="100%">
-      <h1 class="text-center">Уборка офиса по цене штатного сотрудника  </h1>
-      <p class="description">Попробуй 5 дней регулярной уборки до конца месяца, получи генеральную уборку в подарок</p>
+<section class="main-b2b-calc">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+          <h1 class="text-center">Уборка офиса по цене штатного сотрудника  </h1>
+          <p class="description">Попробуй 5 дней регулярной уборки до конца месяца, получи генеральную уборку в подарок</p>
+      </div>
+    </div>
   </div>
 </section>
-<div class="calculate" [formGroup]="CalculateControl">
-    <div class="container">
-        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly center" fxLayoutGap="gappx">
-  
-            <mat-form-field appearance="outline">
-              <input matInput type="text" formControlName='area' placeholder="Площадь помещения">
-            </mat-form-field>
-        
-            <mat-form-field appearance="outline">
-              <!-- <mat-label>Регулярность</mat-label> -->
-              <mat-select formControlName='regular' placeholder="Регулярность">
-                  <mat-option *ngFor="let x of RegularControl;" [value]="x.days">
-                  {{x.translate}}
-                  </mat-option>
-              </mat-select>
-            </mat-form-field>
-    
-            <mat-form-field appearance="outline">
-              <!-- <mat-label>Номер телефона</mat-label> -->
-              <input matInput formControlName='phone' type="tel" [textMask]="{mask: phoneMask}" placeholder="Номер телефона">
-              <mat-hint align="start"><strong>Отправим расчеты сюда</strong> </mat-hint>
-            </mat-form-field>  
-            
-            <button class="base-button" (click)="sentOffer() "type='submit' mat-raised-button>Рассчитать цену </button>
-        </div>
+
+<div class="calculate" [formGroup]="CalculateControl" id="calculate">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p class="text-center">Калькулятор онлайн</p>
+      </div>
     </div>
+    <div class="row text-center">
+      <div class="col-12 col-sm-6 col-lg-3">
+          <input type="text" formControlName='area' placeholder="Площадь помещения">
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="dropdown">
+          <select formControlName='regular' placeholder="Регулярность" class="dropdown-select">
+            <option *ngFor="let x of RegularControl;" [value]="x.days">{{x.translate}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <input formControlName='phone' type="tel" [textMask]="{mask: phoneMask}" placeholder="Номер телефона">
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <button class="base-button" (click)="sentOffer()" type='submit'>Рассчитать цену </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <section id="what-include">
   <div class="container">
-    <div class="head-wrapper">
-        <h2 class="text-center title">Что входит в уборку</h2>
-    </div>
-    <div class="wrapp" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around">
-      <div class="first-wrapp">
+    <div class="row">
+      <div class="col-12">
+          <div class="head-wrapper">
+              <h2 class="text-center title">Что входит в уборку</h2>
+          </div>
+      </div>
+      <div class="col-12 col-md-4">
           <p class="font-weight-bold text-center">Ежедневные работы</p>
           <ul>
             <li>Влажная/сухая уборка пола</li>
@@ -58,7 +71,7 @@
             <li>Вынос мусора</li>
           </ul>
       </div>
-      <div class="second-wrapp">
+      <div class="col-12 col-md-4">
           <p class="font-weight-bold text-center">Еженедельные работы</p>
           <ul>
             <li>Удаление пыли с труднодоступных мест</li>
@@ -66,7 +79,7 @@
             <li>Чистка кафельной плитки</li>
           </ul>
       </div>
-      <div class="second-wrapp">
+      <div class="col-12 col-md-4">
           <p class="font-weight-bold text-center">Ежемесячные работы</p>
           <ul>
             <li>Мытье холодильника</li>
@@ -79,58 +92,57 @@
 
 <section style="padding-top: 0" id="objects">
   <owl-carousel [options]="mySlideOptions" [carouselClasses]="['owl-theme', 'slip']"> 
-    <div class="item" style="padding: 20px 0" *ngFor="let i of Objects;" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly"> 
+    <div class="object" style="padding: 20px 0" *ngFor="let i of Objects;"> 
       <div class="image" [style.background]="dangerFile(i.photo)"></div>
-      <div class="wrapp" fxLayout="column" fxLayoutAlign="center">
+      <div class="wrapp">
         <h2 class="title">{{i.name}}</h2>
         <p><span class="font-weight-bold">Задачи заказчика: </span>{{i.tasks}}</p>
         <p><span class="font-weight-bold">Итог: </span>{{i.itogs}}</p>
         <div class="wrap">
           <a href="#">
-            <button class="base-button" type='button' mat-raised-button>Рассчитать объект</button>
+            <button class="base-button" type='button'>Рассчитать объект</button>
           </a>
         </div>
       </div>
     </div> 
   </owl-carousel>
-
 </section>
 
 <section class="bg-secondary" id='statistic'>
-  <div class="container" fxLayout="row wrap" fxLayoutAlign="space-around">
-
-    <div class="wrap" fxLayout="row" fxLayoutAlign="center center">
-        <i class="material-icons">stars</i>
-        <div class="details">
-          <p class="number">7</p>
-          <p class="description">Лет опыта</p>
+  <div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-3 wrap">
+            <i class="material-icons">stars</i>
+            <div class="details">
+              <p class="number">7</p>
+              <p class="description">Лет опыта</p>
+            </div>
+        </div>
+    
+        <div class="col-12 col-sm-6 col-md-3 wrap">
+            <i class="material-icons">people</i>
+            <div class="details">
+              <p class="number">43</p>
+              <p class="description">Сотрудника</p>
+            </div>
+        </div>
+    
+        <div class="col-12 col-sm-6 col-md-3 wrap">
+            <i class="material-icons">domain</i>
+            <div class="details">
+              <p class="number">23 400м<sup>2</sup></p>
+              <p class="description">Убрано за этот год</p>
+            </div>
+        </div>
+    
+        <div class="col-12 col-sm-6 col-md-3 wrap">
+            <i class="material-icons">accessibility_new</i>
+            <div class="details">
+              <p class="number">1100</p>
+              <p class="description">Визитов к нам за последний год</p>
+            </div>
         </div>
     </div>
-
-    <div class="wrap" fxLayout="row" fxLayoutAlign="center center">
-        <i class="material-icons">people</i>
-        <div class="details">
-          <p class="number">43</p>
-          <p class="description">Сотрудника</p>
-        </div>
-    </div>
-
-    <div class="wrap" fxLayout="row" fxLayoutAlign="center center">
-        <i class="material-icons">domain</i>
-        <div class="details">
-          <p class="number">23 400м<sup>2</sup></p>
-          <p class="description">Убрано за этот год</p>
-        </div>
-    </div>
-
-    <div class="wrap" fxLayout="row" fxLayoutAlign="center center">
-        <i class="material-icons">accessibility_new</i>
-        <div class="details">
-          <p class="number">1100</p>
-          <p class="description">Визитов к нам за последний год</p>
-        </div>
-    </div>
-
   </div>
 </section>
 
@@ -147,88 +159,95 @@
 </section>
 
 <section id="otzovi">
-  <div class="" fxLayout="column" fxLayoutAlign="center">
-    <div class="head-wrapper">
-      <h2 class="title text-center">Отзывы клиентов</h2>
-    </div>
-    
-    <owl-carousel [options]="mySlideOptions" [carouselClasses]="['owl-theme', 'slip']">
-
-      <div class="comments" fxLayout="column" fxLayout.lt-md="column" fxLayoutAlign="center center"> 
-        <div class="image" style="background: url(./assets/img/b2b/otzovi/kulick.jpg) 50% 50% no-repeat / cover"></div>
-        <div class="wrapp" fxLayout="column" fxLayoutAlign="center center">
-          <h2 class="title"></h2>
-          <p class="text-center">Тетя Люба, которая раньше убирала у нас в офисе, перестала справляться, да и болеть часто стала. Было принято решение обратиться в клининговую компанию. Выбор пал на эту (отзывы в интернете хорошие были). Все чисто, все быстро и недорого. Благодарим и надеемся на тесное сотрудничество в дальнейшем!</p>
-          <p class="name">Лариса Кулик</p>
-        </div>
-      </div> 
-      
-  
-      <div class="comments" fxLayout="column" fxLayout.lt-md="column" fxLayoutAlign="center center"> 
-        <div class="image" style="background: url(./assets/img/b2b/otzovi/sitnikov.jpg) 50% 50% no-repeat / cover"></div>
-        <div class="wrapp" fxLayout="column" fxLayoutAlign="center center">
-          <h2 class="title"></h2>
-          <p class="text-center">У нас порядка 1500 квадратных метров. Довольно приличная по размеру площадь. Сейчас такое время, что все, что возможно, частный бизнес отдаёт на аутсорсинг. Мы тоже идем в ногу со временем. Помимо этого, у нас полностью белый бизнес и нам важно показывать расходы. Клининг – одна из статей, которую мы закладываем в бюджет. Сотрудника нанимать – не вижу смысла. Считаю, это прошлый век и лишние ресурсозатраты по управлению. Думаю, коллеги мои меня сейчас понимают. Компанию CleanUp от себя лично могу советовать – с работой справляются на ура.</p>
-          <p class="name">Сергей Сытников</p>
-        </div>
-      </div> 
-
-      <div class="comments" fxLayout="column" fxLayout.lt-md="column" fxLayoutAlign="center center"> 
-        <div class="image" style="background: url(./assets/img/b2b/otzovi/kolvasheva.jpg) 50% 50% no-repeat / cover"></div>
-        <div class="wrapp" fxLayout="column" fxLayoutAlign="center center">
-          <h2 class="title"></h2>
-          <p class="text-center">Клиентом компании CleanUp мы являемся уже более года. Меня, как владельца компании все устраивает. Клинеры приходят вовремя, никогда не мешают моим сотрудникам работать. До этого у нас была уборщица, но, так как метраж площади у нас сравнительно небольшой 400 метров – мы отказались от этой вакансии и отдали чистоту нашего офиса на аутсорсинг. В моей ситуации это выгоднее, чем платить сотруднику. Да и меньше нерабочих разговоров в офисе.</p>
-          <p class="name">Злата Колвашева</p>
-        </div>
-      </div> 
-    </owl-carousel>
-
-    <owl-carousel style="margin-top: 3rem;" [options]="partnersSliderOption" [carouselClasses]="['owl-theme', 'slip']">
-      <div class="partners" *ngFor="let i of partners" fxLayout="row" fxLayoutAlign="center center">
-        <img src="{{i.img}}" alt="CleanUp partner">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+          <div class="head-wrapper">
+            <h2 class="title text-center">Отзывы клиентов</h2>
+          </div>
       </div>
-    </owl-carousel>
-    
+
+      <div class="col-12">
+          <owl-carousel [options]="mySlideOptions" [carouselClasses]="['owl-theme', 'slip']">
+              <div class="comments"> 
+                <div class="image" style="background: url(./assets/img/b2b/otzovi/kulick.jpg) 50% 50% no-repeat / cover"></div>
+                <div class="wrapp">
+                  <h2 class="title"></h2>
+                  <p class="text-center">Тетя Люба, которая раньше убирала у нас в офисе, перестала справляться, да и болеть часто стала. Было принято решение обратиться в клининговую компанию. Выбор пал на эту (отзывы в интернете хорошие были). Все чисто, все быстро и недорого. Благодарим и надеемся на тесное сотрудничество в дальнейшем!</p>
+                  <p class="name">Лариса Кулик</p>
+                </div>
+              </div> 
+              
+          
+              <div class="comments"> 
+                <div class="image" style="background: url(./assets/img/b2b/otzovi/sitnikov.jpg) 50% 50% no-repeat / cover"></div>
+                <div class="wrapp">
+                  <h2 class="title"></h2>
+                  <p class="text-center">У нас порядка 1500 квадратных метров. Довольно приличная по размеру площадь. Сейчас такое время, что все, что возможно, частный бизнес отдаёт на аутсорсинг. Мы тоже идем в ногу со временем. Помимо этого, у нас полностью белый бизнес и нам важно показывать расходы. Клининг – одна из статей, которую мы закладываем в бюджет. Сотрудника нанимать – не вижу смысла. Считаю, это прошлый век и лишние ресурсозатраты по управлению. Думаю, коллеги мои меня сейчас понимают. Компанию CleanUp от себя лично могу советовать – с работой справляются на ура.</p>
+                  <p class="name">Сергей Сытников</p>
+                </div>
+              </div> 
+        
+              <div class="comments"> 
+                <div class="image" style="background: url(./assets/img/b2b/otzovi/kolvasheva.jpg) 50% 50% no-repeat / cover"></div>
+                <div class="wrapp">
+                  <h2 class="title"></h2>
+                  <p class="text-center">Клиентом компании CleanUp мы являемся уже более года. Меня, как владельца компании все устраивает. Клинеры приходят вовремя, никогда не мешают моим сотрудникам работать. До этого у нас была уборщица, но, так как метраж площади у нас сравнительно небольшой 400 метров – мы отказались от этой вакансии и отдали чистоту нашего офиса на аутсорсинг. В моей ситуации это выгоднее, чем платить сотруднику. Да и меньше нерабочих разговоров в офисе.</p>
+                  <p class="name">Злата Колвашева</p>
+                </div>
+              </div> 
+            </owl-carousel>
+      </div>
+      <div class="col-12">
+          <owl-carousel [options]="partnersSliderOption" [carouselClasses]="['owl-theme', 'slip']">
+            <div class="partners" *ngFor="let i of partners">
+              <img src="{{i.img}}" alt="CleanUp partner">
+            </div>
+          </owl-carousel>
+      </div>
+    </div>    
   </div>
 </section>
 
 <section id="window">
-  <div class="container" fxLayout="column">
-    <div class="wrapp">
-      <h3>Мытье окон 2 раза в год включим в стоимость договора</h3>
-      <p>Без каких либо доплат! Подай заявку на рассчет стоимость сейчас</p>
-    </div>
-    <div class="wrap">
-        <a href="#">
-          <button class="base-button" type='button' mat-raised-button>Сделать рассчет</button>
-        </a>
+  <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h3>Мытье окон 2 раза в год включим в стоимость договора</h3>
+            <p>Без каких либо доплат! Подай заявку на рассчет стоимость сейчас</p>
+          </div>
+          <div class="col-12">
+              <a href="#">
+                <button class="base-button" type='button' mat-raised-button>Сделать рассчет</button>
+              </a>
+          </div>
     </div>
   </div>
 </section>
 
 <footer class="bg-main">
-  <div class="container" fxLayout="column">
-    <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly" fxLayoutGap="gappx">
-      <div class="wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-4">
         <a href="#">
           <img class="logo" src="./assets/logotype-alt.svg" alt="CleanUp logo">
         </a>
-        <div class="wrap" fxLayout="row" fxLayoutAlign="start center">
+        <div class="wrap">
           <i class="material-icons">location_on</i>
           <address>420021, г. Казань, ул. Оренбургский Тракт, 160-211</address>
         </div>
   
-        <div class="wrap" fxLayout="row" fxLayoutAlign="start center">
+        <div class="wrap">
           <i class="material-icons">contact_phone</i>
           <a href="tel:+7 (843) 207-02-96">+7 (843) 207-02-96</a>
         </div>
         
-        <div class="wrap" fxLayout="row" fxLayoutAlign="start center">
+        <div class="wrap">
           <i class="material-icons">email</i>
           <a href="mailto:cleanupkzn@yandex.ru">cleanupkzn@yandex.ru</a>
         </div>
       </div>
-      <div class="wrapper">
+      <div class="col-12 col-md-6 col-lg-4">
         <div class="head-wrapper">
             <h4 class="title text-center">Быстрая навигация</h4>
         </div>
@@ -237,8 +256,10 @@
         </div>
       </div>
     </div>
-    <div class="row" fxLayout="row" fxLayoutAlign="center center">
-      <p>© 2013 - ООО «КЛИН АП»</p>
+    <div class="row">
+      <div class="col-12">
+          <p>© 2013 - ООО «КЛИН АП»</p>
+      </div>
     </div>
   </div>
 </footer>
