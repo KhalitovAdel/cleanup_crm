@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <div class="row" [formGroup]="EmployeeControl">
+    <div class="col-4" formGroupName="details">
+
+      <mat-form-field appearance="outline">
+          <input matInput type="text" formControlName="fullName" placeholder="Полное имя">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <input matInput formControlName="birthDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Дата рождения">
+          <owl-date-time #dt1 firstDayOfWeek='1' stepMinute='15'></owl-date-time>
+      </mat-form-field>
+
+      <div class="w-100" formArrayName="contactPhone">
+          <mat-form-field appearance="outline" *ngFor="let x of EmployeeControl['controls'].details['controls'].contactPhone['controls']; let i = index;">
+              <input matInput type="tel" formControlName="{{i}}" placeholder="Номер телефона">
+          </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+          <input matInput type="text" formControlName="homeAddress" placeholder="Адрес проживания">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-select placeholder="Возможные районы работы" formControlName="workAdresses" multiple>
+          <mat-option *ngFor="let topping of areasList" [value]="topping">{{topping}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <textarea matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="5"
+                  cdkAutosizeMaxRows="5" formControlName="workHistory"  placeholder="Предыдущие места работы, что делали"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <textarea matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="5"
+                  cdkAutosizeMaxRows="5" formControlName="workGrah"  placeholder="График в котором может работать"></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="saveEmployee()">Сохранить в базу</button>
+    </div>
+  </div>
+</div>

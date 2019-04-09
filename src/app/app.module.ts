@@ -45,6 +45,8 @@ import { OffersListComponent } from './CRM/Offers/offers-list/offers-list.compon
 import { OutstaffComponent } from './Client/b2b/outstaff/outstaff.component';
 import { ConsumablesComponent } from './CRM/Configuration/consumables/consumables.component';
 import { CommonModule } from '@angular/common';
+import { EmployeesComponent } from './CRM/Contacts/Employees/employees/employees.component';
+import { EmployeesListComponent } from './CRM/Contacts/Employees/employees-list/employees-list.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import { CommonModule } from '@angular/common';
     DashboardComponent,
     OffersListComponent,
     OutstaffComponent,
-    ConsumablesComponent
+    ConsumablesComponent,
+    EmployeesComponent,
+    EmployeesListComponent
   ],
   imports: [
     BrowserModule,

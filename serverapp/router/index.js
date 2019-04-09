@@ -8,7 +8,8 @@ parser      = require('../pageparser/index');
 var ctrlAuth    = require('../controllers/auth'),
     ctrlLead    = require('../controllers/lead'),
     ctrlClient  = require('../controllers/client'),
-    ctrlConfig  = require('../controllers/config');
+    ctrlConfig  = require('../controllers/config'),
+    ctrlEmployee  = require('../controllers/employee');
 
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login); 
@@ -37,8 +38,11 @@ router.post('/newOffer', ctrlAuth.mustAuthenticatedMw, ctrlLead.newOffer);
 router.post('/deleteOffer', ctrlAuth.mustAuthenticatedMw, ctrlLead.deleteOffer);
 router.post('/changeOfferDetailsToAll', ctrlAuth.mustAuthenticatedMw, ctrlLead.changeOfferDetailsToAll);
 
+router.post('/createNewEmployee', ctrlAuth.mustAuthenticatedMw, ctrlEmployee.createNewEmployee);
+
 router.post('/createNewMaterial', ctrlAuth.mustAuthenticatedMw, ctrlConfig.createNewMaterial);
 
+router.get('/getEmployeeList', ctrlAuth.mustAuthenticatedMw, ctrlEmployee.getEmployeeList);
 router.get('/getMaterialList', ctrlAuth.mustAuthenticatedMw, ctrlConfig.getMaterialList);
 router.get('/getLeadList', ctrlAuth.mustAuthenticatedMw, ctrlLead.getLeadList);
 router.get('/getalloffers', ctrlAuth.mustAuthenticatedMw, ctrlLead.getAllOffers)

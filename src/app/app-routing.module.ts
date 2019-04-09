@@ -10,11 +10,15 @@ import { DashboardComponent } from './CRM/Dashboard/dashboard/dashboard.componen
 import { OffersListComponent } from './CRM/Offers/offers-list/offers-list.component';
 import { OutstaffComponent } from './Client/b2b/outstaff/outstaff.component';
 import { ConsumablesComponent } from './CRM/Configuration/consumables/consumables.component';
+import { EmployeesComponent } from './CRM/Contacts/Employees/employees/employees.component';
+import { EmployeesListComponent } from './CRM/Contacts/Employees/employees-list/employees-list.component';
 
 const baseCrmPath = 'crm';
 const routes: Routes = [
   { path: '', component: RegularComponent, pathMatch: 'full' },
   { path: baseCrmPath, component: DashboardComponent, canActivate: [AuthGuard], children: [
+    { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard] },
+    { path: 'employees-list', component: EmployeesListComponent, canActivate: [AuthGuard] },
     { path: 'alloffers', component: OffersListComponent, canActivate: [AuthGuard] },
     { path: 'newlead', component: NewLeadComponent, canActivate: [AuthGuard] },
     { path: 'leadlist', component: LeadListComponent, canActivate: [AuthGuard] },
