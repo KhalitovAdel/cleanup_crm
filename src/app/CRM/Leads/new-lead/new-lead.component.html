@@ -6,119 +6,128 @@
 </mat-menu>
 
 <section>
-    <form [formGroup]="LeadControl">
-        <div class="wrapp">
-            <mat-form-field>
-                <input matInput (change)="pars2gis()" type="text" formControlName="link2gis" placeholder="Ссылка 2gis">
-            </mat-form-field>
-    
-            <mat-form-field>
-                <mat-select placeholder="Статус Лида" formControlName="leadStatus">
-                    <mat-option *ngFor="let x of LeadStatus;" [value]="x.status">
-                    {{x.translate}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-    
-            <mat-form-field>
-                <input matInput type="text" formControlName="firmName" placeholder="Название фирмы">
-            </mat-form-field>                
-    
-            <div class="w-100">
-                <div formArrayName="contactPhones"
-                *ngFor="let phone of LeadControl['controls'].contactPhones['controls']; let i = index;">
-                    <mat-form-field>
-                        <input matInput type="text" formControlName="{{i}}" placeholder="Номер телефона">
-                    </mat-form-field>
-                    <button mat-mini-fab color="warn" (click)='removeContactPhoneControl(i)'>X</button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-7">
+                <div class="container-fluid" [formGroup]="LeadControl">
+                    <div class="row">
+                        <div class="col-4">
+                
+                                <mat-form-field appearance="outline">
+                                    <input matInput (change)="pars2gis()" type="text" formControlName="link2gis" placeholder="Ссылка 2gis">
+                                </mat-form-field>
+                
+                                <mat-form-field appearance="outline">
+                                    <mat-select formControlName="leadStatus" placeholder="Статус Лида">
+                                        <mat-option *ngFor="let x of LeadStatus; let i = index" [value]="x.status">
+                                            {{x.translate}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                
+                
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="firmName" placeholder="Название фирмы">
+                                </mat-form-field>
+                
+                                <mat-form-field appearance="outline"  formArrayName="contactPhones"
+                                *ngFor="let phone of LeadControl['controls'].contactPhones['controls']; let i = index;">
+                                    <input matInput type="text" formControlName="{{i}}" placeholder="Номер телефона">
+                                    <button *ngIf="LeadControl['controls'].contactPhones['controls'].length > 1" mat-button matSuffix mat-icon-button aria-label="Clear" (click)='removeContactPhoneControl(i)'>
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                                <p><a href="#" (click)='addContactPhoneControl($event)'>Добавить номер</a></p>
+                                
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="address" placeholder="Адрес">
+                                </mat-form-field>
+                
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="contactName" placeholder="Имя собеседника">
+                                </mat-form-field>
+                
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="position" placeholder="Его должность">
+                                </mat-form-field>
+                
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="email" formControlName="contactEmail" placeholder="E-mail">
+                                </mat-form-field>
+                
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="text" formControlName="lprsName" placeholder="ФИО ЛПР">
+                                </mat-form-field>
+                
+                        </div>
+                        <div class="multipanel col-8" formArrayName="tasks"
+                            *ngFor="let phone of LeadControl['controls'].tasks['controls']; let i = index;">
+            
+                                <mat-form-field appearance="outline" [formGroupName]="i">
+                                    <mat-select formControlName="action" placeholder="Задача">
+                                        <mat-option *ngFor="let x of PanelControl;" [value]="x.action">
+                                            {{x.translate}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+            
+                                <mat-form-field appearance="outline" [formGroupName]="i">
+                                    <textarea matInput
+                                            cdkTextareaAutosize
+                                            #autosize="cdkTextareaAutosize"
+                                            cdkAutosizeMinRows="5"
+                                            cdkAutosizeMaxRows="5" formControlName="description"  placeholder="Описание задачи"></textarea>
+                                </mat-form-field>
+            
+                                <mat-form-field appearance="outline" [formGroupName]="i">
+                                    <input matInput formControlName="deadLineDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Дата задачи">
+                                    <owl-date-time #dt1 firstDayOfWeek='1' stepMinute='15'></owl-date-time>
+                                </mat-form-field>
+            
+                                <!-- <ul class="ul-0" formArrayName="comments"
+                                *ngFor="let phone of LeadControl['controls'].comments['controls']; let i = index;">
+                                    <li [formGroupName]="i">
+                                        <textarea  formControlName="description" placeholder="Комментарий лида"></textarea>
+                                    </li>
+                                </ul> -->
+                        </div>
+                    </div>
                 </div>
-                <a href="#" (click)='addContactPhoneControl($event)'>Добавить номер</a>
             </div>
-    
-            <mat-form-field>
-                <input matInput type="text" formControlName="address" placeholder="Адрес">
-            </mat-form-field>
-    
-            <mat-form-field>
-                <input matInput type="text" formControlName="contactName" placeholder="Имя собеседника">
-            </mat-form-field>
-    
-            <mat-form-field>
-                <input matInput type="text" formControlName="position" placeholder="Его должность">
-            </mat-form-field>
-    
-            <mat-form-field>
-                <input matInput type="email" formControlName="contactEmail" placeholder="E-mail">
-            </mat-form-field>
-    
-            <mat-form-field>
-                <input matInput type="text" formControlName="lprsName" placeholder="ФИО ЛПР">
-            </mat-form-field>
-    
-        </div>
-        <div class="wrapp">
-    
-            <div class="w-100" formArrayName="tasks"
-            *ngFor="let phone of LeadControl['controls'].tasks['controls']; let i = index;">
-                <mat-form-field [formGroupName]="i">
-                    <mat-select placeholder="Задача" formControlName="action">
-                        <mat-option *ngFor="let x of PanelControl;" [value]="x.action">
-                        {{x.translate}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-    
-            <div class="w-100" formArrayName="tasks"
-            *ngFor="let phone of LeadControl['controls'].tasks['controls']; let i = index;">
-                <mat-form-field [formGroupName]="i" style="width: 100%;">
-                    <textarea matInput formControlName="description" placeholder="Описание задачи"></textarea>
-                </mat-form-field>
-            </div>
-    
-            <div class="w-100" formArrayName="tasks"
-            *ngFor="let phone of LeadControl['controls'].tasks['controls']; let i = index;">
-                <mat-form-field [formGroupName]="i">
-                    <input matInput formControlName="deadLineDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Дата задачи">
-                    <owl-date-time #dt1 firstDayOfWeek='1' stepMinute='15'></owl-date-time>
-                </mat-form-field>
-            </div>
-    
-            <div class="w-100" formArrayName="comments"
-            *ngFor="let phone of LeadControl['controls'].comments; let i = index;">
-                <mat-form-field [formGroupName]="i" style="width: 100%;">
-                    <textarea matInput formControlName="description" placeholder="Комментарий лида"></textarea>
-                </mat-form-field>
+            
+            <div class="col-3" [formGroup]="OfferControl">
+                <div class="container-fluid" formArrayName="objects" *ngFor="let x of OfferControl['controls'].objects['controls']; let i = index">
+                    <div class="row" [formGroupName]="i">
+
+                        <mat-form-field appearance="outline">
+                            <mat-select (selectionChange)="calculate()" formControlName="regular" placeholder="Регулярность">
+                                <mat-option *ngFor="let x of RegularControl;" [value]="x.days">
+                                    {{x.translate}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+        
+                        <mat-form-field appearance="outline">
+                            <input matInput (change)="calculate()" type="number" formControlName="area" placeholder="Площадь">
+                        </mat-form-field>
+                
+                        <mat-form-field appearance="outline">
+                            <input matInput (change)="calculate()" type="number" formControlName="time" placeholder="Время на объекте">
+                        </mat-form-field>
+        
+                        <mat-checkbox (change)="calculate()" formControlName="twice">Уборка 2 раза в день</mat-checkbox>
+                        
+                        <button (click)='createNewObject()'>Новый</button>
+                        <br>
+                        <button (click)="clearOfferControl()">Значение</button>
+                        <!-- <p *ngIf="OfferControl.value.details.fotOnHand > 1"> Фот: {{OfferControl.value.details.fotOnHand}}</p>
+                        <p *ngIf="OfferControl.value.details.profit > 1">Прибыль: {{OfferControl.value.details.profit}}</p>
+                        <p *ngIf="OfferControl.value.details.itog > 1">Итог: {{OfferControl.value.details.itog}}</p>
+                        <p *ngIf="OfferControl.value.details.itogMaterial > 1">Итог мат: {{OfferControl.value.details.itogMaterial}}</p> -->
+
+                    </div>
+                </div>
             </div>
         </div>
-    </form>
-    
-    <form [formGroup]="OfferControl">
-        <div class="wrapp">
-                <mat-form-field>
-                    <mat-select (selectionChange)="calculate()" placeholder="Регулярность" formControlName="regular">
-                        <mat-option *ngFor="let x of RegularControl;" [value]="x.days">
-                        {{x.translate}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-        
-                <mat-form-field>
-                    <input matInput (change)="calculate()" type="number" formControlName="area" placeholder="Площадь">
-                </mat-form-field>
-        
-                <mat-form-field>
-                    <input matInput (change)="calculate()" type="number" formControlName="time" placeholder="Время на объекте">
-                </mat-form-field>
-
-                <mat-checkbox (change)="calculate()" formControlName="twice">Убираться 2 раза</mat-checkbox>
-
-                <p *ngIf="Result.fotOnHand > 1"> Фот: {{Result.fotOnHand}}</p>
-                <p *ngIf="Result.profit > 1">Прибыль: {{Result.profit}}</p>
-                <p *ngIf="Result.itog > 1">Итог: {{Result.itog}}</p>
-                <p *ngIf="Result.itogMaterial > 1">Итог мат: {{Result.itogMaterial}}</p>
-        </div>   
-
-    </form>
-
+    </div>
 </section>

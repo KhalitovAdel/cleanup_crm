@@ -1,164 +1,211 @@
 import { Injectable } from '@angular/core';
-
+import { METER_PER_HOURE, MaterialCalculationService } from './Material/material-calculation.service';
+interface Objects {
+  area: number,
+  regular: number,
+  time: number,
+  twice: boolean
+}
 @Injectable({
   providedIn: 'root'
 })
 export class CalculateService {
 
-    ONE_HOUR_PRICE = 59;
-    ONE_METER_PRICE = 0.455;
-    ONE_DAY_PRICE = 227;
-    MROT = 12000;
-
-    getOfficialFot(area, regularValue, timeValue, twice):number {  
-      if ( timeValue != '' && timeValue != null ) { // Считается по часам
-
-        return this.MROT * ( timeValue * regularValue / (30/7) ) / 40;
-
-      } else { //Считаем по квадратуре
-        if (twice === true) {
-          
-          return this.MROT * ( ( area * 2 / 150 ) * regularValue / (30/7) ) / 40;
-
-        }
-        return this.MROT * ( ( area / 150 ) * regularValue / (30/7) ) / 40;
-      }
-    }
-
-    getOfficialFotNalog(area, regularValue, timeValue, twice) {
-      var offFot = this.getOfficialFot(area, regularValue, timeValue, twice);
-      var itog = {
-        NDFL: parseFloat( (offFot* 0.13).toFixed(2) ),
-        PS: parseFloat( (offFot * 0.22).toFixed(2) ),
-        MS: parseFloat( (offFot * 0.051).toFixed(2) ),
-        Other: parseFloat( (offFot * 0.029).toFixed(2) ),
-        Travm: parseFloat( (offFot * 0.002).toFixed(2) ),
-        Summ: 1
-      }
-      var itogSumm = itog.NDFL + itog.PS + itog.MS + itog.Other + itog.Travm;
-      itog.Summ = parseFloat( itogSumm.toFixed(2) );
-      return itog;
-    }
-
-    calculateFot(area, regularValue, timeValue, twice) {
-      if ( timeValue != '' && timeValue != null ) { // Считается по часам
-        console.log('Считается по часам');
-        return this.beautyPrice( regularValue * ( this.ONE_DAY_PRICE + timeValue * this.ONE_HOUR_PRICE ) );
-      } else { //Считаем по квадратуре
-        if (twice === true) {
-          return this.beautyPrice( regularValue * ( this.ONE_DAY_PRICE + area * this.ONE_METER_PRICE * 2 ) + 2000 );
-        }
-        return this.beautyPrice( regularValue * ( this.ONE_DAY_PRICE + area * this.ONE_METER_PRICE ) );
-      }
-    }
+    ONE_HOUR_PRICE: number = 59;
+    ONE_METER_PRICE: number = 0.455;
+    ONE_DAY_PRICE: number = 227;
+    MROT: number = 12000;
     
-    calculateBlackFot(area, regularValue, timeValue, twice) {
-      return  this.calculateFot(area, regularValue, timeValue, twice)
-              - this.getOfficialFot(area, regularValue, timeValue, twice) 
-              + this.getOfficialFotNalog(area, regularValue, timeValue, twice).NDFL;
+  constructor(private material: MaterialCalculationService) { }
+
+  beautyPrice(num): number  {
+    return parseFloat((num).toFixed(2));
+  }
+  
+  getWorkersCounte(object): object {
+
+    var coefficient: number = (object.regular==30)?2:1; //Коэф кол-ва людей, если график без выходных в 2 раза больше людей
+    var timeToWork: number = object.time?object.time:12; // Время на объекте
+
+    var counte: number = object.area / METER_PER_HOURE / timeToWork; // Кол-ва людей в определенном графике
+    if ( ( counte - Math.trunc(counte) ) / Math.trunc(counte) > 0.15 && ( counte >= 1) ) {
+      var metersperone = object.area/counte;
+      return [
+          {
+            count: this.beautyPrice( Math.trunc(counte) * coefficient ),
+            metersPerDay: this.beautyPrice( object.area/counte ),
+            timeToWorkPerDay: this.beautyPrice( metersperone/METER_PER_HOURE ),
+            workDayPerMonth: this.beautyPrice( object.regular/coefficient )
+        },
+        {
+          count: this.beautyPrice( 1 * coefficient ),
+          metersPerDay: this.beautyPrice( metersperone * ( counte - Math.trunc(counte) ) ),
+          timeToWorkPerDay: this.beautyPrice( metersperone * ( counte - Math.trunc(counte) )/METER_PER_HOURE ),
+          workDayPerMonth: this.beautyPrice( object.regular/coefficient )
+        }
+      ]
+    } else {
+      return [{
+        count: this.beautyPrice( ( (Math.trunc(counte)<1)?1:Math.trunc(counte) ) * coefficient ),
+        metersPerDay: this.beautyPrice( object.area/( (counte<1)?1:counte) ),
+        timeToWorkPerDay: this.beautyPrice( object.area/( (counte<1)?1:counte)/METER_PER_HOURE ),
+        workDayPerMonth: this.beautyPrice( object.regular/coefficient)
+      }]
     }
-
-    calculateManagerWage(area, regularValue)  {
-      if ( area < 120 && regularValue < 9 ) {
-        return 750;
-      }
-      return 500 + 750;
-    }
-
-    calculateWindowsFond(area)  {
-      return 300;
-    }
-
-    calculateTinkoffCommission(area, regularValue, timeValue, twice)  {
-
-      return this.beautyPrice( 
-              ( this.calculateBlackFot(area, regularValue, timeValue, twice) 
-              + this.calculateManagerWage(area, regularValue) 
-              + this.calculateWindowsFond(area) ) * 1.5 / 98.5);
-    }
-
-    beautyPrice(num): number  {
-      Number.parseInt(num);
-      return Math.ceil(num);
-    }
-
-    calculateMaterial(area, regularValue, twice)  {
-      if (twice === true) {
-        return this.beautyPrice( (4.08 * regularValue + regularValue * area * 0.09 * 2 + 718) );
-      }
-      return this.beautyPrice( (4.08 * regularValue + regularValue * area * 0.09 + 718) );
-    }
-
-    setProfit(area, regularValue, timeValue, twice)  {
-      
-      if ( isNaN(timeValue) && ( area <= 120 ) && (regularValue < 9) ) {
-        return 1000;
-      }
-      if ( ( isNaN(timeValue) || timeValue === '' ) && ( area <= 120 ) && regularValue < 9) {
-        return 1500;
-      } 
-      return 3000;
-    }
-
-    calculateItog(area, regularValue, timeValue, twice)  {
-
-      return this.beautyPrice(
-        (     this.getOfficialFot(area, regularValue, timeValue, twice)
-              + this.calculateBlackFot(area, regularValue, timeValue, twice)
-              + this.getOfficialFotNalog(area, regularValue, timeValue, twice).Summ
-              - this.getOfficialFotNalog(area, regularValue, timeValue, twice).NDFL
-              + this.calculateManagerWage(area, regularValue) 
-              + this.calculateTinkoffCommission(area, regularValue, timeValue, twice) 
-              + this.calculateWindowsFond(area) 
-              + this.setProfit(area, regularValue, timeValue, twice) ) * 100 / 94
-      );
-    }
-
-    calculateItogMaterial(area, regularValue, timeValue, twice)  {
-
-      return this.beautyPrice(
-              ( this.getOfficialFot(area, regularValue, timeValue, twice)
-              + this.calculateBlackFot(area, regularValue, timeValue, twice)
-              + this.getOfficialFotNalog(area, regularValue, timeValue, twice).Summ
-              - this.getOfficialFotNalog(area, regularValue, timeValue, twice).NDFL
-              + this.calculateManagerWage(area, regularValue) 
-              + this.calculateTinkoffCommission(area, regularValue, timeValue, twice) 
-              + this.calculateWindowsFond(area) 
-              + this.calculateMaterial(area, regularValue, twice)
-              + this.setProfit(area, regularValue, timeValue, twice) ) * 100 / 94
-      );
-    }
-    getCalculate(area, regularValue, timeValue, twice)  {
-      var Offer: Object = {
-        whiteFot: parseFloat( this.getOfficialFot(area, regularValue, timeValue, twice).toFixed(2) ),
-        blackFot: parseFloat( this.calculateBlackFot(area, regularValue, timeValue, twice).toFixed(2) ),
-        fotOnHand:  parseFloat( this.getOfficialFot(area, regularValue, timeValue, twice).toFixed(2) )
-                    + parseFloat( this.calculateBlackFot(area, regularValue, timeValue, twice).toFixed(2) )
-                    - this.getOfficialFotNalog(area, regularValue, timeValue, twice).NDFL,
-        zpNalog: this.getOfficialFotNalog(area, regularValue, timeValue, twice),
-        managerWage: this.calculateManagerWage(area, regularValue),
-        tinkoffCommission: this.calculateTinkoffCommission(area, regularValue, timeValue, twice),
-        windowFond: this.calculateWindowsFond(area),
-        material: this.calculateMaterial(area, regularValue, twice),
-        profit: this.setProfit(area, regularValue, timeValue, twice),
-        itog: this.calculateItog(area, regularValue, timeValue, twice),
-        itogMaterial: this.calculateItogMaterial(area, regularValue, timeValue, twice)
-      }
-      return Offer;
-    }
-
-    getChangesCalculate(Offer) {
-      var rashodi: number = Number.parseInt(Offer.details.fot) 
-                  + Number.parseInt(Offer.details.managerWage)
-                  + Number.parseInt(Offer.details.windowFond);
-      var tinkoff: number = rashodi * 1.5 / 98.5;
-      var profit: number = Number.parseInt(Offer.details.profit),
-          material: number = Number.parseInt(Offer.details.material);
-      return {
-        tinkoffCommission: this.beautyPrice(tinkoff),
-        itog: this.beautyPrice( (rashodi + tinkoff + profit ) * 100 / 94 ),
-        itogMaterial: this.beautyPrice( (rashodi + tinkoff + profit + material ) * 100 / 94 )
+  }
+  calculateFot(object):object {
+    var counteResult = this.getWorkersCounte(object)
+    for (let i in counteResult) {
+      if (object.twice === false) {
+        counteResult[i]['fotOnHand'] = this.beautyPrice( counteResult[i].workDayPerMonth * (this.ONE_DAY_PRICE + counteResult[i].metersPerDay * this.ONE_METER_PRICE) );
+      } else {
+        counteResult[i]['fotOnHand'] = this.beautyPrice( 1.5 * counteResult[i].workDayPerMonth * (this.ONE_DAY_PRICE + counteResult[i].metersPerDay * this.ONE_METER_PRICE) );
       }
     }
-  constructor() { }
+    return counteResult;
+  }
+
+  getOfficialFot(object):object {
+    var calculateFotResult = this.calculateFot(object);
+    for (let i in calculateFotResult) {
+
+      var potentialOfficialFot = this.beautyPrice( calculateFotResult[i].workDayPerMonth * calculateFotResult[i].timeToWorkPerDay / 2 * ( (this.MROT /(30/7) )/40 ) );
+      calculateFotResult[i]['whiteFot'] = (potentialOfficialFot> 6000)?6000:potentialOfficialFot;
+    }
+    return calculateFotResult;
+  }
+
+  getOfficialFotNalog(object):object {
+    var officialFotResult = this.getOfficialFot(object);
+    for (let i in officialFotResult) {
+      var offFot = officialFotResult[i].whiteFot;
+      officialFotResult[i]['zpNalog'] = {
+          NDFL: this.beautyPrice(offFot* 0.13),
+          PS: this.beautyPrice(offFot * 0.22),
+          MS: this.beautyPrice(offFot * 0.051),
+          Other: this.beautyPrice(offFot * 0.029),
+          Travm: this.beautyPrice(offFot * 0.002),
+          Summ: 1
+        }
+        var itogSumm =    officialFotResult[i]['zpNalog'].NDFL 
+                          + officialFotResult[i]['zpNalog'].PS 
+                          + officialFotResult[i]['zpNalog'].MS 
+                          + officialFotResult[i]['zpNalog'].Other 
+                          + officialFotResult[i]['zpNalog'].Travm;
+        officialFotResult[i]['zpNalog'].Summ = this.beautyPrice( itogSumm );
+    }
+    return officialFotResult;
+  }
+
+  calculateBlackFot(object):object {
+    var calculateNalogResult = this.getOfficialFotNalog(object);
+    for (let i in calculateNalogResult) {
+      calculateNalogResult[i]['blackFot'] = this.beautyPrice(calculateNalogResult[i]['fotOnHand'] - calculateNalogResult[i]['whiteFot']);
+    }
+    return calculateNalogResult;
+  }
+
+  calculatEmployeesCount(Offer): object {
+    var counte = 0;
+    for (let i in Offer.objects) {
+      for (let x in Offer.objects[i].employees) {
+        counte = counte + Offer.objects[i].employees[x].count;
+      }
+    }
+    return {employeesCount: counte};
+  }
+
+  calculateManagerWage(Offer): object  {
+    var EmployeesCountResult = this.calculatEmployeesCount(Offer);
+    EmployeesCountResult['managerWage'] = 500 + 750 * EmployeesCountResult['employeesCount']
+    return EmployeesCountResult;
+  }
+
+  calculateWindowsFond(Offer): object  {
+    var area = 0;
+    var ManagerWageResult = this.calculateManagerWage(Offer);
+    for (let i in Offer.objects) {
+      area = area + Offer.objects[i]['area'];
+    }
+    ManagerWageResult['windowFond'] = this.beautyPrice( 300 * ((area/300 < 1)?1:(area/400) ) );
+    return ManagerWageResult;
+  }
+
+  calculateTinkoffCommission(Offer): object  {
+    var rash = 0;
+    var WindowsFondResult = this.calculateWindowsFond(Offer);
+    for (let i in Offer.objects) {
+      for (let x in Offer.objects[i].employees) {
+        rash = rash + Offer.objects[i].employees[x].blackFot * Offer.objects[i].employees[x].count;
+      }
+    }
+    WindowsFondResult['obnalCommission'] = this.beautyPrice( (rash + WindowsFondResult['managerWage'] + WindowsFondResult['windowFond'])*15/85 );
+    return WindowsFondResult;
+  }
+
+  setProfit(Offer): object  {
+    var TinkoffCommissionResult = this.calculateTinkoffCommission(Offer);
+    if (TinkoffCommissionResult['employeesCount'] > 10) {
+      TinkoffCommissionResult['profit'] = TinkoffCommissionResult['employeesCount'] * 2000;
+    } else {
+      TinkoffCommissionResult['profit'] = TinkoffCommissionResult['employeesCount'] * 3000;
+    }
+    return TinkoffCommissionResult;
+  }
+
+  async calculateMaterial(Offer)  {
+    var ProfitResult = this.setProfit(Offer);
+    return await this.material.getCalculateChemistry(Offer ,ProfitResult);
+  }
+
+  calculateItog(Offer) {
+    return this.calculateMaterial(Offer)
+      .then(data=> {
+        var Summ = 0;
+        for (let i in Offer.objects) {
+          for (let x in Offer.objects[i].employees) {
+            Summ =  Summ + Offer.objects[i].employees[x].count * ( Offer.objects[i].employees[x].fotOnHand + Offer.objects[i].employees[x].zpNalog.Summ)
+                    
+          }
+        }
+        var potentialItog = this.beautyPrice(( Summ + data.managerWage
+          + data.windowFond
+          + data.obnalCommission
+          + data.profit ) );
+        var nalogItog = (data.profit/10 > potentialItog/99)?data.profit/10:potentialItog/99;
+        
+        data['itog'] = this.beautyPrice(( Summ + data.managerWage
+                        + data.windowFond
+                        + data.obnalCommission
+                        + data.profit
+                        + nalogItog )*1.1 );
+        data['base_nalog_itog'] = this.beautyPrice(nalogItog);                                     
+        data['discount'] = Math.round(0.1 * data.itog / 1.1);
+        var potentialItogMaterial = this.beautyPrice(( Summ + data.managerWage
+                          + data.windowFond
+                          + data.obnalCommission
+                          + data.profit 
+                          + data.material) );
+        var nalogItogMaterial = (data.profit/10 > potentialItogMaterial/99)?data.profit/10:potentialItogMaterial/99;
+        
+        data['itogMaterial'] = this.beautyPrice(( Summ + data.managerWage
+                                + data.windowFond
+                                + data.obnalCommission
+                                + data.profit 
+                                + data.material
+                                + nalogItogMaterial) + data.discount );
+        
+        data['base_nalog_itog_material'] = this.beautyPrice(nalogItogMaterial);
+        return data;
+      })
+  }
+ 
+  async getCalculate(Offer) {
+    var NewOffer = Offer;
+    for (let i in NewOffer.objects) {
+      NewOffer.objects[i].employees = this.calculateBlackFot(NewOffer.objects[i]);
+    }
+    NewOffer.details = await this.calculateItog(NewOffer);
+    return NewOffer;
+  }
 }

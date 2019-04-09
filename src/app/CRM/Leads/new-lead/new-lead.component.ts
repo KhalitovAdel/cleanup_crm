@@ -5,20 +5,9 @@ import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 import { Guid } from "guid-typescript";
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert/alert.service';
+import { Offer, OfferInterface } from 'interfacess/OfferInterface';
+import { MaterialCalculationService } from 'src/app/services/calculate/Material/material-calculation.service';
 
-interface calculateResult {
-  whiteFot: Number,
-  blackFot: Number,
-  fotOnHand: Number,
-  zpNalog: Object,
-  itog: Number,
-  itogMaterial: Number,
-  managerWage: Number,
-  material: Number,
-  profit: Number,
-  tinkoffCommission: Number,
-  windowFond: Number,
-}
 
 @Component({
   selector: 'app-new-lead',
@@ -29,19 +18,19 @@ export class NewLeadComponent implements OnInit {
 
   LeadControl: FormGroup;
   OfferControl: FormGroup;
-
-  Result: calculateResult;
+  
+  canCalculate: boolean = false;
 
   RegularControl: Array<Object> = [
-    {days: '30', translate: 'Без выходных'},
-    {days: '25.8', translate: '6/1 - сб полный'},
-    {days: '23.7', translate: '6/1 - сб не полный'},
-    {days: '21.5', translate: '5/2'},
-    {days: '15', translate: '2/2'},
-    {days: '13', translate: '3 раза в неделю'},
-    {days: '8.6', translate: '2 раза в неделю'},
-    {days: '4.3', translate: 'Раз в неделю'},
-    {days: '1', translate: 'Раз в месяц'}
+    {days: 30, translate: 'Без выходных'},
+    {days: 25.8, translate: '6/1 - сб полный'},
+    {days: 23.7, translate: '6/1 - сб не полный'},
+    {days: 21.5, translate: '5/2'},
+    {days: 15, translate: '2/2'},
+    {days: 13, translate: '3 раза в неделю'},
+    {days: 8.6, translate: '2 раза в неделю'},
+    {days: 4.3, translate: 'Раз в неделю'},
+    {days: 1, translate: 'Раз в месяц'}
   ];
   
   PanelControl: Array<Object> = [
@@ -63,10 +52,10 @@ export class NewLeadComponent implements OnInit {
     private fb: FormBuilder,
     private svc: CalculateService,
     private myHttp: myHTTPService,
+    private material: MaterialCalculationService
     ) {}
 
   ngOnInit() {
-
     this.LeadControl = this.fb.group({
       leadId: Guid.create().toString(),
       leadStatus: ['', Validators.required],
@@ -98,37 +87,25 @@ export class NewLeadComponent implements OnInit {
 
     this.OfferControl = this.fb.group({
       leadLink: this.LeadControl.get('leadId').value,
-      area: ['', Validators.required],
-      regular: ['', Validators.required],
-      time: '',
-      twice: false,
+      objects: this.fb.array([
+        this.addObject()
+      ]),
+      details: this.createDetails(),
       status: '',
       createdDate: new Date,
       sentingDate: '',
-      details: this.fb.group({
-        whiteFot: ['', Validators.required],
-        blackFot: ['', Validators.required],
-        fotOnHand: ['', Validators.required],
-        zpNalog: ['', Validators.required], //хз
-        managerWage: ['', Validators.required],
-        tinkoffCommission: ['', Validators.required],
-        windowFond: ['', Validators.required],
-        material: ['', Validators.required],
-        profit: ['', Validators.required],
-        itog: ['', Validators.required],
-        itogMaterial: ['', Validators.required],
-      })
     });
 
-    this.LeadControl.valueChanges
-      .subscribe(
-        (value) => console.log(value)
-      );
+    // this.LeadControl.valueChanges
+    //   .subscribe(
+    //     // (value) => console.log(value)
+    //   );
 
-    this.OfferControl.valueChanges
-      .subscribe(
-        (value) => console.log(value)
-      );
+    // this.OfferControl.valueChanges
+    //   .subscribe(
+    //     // (value) => console.log(value)
+    //   );
+      
   } //ngOnInit finished
 
   //methods to control contactPhone inputs
@@ -141,20 +118,88 @@ export class NewLeadComponent implements OnInit {
     e.preventDefault();
     ( this.LeadControl.get('contactPhones') as FormArray ).push(new FormControl);
   }
+  addObject():FormGroup {
+    return this.fb.group({
+      area: ['', Validators.required],
+      regular: ['', Validators.required],
+      time: '',
+      twice: false,
+      employees: this.fb.array([
+  
+      ]),
+    })
+  }
+  createDetails() {
+    return this.fb.group({
+      Chemistry: Array,
+      Inventory: Array,
+      WindowInventory: Array,
+      employeesCount: Number,
+      managerWage: Number,
+      windowFond: Number,
+      obnalCommission: Number,
+      profit: Number,
+      material: Number,
+      itog: Number,
+      base_nalog_itog: Number,
+      itogMaterial: Number,
+      base_nalog_itog_material: Number,
+      discount: Number,
+      materialToStart: Number
+    })
+  }
+  getValue() {
+    console.log(this.OfferControl.value);
+  }
+  createNewEmployeesGroup() {
+    return this.fb.group({
+      count: Number,
+      metersPerDay: Number,
+      timeToWorkPerDay: Number,
+      workDayPerMonth: Number,
+      fotOnHand: Number,
+      whiteFot: Number,
+      blackFot: Number,
+      zpNalog: Object
+    })
+  }
+  createNewObject() {
+    ( this.OfferControl.get('objects') as FormArray ).push( this.addObject() );
+  }
   //methods to control contactPhone inputs
+
   calculate() {
-    if ( this.OfferControl.get('area').value > 0 && this.OfferControl.get('regular').value > 0 ) {
-
-      this.OfferControl.get('details').setValue( this.svc.getCalculate(
-        this.OfferControl.get('area').value, 
-        this.OfferControl.get('regular').value,
-        this.OfferControl.get('time').value,
-        this.OfferControl.get('twice').value,
-      ));
-      this.Result = this.OfferControl.get('details').value;
-      return this.Result;
-
+    var schetchik = 0;
+    for(let z in this.OfferControl['controls'].objects['controls']) {
+      var object = this.OfferControl['controls'].objects['controls'][z].value;
+      if (object.area > 0 && object.regular > 0) {
+        if (this.canCalculate === false) {
+          schetchik = 1;
+          this.canCalculate = true;
+        }
+      } else {
+        this.valid(this.OfferControl);
+      }
     }
+    for (let i in this.OfferControl['controls'].objects['controls']) {
+      while (this.OfferControl['controls'].objects['controls'][i]['controls'].employees.length !== 0) {
+        this.OfferControl['controls'].objects['controls'][i]['controls'].employees.removeAt(0)
+      }
+    }
+    if (schetchik === 1) {
+      this.svc.getCalculate(
+        this.OfferControl.value
+      ).then(data=> {
+        for (let y in data.objects) {
+          for (let i in data.objects[y].employees) {
+            (this.OfferControl['controls'].objects['controls'][y]['controls'].employees['controls'] as FormArray).push(this.createNewEmployeesGroup())
+          }
+        }
+        this.OfferControl.patchValue(data);
+        this.canCalculate = false;
+        console.log(this.OfferControl.value)
+      }) 
+    } 
   }
 
   pars2gis() {

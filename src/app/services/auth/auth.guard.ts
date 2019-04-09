@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate {
         }
       }),
       catchError( (err: HttpErrorResponse) => {
-        this._router.navigate(['crm']);
+        this._router.navigate(['login']);
         return Observable.throw(err.statusText);
       })
     )}

@@ -45,26 +45,54 @@ LeadSchema  = new mongoose.Schema({
 });
 
 OfferSchema  = new mongoose.Schema({
-  leadLink: String,
-  area: Number,
-  regular: Number,
-  time: Number,
-  twice: Boolean,
-  status: String,
   createdDate: Date,
+  leadLink: String,
+  objects: [
+    {
+      area: Number,
+      regular: Number,
+      time: Number,
+      twice: Boolean,
+      employees: [
+        {
+          blackFot: Number,
+          count: Number,
+          fotOnHand: Number,
+          metersPerDay: Number,
+          timeToWorkPerDay: Number,
+          whiteFot: Number,
+          workDayPerMonth: Number,
+          zpNalog: {
+            MS: Number,
+            NDFL: Number,
+            Other: Number,
+            PS: Number,
+            Summ: Number,
+            Travm: Number
+          }
+        }
+      ]
+    }
+
+  ],
   sentingDate: Date,
+  status: String,
   details: {
-    whiteFot: Number,
-    blackFot: Number,
-    fotOnHand: Number,
-    zpNalog: Object,
-    managerWage: Number,
-    tinkoffCommission: Number,
-    windowFond: Number,
-    material: Number,
-    profit: Number,
+    Chemistry: Array,
+    Inventory: Array,
+    WindowInventory: Array,
+    base_nalog_itog: Number,
+    base_nalog_itog_material: Number,
+    discount: Number,
+    employeesCount: Number,
     itog: Number,
     itogMaterial: Number,
+    managerWage: Number,
+    material: Number,
+    materialToStart: Number,
+    obnalCommission: Number,
+    profit: Number,
+    windowFond: Number,
   }
 });
 

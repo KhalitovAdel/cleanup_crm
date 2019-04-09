@@ -7,7 +7,8 @@ parser      = require('../pageparser/index');
 
 var ctrlAuth    = require('../controllers/auth'),
     ctrlLead    = require('../controllers/lead'),
-    ctrlClient  = require('../controllers/client');
+    ctrlClient  = require('../controllers/client'),
+    ctrlConfig  = require('../controllers/config');
 
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login); 
@@ -33,9 +34,14 @@ router.post('/saveOfferChanges', ctrlAuth.mustAuthenticatedMw, ctrlLead.saveOffe
 router.post('/saveOfferDetailChanges', ctrlAuth.mustAuthenticatedMw, ctrlLead.saveOfferDetailChanges);
 router.post('/sentOffer', ctrlAuth.mustAuthenticatedMw, ctrlLead.sentOffer);
 router.post('/newOffer', ctrlAuth.mustAuthenticatedMw, ctrlLead.newOffer);
-router.post('/deleteOffer', ctrlAuth.mustAuthenticatedMw, ctrlLead.deleteOffer)
+router.post('/deleteOffer', ctrlAuth.mustAuthenticatedMw, ctrlLead.deleteOffer);
+router.post('/changeOfferDetailsToAll', ctrlAuth.mustAuthenticatedMw, ctrlLead.changeOfferDetailsToAll);
 
+router.post('/createNewMaterial', ctrlAuth.mustAuthenticatedMw, ctrlConfig.createNewMaterial);
+
+router.get('/getMaterialList', ctrlAuth.mustAuthenticatedMw, ctrlConfig.getMaterialList);
 router.get('/getLeadList', ctrlAuth.mustAuthenticatedMw, ctrlLead.getLeadList);
+router.get('/getalloffers', ctrlAuth.mustAuthenticatedMw, ctrlLead.getAllOffers)
 router.get('/detect', function( req, res) {
     if ( req.isAuthenticated() ) {
         res.status(200).send({ detect: true })

@@ -33,20 +33,26 @@
     </div>
     <div class="row text-center">
       <div class="col-12 col-sm-6 col-lg-3">
-          <input type="text" formControlName='area' placeholder="Площадь помещения">
+          <mat-form-field appearance="outline">
+            <input matInput type="text" formControlName='area' placeholder="Площадь помещения">
+          </mat-form-field>
       </div>
       <div class="col-12 col-sm-6 col-lg-3">
         <div class="dropdown">
-          <select formControlName='regular' placeholder="Регулярность" class="dropdown-select">
-            <option *ngFor="let x of RegularControl;" [value]="x.days">{{x.translate}}</option>
-          </select>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName='regular' placeholder="Регулярность" class="dropdown-select">
+              <mat-option *ngFor="let x of RegularControl;" [value]="x.days">{{x.translate}}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
       <div class="col-12 col-sm-6 col-lg-3">
-        <input formControlName='phone' type="tel" [textMask]="{mask: phoneMask}" placeholder="Номер телефона">
+        <mat-form-field appearance="outline">
+          <input matInput formControlName='phone' type="tel" [textMask]="{mask: phoneMask}" placeholder="Номер телефона">
+        </mat-form-field>
       </div>
       <div class="col-12 col-sm-6 col-lg-3">
-        <button class="base-button" (click)="sentOffer()" type='submit'>Рассчитать цену </button>
+        <button mat-raised-button class="base-button" (click)="sentOffer()" type='submit'>Рассчитать цену </button>
       </div>
     </div>
   </div>
@@ -100,7 +106,7 @@
         <p><span class="font-weight-bold">Итог: </span>{{i.itogs}}</p>
         <div class="wrap">
           <a href="#">
-            <button class="base-button" type='button'>Рассчитать объект</button>
+              <button mat-raised-button class="base-button" (click)="sentOffer()" type='submit'>Рассчитать цену </button>
           </a>
         </div>
       </div>

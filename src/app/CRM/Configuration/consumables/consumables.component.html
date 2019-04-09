@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4 form-container" [formGroup]="MaterialControl">
+          <mat-form-field appearance="outline">
+              <mat-select formControlName="type" placeholder="Регулярность">
+                  <mat-option *ngFor="let x of ConsumablesType;" [value]="x.key">
+                      {{x.translate}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <input matInput type="text" formControlName="name" placeholder="Название расходника">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+              <input matInput type="text" formControlName="urlLink" placeholder="Ссылка на магазин">
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+              <input matInput type="number" formControlName="price" placeholder="Стоимость">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" *ngIf="MaterialControl['controls'].type.value=='chemistry'">
+            <input matInput type="number" formControlName="volume" placeholder="Объем тары">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" *ngIf="MaterialControl['controls'].type.value=='chemistry'">
+            <input matInput type="number" formControlName="norms" placeholder="Норма расхода(гр)">
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" *ngIf="MaterialControl['controls'].type.value=='chemistry'">
+            <input matInput type="number" formControlName="area" placeholder="Норма расхода на площадь">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" *ngIf="MaterialControl['controls'].type.value!='chemistry'">
+              <input matInput type="number" formControlName="expluotation" placeholder="Срок эксплуотации">
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+              <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="5"
+                      cdkAutosizeMaxRows="5" formControlName="description"  placeholder="Описание задачи"></textarea>
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="createNewMaterial()">Создать</button>
+    </div>
+
+    <div class="col-8">
+      <div class="w-100" *ngFor="let i of AllMaterial">
+        <a href="{{i.urlLink}}"><p>{{i.name}}</p></a>
+      </div>
+    </div>
+  </div>
+</div>

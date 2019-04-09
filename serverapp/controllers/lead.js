@@ -245,3 +245,27 @@ module.exports.deleteOffer = function(req, res) {
             return sendJSONresponse(res, 404, err);
         });
 }
+
+module.exports.getAllOffers = function(req, res) {
+    db.Offer.find({})
+        .then(data=> {
+            res.send(data).status(200);
+        })
+        .catch(err=> {
+            return sendJSONresponse(res, 404, err);
+        });
+}
+
+module.exports.changeOfferDetailsToAll = function(req, res) {
+    for (let i of req.body) {
+        db.Offer.findOneAndUpdate({_id: i._id},
+            {$set: {'details': i.details,
+            }})
+            .then(data => {
+                return console.log('Успешно');
+            })
+            .catch(err=> {
+                return console.log(err);
+            });
+    }
+}

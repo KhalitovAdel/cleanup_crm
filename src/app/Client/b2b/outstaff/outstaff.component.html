@@ -1,0 +1,68 @@
+<section class="main-outstaff">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <mat-form-field appearance="outline">
+            <input matInput (change)="calculate()" [(ngModel)]="ZP" type="number" placeholder="ЗП на руки">
+        </mat-form-field>
+        <p *ngIf="!(ZP > 1)">Сколько сотрудник получает сейчас на руки</p>
+      </div>
+      <div class="col-12 col-md-6 offset-md-3">
+        <p class="text-center" *ngIf="ZP > 1">Вы платите за сотрудника от {{BlackFot.ITOG}} до {{WhiteFot.ITOG}} ₽ в месяц,
+            <span class="font-weight-bold">цена за наши услуги {{ITOG}} ₽ в месяц</span>, максимальная выгода {{WhiteFot.Raznicya}} ₽ в мес. = {{WhiteFot.Raznicya * 12}} ₽ руб. в год,
+            {{WhiteFot.Raznicya * 12 * 5}} ₽ за 5 сотрудников в год</p>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 3rem;">
+      <div class="col-12 col-md-4 wrapper" *ngIf="ZP > 1">
+        <h4 class="main-text-color">Черная ЗП</h4>
+        <ul>
+          <li style="color: red">Неудобства начисления ЗП</li>
+          <li style="color: red">Риски налоговой проверки</li>
+          <li style="color: red">Доначисление налогов по ТК</li>
+          <li style="color: red">Смежные проверки обнальной организации</li>
+          <li style="color: red">У сотрудника нет ответсвенности</li>
+        </ul>
+        <!-- <p>Комиссия за обнал (15%): {{BlackFot.ObnalComission}} ₽</p> -->
+        <p>Затраты на сотрудника: {{BlackFot.ITOG}} ₽</p>
+        <p>Выгода: {{BlackFot.Raznicya}} ₽</p>
+      </div>
+      <div class="col-12 col-md-4 wrapper" *ngIf="ZP > 1">
+        <h4 class="main-text-color">Черно-белая ЗП</h4>
+        <ul>
+            <li style="color: red">Неудобства начисления ЗП</li>
+            <li style="color: red">Риски налоговой проверки</li>
+            <li style="color: red">Доначисление налогов по ТК</li>
+            <li style="color: red">Смежные проверки обнальной организации</li>
+            <li style="color: green">Ответсвенность сотрудника по ТК</li>
+          </ul>
+        <!-- <p>Официальная ЗП: {{WhiteBlackFot.white}} ₽</p>
+        <p>Налоги по ЗП: {{WhiteBlackFot.NalogiPoTK}} ₽</p>
+        <p>ЗП в Конверте: {{WhiteBlackFot.black}} ₽</p>
+        <p>Комиссия за обнал (15%): {{WhiteBlackFot.ObnalComission}} ₽</p> -->
+        <p>Затраты на сотрудника: {{WhiteBlackFot.ITOG}} ₽</p>
+        <p>Выгода: {{WhiteBlackFot.Raznicya}} ₽</p>
+      </div>
+      <div class="col-12 col-md-4 wrapper" *ngIf="ZP > 1">
+        <h4 class="main-text-color">100% белая ЗП</h4>
+        <ul>
+          <li style="color: green">Перевод на карту сотрудника</li>
+          <li style="color: green">Чисты перед налоговой</li>
+          <li style="color: green">Ответсвенность сотрудника по ТК</li>
+          <li style="color: red">Переработки и штрафы от налоговой по защите прав по ТК</li>
+          <li style="color: red">Переплата {{WhiteFot.Raznicya*12}} ₽ в год по налогам</li>
+        </ul>
+        <!-- <p>Официальная ЗП: {{ZP}} ₽</p>
+        <p>Налоги по ЗП: {{WhiteFot.NalogiPoTK}} ₽</p> -->
+        <p>Затраты на сотрудника: {{WhiteFot.ITOG}} ₽</p>
+        <p>Выгода: {{WhiteFot.Raznicya}} ₽</p>
+      </div>
+      
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <p class="font-weight-bold">Вывод сотрудников из штата абсолютна законным образом. Вы снижаете налоговую нагрузку на организацию, избегаете санкций со стороны налоговой инспекции по несоблюдению ТК. Вы можете смелой уйти от конвертой ЗП. Звоните 207-02-96</p>
+      </div>
+    </div>
+  </div>
+</section>

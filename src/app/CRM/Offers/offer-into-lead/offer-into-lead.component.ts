@@ -6,7 +6,10 @@ import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 import { AlertService } from 'src/app/services/alert/alert.service';
 
 interface calculateResult {
-  fot: Number,
+  whiteFot: Number,
+  blackFot: Number,
+  fotOnHand: Number,
+  zpNalog: Object,
   itog: Number,
   itogMaterial: Number,
   managerWage: Number,
@@ -31,7 +34,19 @@ export class OfferIntoLeadComponent implements OnInit {
     {details: Object}
   ];
 
-  Result: calculateResult;
+  Result: calculateResult = {
+    whiteFot: 0,
+    blackFot: 0,
+    fotOnHand: 0,
+    zpNalog: Object,
+    itog: 0,
+    itogMaterial: 0,
+    managerWage: 0,
+    material: 0,
+    profit: 0,
+    tinkoffCommission: 0,
+    windowFond: 0,
+  };
 
   RegularControl: Array<Object> = [
     {days: 30, translate: 'Без выходных'},
@@ -66,31 +81,40 @@ export class OfferIntoLeadComponent implements OnInit {
       createdDate: new Date,
       sentingDate: '',
       details: this.fb.group({
-        fot: ['', Validators.required],
-        managerWage: ['', Validators.required],
-        tinkoffCommission: ['', Validators.required],
-        windowFond: ['', Validators.required],
-        material: ['', Validators.required],
-        profit: ['', Validators.required],
-        itog: ['', Validators.required],
-        itogMaterial: ['', Validators.required],
+        whiteFot: Number,
+        blackFot: Number,
+        fotOnHand: Number,
+        zpNalog: Object,
+        itog: Number,
+        itogMaterial: Number,
+        managerWage: Number,
+        material: Number,
+        profit: Number,
+        tinkoffCommission: Number,
+        windowFond: Number,
       })
     });
   }
 
   newCalculate() {
-    if ( this.OfferControl.get('area').value > 0 && this.OfferControl.get('regular').value > 0 ) {
+    // console.log( this.svc.getWorkersCounte(
+    //   this.OfferControl.get('area').value, 
+    //   this.OfferControl.get('regular').value,
+    //   this.OfferControl.get('time').value,
+    //   this.OfferControl.get('twice').value,
+    // ) );
+    // if ( this.OfferControl.get('area').value > 0 && this.OfferControl.get('regular').value > 0 ) {
 
-      this.OfferControl.get('details').setValue( this.svc.getCalculate(
-        this.OfferControl.get('area').value, 
-        this.OfferControl.get('regular').value,
-        this.OfferControl.get('time').value,
-        this.OfferControl.get('twice').value,
-      ));
-      this.Result = this.OfferControl.get('details').value;
-      return this.getLeadOffers();
+    //   this.OfferControl.get('details').setValue( this.svc.getCalculate(
+    //     this.OfferControl.get('area').value, 
+    //     this.OfferControl.get('regular').value,
+    //     this.OfferControl.get('time').value,
+    //     this.OfferControl.get('twice').value,
+    //   ));
+    //   this.Result = this.OfferControl.get('details').value;
+    //   return this.getLeadOffers();
 
-    }
+    // }
   }
 
   createNewOffer() {
@@ -156,11 +180,11 @@ export class OfferIntoLeadComponent implements OnInit {
   }
   calculate(index) {
     var offer: any = this.Offers[index];
-    this.Offers[index].details = this.svc.getCalculate(
-      offer.area, 
-      offer.regular, 
-      offer.time, 
-      offer.twice);
+    // this.Offers[index].details = this.svc.getCalculate(
+    //   offer.area, 
+    //   offer.regular, 
+    //   offer.time, 
+    //   offer.twice);
   }
 
   saveOfferChanges(index) {
@@ -224,10 +248,7 @@ export class BottomSheet {
   }
 
   calculate() {
-    var result = this.svc.getChangesCalculate(this.Offer);
-    this.Offer.details.itog = result.itog;
-    this.Offer.details.itogMaterial = result.itogMaterial;
-    this.Offer.details.tinkoffCommission = result.tinkoffCommission;
+    // var result = this.svc.getChangesCalculate(this.Offer);
   }
 
   saveOfferDetailChanges() {

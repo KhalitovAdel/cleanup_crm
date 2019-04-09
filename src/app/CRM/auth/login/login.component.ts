@@ -27,15 +27,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  register(){
-    return this.auth.registerNewEmployee(this.User)
-      .subscribe( (data: any) => {
-        this._routes.navigate(['/newlead']);
-      }, err => {
-        this.alert.openSnackBar(err);
-      })
-  }
-
   login(){
     return this.auth.loginByEmployee(this.User)
       .subscribe( (data: any) => {

@@ -70,6 +70,7 @@ export class LeadPageComponent implements OnInit {
         'top': '0',
         'right': '0'
       },
+      width: '80%',
       maxWidth: 'none',
       minWidth: '80vh',
       height: '100vh',

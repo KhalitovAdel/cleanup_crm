@@ -40,6 +40,11 @@ import { AlertComponent } from './services/alert/alert.service';
 import { LoginComponent } from './CRM/auth/login/login.component';
 import { AuthGuard } from './services/auth/auth.guard';
 import { RegularComponent } from './Client/b2b/regular/regular.component';
+import { DashboardComponent } from './CRM/Dashboard/dashboard/dashboard.component';
+import { OffersListComponent } from './CRM/Offers/offers-list/offers-list.component';
+import { OutstaffComponent } from './Client/b2b/outstaff/outstaff.component';
+import { ConsumablesComponent } from './CRM/Configuration/consumables/consumables.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -53,10 +58,15 @@ import { RegularComponent } from './Client/b2b/regular/regular.component';
     AlertComponent,
     BottomSheet,
     LoginComponent,
-    RegularComponent
+    RegularComponent,
+    DashboardComponent,
+    OffersListComponent,
+    OutstaffComponent,
+    ConsumablesComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
