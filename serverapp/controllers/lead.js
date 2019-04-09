@@ -1,17 +1,18 @@
 const passport      = require('passport'),
 mongoose            = require('mongoose'),
 makePDF             = require('../pdfmaker/'),
-db                  = require('../config/index');
+db                  = require('../config/index'),
+Lead                = require('../models/lead');
 
 var sendJSONresponse = function(res, status, content) {
     res.status(status).json(content);
 }
 
 module.exports.newLead = function(req, res) {
-    db.Lead.findOne({leadId: req.body.leadId})
+    Lead.findOne({leadId: req.body.leadId})
         .then(data => {
             if (data === null) {
-                var lead = new db.Lead(req.body);
+                var lead = new Lead(req.body);
                 lead.save(function(err) { 
                    if (err) { return sendJSONresponse(res, 404, err); }
                    return sendJSONresponse(res, 200, {message: '🤟 Лид успешно создан!'});
@@ -26,10 +27,10 @@ module.exports.newLead = function(req, res) {
 };
 
 module.exports.newLeadOffer = function(req, res) {
-    db.Lead.findOne({leadId: req.body.Lead.leadId})
+    Lead.findOne({leadId: req.body.Lead.leadId})
         .then(data => {
             if (data === null) {
-                var lead = new db.Lead(req.body.Lead);
+                var lead = new Lead(req.body.Lead);
                 lead.save(function(err) { 
                    if (err) { return sendJSONresponse(res, 404, err); }
                 });
@@ -49,10 +50,10 @@ module.exports.newLeadOffer = function(req, res) {
 }
 
 module.exports.newLeadOfferSent = function(req, res) {
-    db.Lead.findOne({leadId: req.body.Lead.leadId})
+    Lead.findOne({leadId: req.body.Lead.leadId})
         .then(data => {
             if (data === null) {
-                var lead = new db.Lead(req.body.Lead);
+                var lead = new Lead(req.body.Lead);
                 lead.save(function(err) { 
                    if (err) { return sendJSONresponse(res, 404, err); }
                 });
@@ -75,7 +76,7 @@ module.exports.newLeadOfferSent = function(req, res) {
 }
 
 module.exports.getLeadInfo = function(req, res) {
-    db.Lead.findOne({leadId: req.body.id})
+    Lead.findOne({leadId: req.body.id})
         .then( data => {
             return sendJSONresponse(res, 200, data);
         })
@@ -85,7 +86,7 @@ module.exports.getLeadInfo = function(req, res) {
 }
 
 module.exports.createNewComment = function(req, res) {
-    db.Lead.findOneAndUpdate({leadId: req.body.leadId},
+    Lead.findOneAndUpdate({leadId: req.body.leadId},
         {
             '$push': {comments: [req.body.comment]}}, {new: true})
             .then(data => {
@@ -96,7 +97,7 @@ module.exports.createNewComment = function(req, res) {
 }
 
 module.exports.createNewTask = function(req, res) {
-    db.Lead.findOneAndUpdate({leadId: req.body.leadId},
+    Lead.findOneAndUpdate({leadId: req.body.leadId},
         {
             '$push': {tasks: [req.body.task]}}, {new: true})
             .then(data => {
@@ -107,7 +108,7 @@ module.exports.createNewTask = function(req, res) {
 }
 
 module.exports.changeStatus = function(req, res) {
-    db.Lead.findOneAndUpdate({'leadId': req.body.leadId, 'tasks._id': req.body.changedTask._id},
+    Lead.findOneAndUpdate({'leadId': req.body.leadId, 'tasks._id': req.body.changedTask._id},
         {$set: {'tasks.$.status' : 'finished', 'tasks.$.finishedDate' : (new Date).toISOString() } }, {new: true}
         ).then(data => {
             return sendJSONresponse(res, 200, data);
@@ -127,7 +128,7 @@ module.exports.getAllOffersFromLead = function(req, res) {
 }
 
 module.exports.changeLeadStatus = function(req, res) {
-    db.Lead.findOneAndUpdate({leadId: req.body.leadId},
+    Lead.findOneAndUpdate({leadId: req.body.leadId},
         {$set: {'leadStatus': req.body.leadStatus}})
         .then( data => {
             return sendJSONresponse(res, 200, {message: '🤟 Статус изменен!'});
@@ -137,7 +138,7 @@ module.exports.changeLeadStatus = function(req, res) {
 }
 
 module.exports.saveLeadChanges = function(req, res) {
-    db.Lead.findOneAndUpdate({leadId: req.body.leadId},
+    Lead.findOneAndUpdate({leadId: req.body.leadId},
         {$set: {'firmName': req.body.firmName,
                 'contactPhones': req.body.contactPhones,
                 'contactPhones': req.body.contactPhones,
@@ -195,7 +196,7 @@ module.exports.saveOfferDetailChanges = function(req, res) {
 }
 
 module.exports.sentOffer = function(req, res) {
-    db.Lead.findOne({leadId: req.body.leadLink})
+    Lead.findOne({leadId: req.body.leadLink})
         .then(data => {
             console.log(data.contactEmail);
             makePDF.makePDF({
@@ -212,7 +213,7 @@ module.exports.sentOffer = function(req, res) {
 }
 
 module.exports.getLeadList = function(req, res) {
-    db.Lead.find({})
+    Lead.find({})
         .then(data => {
             return sendJSONresponse(res, 200, data);
         })

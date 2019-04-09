@@ -21,28 +21,7 @@ exports.connect = function (done) {
 };
 var conn    = mongoose.connection,
 
-LeadSchema  = new mongoose.Schema({
-  leadId: String,
-  leadStatus: String,
-  firmName: String,
-  contactPhones: [String],
-  contactName: String,
-  position: String,
-  contactEmail: String,
-  address: String,
-  lprsName: String,
-  comments: [{description: String, createdDate: String}],
-  tasks: [{
-    status: String,
-    action: String,
-    description: String,
-    createdDate: String,
-    deadLineDate: String,
-    finishedDate: String
-  }],
-  link2gis: String,
-  createdDate: String
-});
+
 
 OfferSchema  = new mongoose.Schema({
   createdDate: Date,
@@ -97,5 +76,4 @@ OfferSchema  = new mongoose.Schema({
 });
 
 exports.freshConnect = conn;
-exports.Lead  = conn.model('Lead', LeadSchema);
 exports.Offer = conn.model('Offer', OfferSchema);

@@ -53,4 +53,5 @@ router.get('/detect', function( req, res) {
         res.status(401).send({ detect: false })
     }
 })
+
 module.exports = router;
