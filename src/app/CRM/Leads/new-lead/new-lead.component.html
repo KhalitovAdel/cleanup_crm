@@ -4,6 +4,7 @@
     <button mat-menu-item (click)='createNewLeadOffer()'>Создать Лид + Предложение</button>
     <button mat-menu-item (click)='createNewLeadOfferSend()'>Создать Лид + Предложение + отправить</button>
 </mat-menu>
+<button (click)="preparatGroup()">ewdfwef</button>
 
 <section>
     <div class="container-fluid">
@@ -11,7 +12,7 @@
             <div class="col-7">
                 <div class="container-fluid" [formGroup]="LeadControl">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-4" formGroupName="details">
                 
                                 <mat-form-field appearance="outline">
                                     <input matInput (change)="pars2gis()" type="text" formControlName="link2gis" placeholder="Ссылка 2gis">
@@ -31,9 +32,9 @@
                                 </mat-form-field>
                 
                                 <mat-form-field appearance="outline"  formArrayName="contactPhones"
-                                *ngFor="let phone of LeadControl['controls'].contactPhones['controls']; let i = index;">
+                                *ngFor="let phone of LeadControl['controls'].details['controls'].contactPhones['controls']; let i = index;">
                                     <input matInput type="text" formControlName="{{i}}" placeholder="Номер телефона">
-                                    <button *ngIf="LeadControl['controls'].contactPhones['controls'].length > 1" mat-button matSuffix mat-icon-button aria-label="Clear" (click)='removeContactPhoneControl(i)'>
+                                    <button *ngIf="LeadControl['controls'].details['controls'].contactPhones['controls'].length > 1" mat-button matSuffix mat-icon-button aria-label="Clear" (click)='removeContactPhoneControl(i)'>
                                         <mat-icon>close</mat-icon>
                                     </button>
                                 </mat-form-field>

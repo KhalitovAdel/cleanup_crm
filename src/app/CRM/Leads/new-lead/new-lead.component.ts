@@ -57,15 +57,18 @@ export class NewLeadComponent implements OnInit {
 
   ngOnInit() {
     this.LeadControl = this.fb.group({
-      leadId: Guid.create().toString(),
-      leadStatus: ['', Validators.required],
-      firmName: ['', Validators.required],
-      contactPhones: this.fb.array([ ['', Validators.required] ]),
-      contactName: '',
-      position: '',
-      contactEmail: ['', Validators.email],
-      address: ['', Validators.required],
-      lprsName: '',
+      details: this.fb.group({
+        leadId: Guid.create().toString(),
+        leadStatus: ['', Validators.required],
+        firmName: ['', Validators.required],
+        contactPhones: this.fb.array([ ['', Validators.required] ]),
+        contactName: '',
+        position: '',
+        contactEmail: ['', Validators.email],
+        address: ['', Validators.required],
+        lprsName: '',
+        link2gis: '',
+      }),
       comments: this.fb.array([
         this.fb.group({
           description: '',
@@ -81,19 +84,19 @@ export class NewLeadComponent implements OnInit {
           deadLineDate: ['', Validators.required]
         })
       ]),
-      link2gis: '',
-      createdDate: new Date
+      leadId: '',
+      createdDate: ''
     });
 
     this.OfferControl = this.fb.group({
-      leadLink: this.LeadControl.get('leadId').value,
+      leadLink: '',
       objects: this.fb.array([
         this.addObject()
       ]),
       details: this.createDetails(),
       status: '',
-      createdDate: new Date,
       sentingDate: '',
+      createdDate: ''
     });
 
     // this.LeadControl.valueChanges
@@ -109,14 +112,15 @@ export class NewLeadComponent implements OnInit {
   } //ngOnInit finished
 
   //methods to control contactPhone inputs
-  removeContactPhoneControl(index) {
-    if (( this.LeadControl.controls['contactPhones'] as FormArray ).length > 1 ) {
-      ( this.LeadControl.controls['contactPhones'] as FormArray ).removeAt(index);
-    }
-  }
   addContactPhoneControl(e) {
     e.preventDefault();
-    ( this.LeadControl.get('contactPhones') as FormArray ).push(new FormControl);
+    ( this.LeadControl['controls'].details['controls'].contactPhones['controls'] as FormArray ).push(new FormControl);
+  }
+
+  removeContactPhoneControl(index) {
+    if (( this.LeadControl['controls'].details['controls'].contactPhones as FormArray ).length > 1 ) {
+      ( this.LeadControl['controls'].details['controls'].contactPhones as FormArray ).removeAt(index);
+    }
   }
   addObject():FormGroup {
     return this.fb.group({
@@ -147,9 +151,6 @@ export class NewLeadComponent implements OnInit {
       discount: Number,
       materialToStart: Number
     })
-  }
-  getValue() {
-    console.log(this.OfferControl.value);
   }
   createNewEmployeesGroup() {
     return this.fb.group({
@@ -202,32 +203,6 @@ export class NewLeadComponent implements OnInit {
     } 
   }
 
-  pars2gis() {
-    return this.myHttp.postHTTP('/pars2gis', 
-                        {link: this.LeadControl.get('link2gis').value})
-      .subscribe(data =>  {
-        for (let x in this.LeadControl.value ) {
-          for (let y in data) {
-            if (x === y) {
-              if (x == 'contactPhones') {
-                console.log(data[y].length);
-                (this.LeadControl.get(x) as FormArray ).removeAt(0);
-                for (var i = 0; i < data[y].length; i++) {
-                  (this.LeadControl.get(x) as FormArray ).push(new FormControl(data[y][i]) );
-                }
-              } else {
-                this.LeadControl.get(x).setValue( data[y] );
-              }
-            }
-          }
-        }
-        console.log(data);
-      }, err => {
-        console.log(err);
-      }
-      );
-  }//pars2gis
-
   resetForm() {
     this.LeadControl.reset();
     this.OfferControl.reset();
@@ -236,15 +211,16 @@ export class NewLeadComponent implements OnInit {
   createNewLead() {
     this.valid(this.LeadControl);
     if (this.LeadControl.valid) {
-      var data = this.clearLead(this.LeadControl);
+      this.preparatGroup();
+      var data = this.LeadControl.value;
       return this.myHttp.postHTTP('/newLead', data)
         .subscribe( (data: any) => {
           this.alert.openSnackBar( data.message );
+          this.resetAllControls();
         }, ( err: any ) => {
           this.alert.openSnackBar( err );
         }
       );
-      //Добавить отчистку объекта
     } else {
       this.alert.openSnackBar('🤦‍ Заполнены не все поля!');
     }
@@ -254,11 +230,13 @@ export class NewLeadComponent implements OnInit {
     this.valid(this.LeadControl);
     this.valid(this.OfferControl);
     if ( this.LeadControl.valid && this.OfferControl.valid ) {
-      var data = this.clearLead(this.LeadControl);
+      this.preparatGroup();
+      var data = this.LeadControl.value;
       this.OfferControl.get('status').setValue('created');
       return this.myHttp.postHTTP('/newLeadOffer', {Lead: data, Offer: this.OfferControl.value})
         .subscribe( (data: any) => {
           this.alert.openSnackBar( data.message );
+          this.resetAllControls();
         }, ( err: any ) => {
           this.alert.openSnackBar( err );
         }
@@ -267,18 +245,21 @@ export class NewLeadComponent implements OnInit {
       this.alert.openSnackBar('🤦‍ Заполнены не все поля!');
     }
   }
+
   createNewLeadOfferSend() {
     this.LeadControl.get('contactEmail').setValidators([Validators.required]);
     this.LeadControl.get('contactEmail').updateValueAndValidity();
     this.valid(this.LeadControl);
     this.valid(this.OfferControl);
     if ( this.LeadControl.valid && this.OfferControl.valid ) {
-      var data = this.clearLead(this.LeadControl);
+      this.preparatGroup();
+      var data = this.LeadControl;
       this.OfferControl.get('status').setValue('sent');
       this.OfferControl.get('sentingDate').setValue(new Date);
       return this.myHttp.postHTTP('/newLeadOfferSend', {Lead: data, Offer: this.OfferControl.value})
       .subscribe( (data: any) => {
         this.alert.openSnackBar( data.message );
+        this.resetAllControls();
       }, ( err: any ) => {
         this.alert.openSnackBar( err );
       }
@@ -287,28 +268,22 @@ export class NewLeadComponent implements OnInit {
       this.alert.openSnackBar('🤦‍ Заполнены не все поля!');
     }
   }
-  clearLead(group: FormGroup) {
-    var copeLead: Object = group.value;
-    Object.keys(copeLead).forEach(key => {
-      if (typeof(copeLead[key]) === 'string' && 
-      (copeLead[key] === null || copeLead[key] === '') ) {
-        delete copeLead[key];
-      } else if ( Array.isArray(copeLead[key]) ) {
-        for (var x of copeLead[key]) {
-          if (x instanceof Object) {
-            for (let y in x) {
-              if ( x[y] === null || x[y] === '') {
-                copeLead[key] = [];
-              }
-            }
-          }
-        }
-      }
-    });
-    return copeLead;
-  } 
+    
+  preparatGroup(): void {
+    this.LeadControl.get('createdDate').setValue(new Date);
+    this.OfferControl.get('createdDate').setValue(new Date);
+    this.LeadControl.get('leadId').setValue( Guid.create().toString() );
+    this.OfferControl.get('leadLink').setValue( this.LeadControl['controls'].leadId.value );
+  }//Создание уникального идентификатора и дату создания
 
-  valid(group: FormGroup) {
+  resetAllControls() {
+    this.LeadControl.reset();
+    this.OfferControl.reset();
+    console.log(this.LeadControl.value)
+    console.log(this.OfferControl.value)
+  }
+
+  valid(group: FormGroup) { // Проверить действующие контролы
     var copeLead: Object = group.controls;
     Object.keys(copeLead).forEach(key => {
       if (copeLead[key] instanceof FormControl) {
@@ -322,6 +297,6 @@ export class NewLeadComponent implements OnInit {
         }
       }
     });
-  };
+  };//Переделать
   
 }

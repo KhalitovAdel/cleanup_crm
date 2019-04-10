@@ -24,4 +24,14 @@ export class EmployeesListComponent implements OnInit {
       })
   }
 
+  somefunc() {
+    this.myHttp.getHTTP('/updateLead')
+      .subscribe( (data: any) => {;
+        this.AllEmployees = data;
+        console.log(this.AllEmployees)
+      }, ( err: any ) => {
+        this.alert.openSnackBar( err );
+      })
+  }
+
 }
