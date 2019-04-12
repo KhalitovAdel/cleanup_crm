@@ -12,8 +12,8 @@ interface Objects {
 export class CalculateService {
 
     ONE_HOUR_PRICE: number = 59;
-    ONE_METER_PRICE: number = 0.455;
-    ONE_DAY_PRICE: number = 227;
+    ONE_METER_PRICE: number = 0.68;//0.455
+    ONE_DAY_PRICE: number = 340;//227
     MROT: number = 12000;
     
   constructor(private material: MaterialCalculationService) { }
@@ -105,97 +105,138 @@ export class CalculateService {
     return calculateNalogResult;
   }
 
-  calculatEmployeesCount(Offer): object {
-    var counte = 0;
+  calculatEmployeesCount(Offer) {
+    var summ: number = 0;
     for (let i in Offer.objects) {
+      var counte = 0;
       for (let x in Offer.objects[i].employees) {
         counte = counte + Offer.objects[i].employees[x].count;
       }
+      Offer.objects[i]['details'] = {};
+      Offer.objects[i].details['employeesCount'] = counte;
+      summ = summ + counte;
     }
-    return {employeesCount: counte};
+    Offer.details.employeesCount = summ;
+    return Offer;
   }
 
-  calculateManagerWage(Offer): object  {
-    var EmployeesCountResult = this.calculatEmployeesCount(Offer);
-    EmployeesCountResult['managerWage'] = 500 + 750 * EmployeesCountResult['employeesCount']
-    return EmployeesCountResult;
-  }
-
-  calculateWindowsFond(Offer): object  {
-    var area = 0;
-    var ManagerWageResult = this.calculateManagerWage(Offer);
-    for (let i in Offer.objects) {
-      area = area + Offer.objects[i]['area'];
+  calculateManagerWage(Offer)  {
+    var data = this.calculatEmployeesCount(Offer);
+    var summ: number = 0;
+    for (let i in data.objects) {
+      data.objects[i].details['managerWage'] = ( 500 + 750 * data.objects[i].details.employeesCount ) * 2.4;
+      summ = summ + data.objects[i].details.managerWage;
     }
-    ManagerWageResult['windowFond'] = this.beautyPrice( 300 * ((area/300 < 1)?1:(area/400) ) );
-    return ManagerWageResult;
+    data.details.managerWage = summ;
+    return data;
   }
 
-  calculateTinkoffCommission(Offer): object  {
-    var rash = 0;
-    var WindowsFondResult = this.calculateWindowsFond(Offer);
+  calculateWindowsFond(Offer)  {
+    var summ: number = 0;
+    var data = this.calculateManagerWage(Offer);
     for (let i in Offer.objects) {
+      data.objects[i].details['windowFond'] = this.beautyPrice( 450 * ((Offer.objects[i]['area']/300 < 1)?1:(Offer.objects[i]['area']/400) ) )
+      summ = summ + data.objects[i].details.windowFond;
+    }
+    data.details.windowFond = summ;
+    return data;
+  }
+
+  calculateTinkoffCommission(Offer)  {
+    var summ: number = 0;
+    var data = this.calculateWindowsFond(Offer);
+    for (let i in Offer.objects) {
+      var rash = 0;
       for (let x in Offer.objects[i].employees) {
         rash = rash + Offer.objects[i].employees[x].blackFot * Offer.objects[i].employees[x].count;
       }
+      data.objects[i].details['obnalCommission'] =  this.beautyPrice( (rash 
+                                                    + data.objects[i].details.managerWage
+                                                    + data.objects[i].details.windowFond) *15/85 );
+      summ = summ + data.objects[i].details.obnalCommission;
     }
-    WindowsFondResult['obnalCommission'] = this.beautyPrice( (rash + WindowsFondResult['managerWage'] + WindowsFondResult['windowFond'])*15/85 );
-    return WindowsFondResult;
+    data.details.obnalCommission = summ;
+    return data;
   }
 
-  setProfit(Offer): object  {
-    var TinkoffCommissionResult = this.calculateTinkoffCommission(Offer);
-    if (TinkoffCommissionResult['employeesCount'] > 10) {
-      TinkoffCommissionResult['profit'] = TinkoffCommissionResult['employeesCount'] * 2000;
-    } else {
-      TinkoffCommissionResult['profit'] = TinkoffCommissionResult['employeesCount'] * 3000;
+  setProfit(Offer)  {
+    var data = this.calculateTinkoffCommission(Offer);
+    var summ: number = 0;
+    for (let i in Offer.objects) {
+      if (data.objects[i].details.employeesCount > 10) {
+        data.objects[i].details['profit'] = data.objects[i].details.employeesCount * 2000;
+      } else {
+        data.objects[i].details['profit'] = data.objects[i].details.employeesCount * 5000;
+      }
+      summ = summ + data.objects[i].details.profit;
     }
-    return TinkoffCommissionResult;
+    data.details.profit = summ;
+    return data;
   }
 
   async calculateMaterial(Offer)  {
-    var ProfitResult = this.setProfit(Offer);
-    return await this.material.getCalculateChemistry(Offer ,ProfitResult);
+    var data = this.setProfit(Offer);
+    return await this.material.getCalculateChemistry(Offer);
+    return data;
   }
 
   calculateItog(Offer) {
     return this.calculateMaterial(Offer)
       .then(data=> {
-        var Summ = 0;
-        for (let i in Offer.objects) {
-          for (let x in Offer.objects[i].employees) {
-            Summ =  Summ + Offer.objects[i].employees[x].count * ( Offer.objects[i].employees[x].fotOnHand + Offer.objects[i].employees[x].zpNalog.Summ)
-                    
+        var itog: number = 0,
+            base_nalog_itog: number = 0,
+            discount: number = 0,
+            itogMaterial: number = 0,
+            base_nalog_itog_material: number = 0;
+
+        for (let i in data.objects) {
+          var Summ = 0;
+          var obj = data.objects[i];
+          for (let x in obj.employees) {
+            Summ =  Summ + obj.employees[x].count * ( obj.employees[x].fotOnHand + obj.employees[x].zpNalog.Summ)          
           }
+        
+          var potentialItog = this.beautyPrice(( Summ + obj.details.managerWage
+            + obj.details.windowFond
+            + obj.details.obnalCommission
+            + obj.details.profit ) );
+          var nalogItog = (obj.details.profit/10 > potentialItog/99)?obj.details.profit/10:potentialItog/99;
+          
+          obj.details['itog'] = this.beautyPrice(( Summ + obj.details.managerWage
+                          + obj.details.windowFond
+                          + obj.details.obnalCommission
+                          + obj.details.profit
+                          + nalogItog )*1.1 );
+          obj.details['base_nalog_itog'] = this.beautyPrice(nalogItog);  
+                                             
+          obj.details['discount'] = Math.round(0.1 * obj.details.itog / 1.1);
+
+          var potentialItogMaterial = this.beautyPrice(( Summ + obj.details.managerWage
+                            + obj.details.windowFond
+                            + obj.details.obnalCommission
+                            + obj.details.profit 
+                            + obj.details.material) );
+          var nalogItogMaterial = (obj.details.profit/10 > potentialItogMaterial/99)?obj.details.profit/10:potentialItogMaterial/99;
+          
+          obj.details['itogMaterial'] = this.beautyPrice(( Summ + obj.details.managerWage
+                                  + obj.details.windowFond
+                                  + obj.details.obnalCommission
+                                  + obj.details.profit 
+                                  + obj.details.material
+                                  + nalogItogMaterial) + obj.details.discount );
+          
+          obj.details['base_nalog_itog_material'] = this.beautyPrice(nalogItogMaterial);
+          itog = itog + obj.details.itog
+          base_nalog_itog = base_nalog_itog + obj.details.base_nalog_itog
+          discount = discount + obj.details.discount
+          itogMaterial = itogMaterial + obj.details.itogMaterial
+          base_nalog_itog_material = base_nalog_itog_material + obj.details.base_nalog_itog_material
         }
-        var potentialItog = this.beautyPrice(( Summ + data.managerWage
-          + data.windowFond
-          + data.obnalCommission
-          + data.profit ) );
-        var nalogItog = (data.profit/10 > potentialItog/99)?data.profit/10:potentialItog/99;
-        
-        data['itog'] = this.beautyPrice(( Summ + data.managerWage
-                        + data.windowFond
-                        + data.obnalCommission
-                        + data.profit
-                        + nalogItog )*1.1 );
-        data['base_nalog_itog'] = this.beautyPrice(nalogItog);                                     
-        data['discount'] = Math.round(0.1 * data.itog / 1.1);
-        var potentialItogMaterial = this.beautyPrice(( Summ + data.managerWage
-                          + data.windowFond
-                          + data.obnalCommission
-                          + data.profit 
-                          + data.material) );
-        var nalogItogMaterial = (data.profit/10 > potentialItogMaterial/99)?data.profit/10:potentialItogMaterial/99;
-        
-        data['itogMaterial'] = this.beautyPrice(( Summ + data.managerWage
-                                + data.windowFond
-                                + data.obnalCommission
-                                + data.profit 
-                                + data.material
-                                + nalogItogMaterial) + data.discount );
-        
-        data['base_nalog_itog_material'] = this.beautyPrice(nalogItogMaterial);
+        data.details.itog = itog;
+        data.details.base_nalog_itog = base_nalog_itog;
+        data.details.discount = discount;
+        data.details.itogMaterial = itogMaterial;
+        data.details.base_nalog_itog_material = base_nalog_itog_material;
         return data;
       })
   }
@@ -205,7 +246,8 @@ export class CalculateService {
     for (let i in NewOffer.objects) {
       NewOffer.objects[i].employees = this.calculateBlackFot(NewOffer.objects[i]);
     }
-    NewOffer.details = await this.calculateItog(NewOffer);
+    await this.calculateItog(NewOffer);
+    console.log(NewOffer)
     return NewOffer;
   }
 }
