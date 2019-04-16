@@ -24,7 +24,7 @@ export interface Lead {
   styleUrls: ['./lead-list.component.styl']
 })
 export class LeadListComponent implements OnInit {
-  Leads: Lead[];
+  Leads: Array<any>;
   dataSource;
   displayedColumns: string[] = ['firmName', 'tasks', 'address', 'createdDate'];
 
@@ -41,7 +41,7 @@ export class LeadListComponent implements OnInit {
   }
   async getLeadList() {
     await this.myHttp.getHTTP('/getLeadList')
-      .subscribe( (data: Lead[])=> {
+      .subscribe( (data: [])=> {
         this.Leads = data;
         this.refreshDataSource(this.Leads);
         return;

@@ -118,7 +118,7 @@ export class MaterialCalculationService {
             if (this.AllMaterial[y].type == 'chemistry') {
               var some: any = {}
               some['id'] = this.AllMaterial[y]._id;
-              some['count'] = (this.AllMaterial[y].norms * Offer.objects[x].area/this.AllMaterial[y].area) / this.AllMaterial[y].volume;
+              some['count'] = Offer.objects[x].regular * (this.AllMaterial[y].norms * Offer.objects[x].area/this.AllMaterial[y].area) / this.AllMaterial[y].volume;
               some['Itog'] = some.count * this.AllMaterial[y].price
               Offer.objects[x].details.Chemistry.push(some);
               ItogMonth = ItogMonth + some.Itog;

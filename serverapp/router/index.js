@@ -40,6 +40,9 @@ router.post('/changeOfferDetailsToAll', ctrlAuth.mustAuthenticatedMw, ctrlLead.c
 
 router.post('/createNewEmployee', ctrlAuth.mustAuthenticatedMw, ctrlEmployee.createNewEmployee);
 
+
+router.post('/createTestKP', ctrlAuth.mustAuthenticatedMw, ctrlLead.createkp);
+
 router.post('/createNewMaterial', ctrlAuth.mustAuthenticatedMw, ctrlConfig.createNewMaterial);
 
 router.get('/getEmployeeList', ctrlAuth.mustAuthenticatedMw, ctrlEmployee.getEmployeeList);

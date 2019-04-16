@@ -6,36 +6,44 @@
               <a href="#">
                   <img class="logo" src="./assets/logotype-alt.svg" alt="CleanUp logo">
               </a>
+              <button (click)="sidenav.toggle()" style="background-color: white;">{{screenWidth}}</button>
               <a class="tel" href="tel:+7 (843) 207-02-96">+7 (843) 207-02-96</a>
           </div>
       </div>
     </div>
   </div>
 </nav>
-<section>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-2">
+  <mat-sidenav-container [hasBackdrop]="false">
+      <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'" [autoFocus]="false">
         <nav class="sidebar">
           <ul>
             <li><a [routerLink]="['crm']">CRM</a></li>
           </ul>
         </nav>
-      </div>
-      <div class="col-10">
-        <nav class="navigate-panel">
-          <div class="main-nav-button">
-            <a [routerLink]="['leadlist']">Лиды</a>
-            <a class="add_new" [routerLink]="['newlead']"><i class="material-icons">control_point</i></a>
-          </div>
-          <div class="main-nav-button">
-            <a [routerLink]="['alloffers']">Предложения</a>
-          </div>
-        </nav>
-        <div class="wrapper-container">
-            <router-outlet></router-outlet>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+          <section>
+          <div class="container-fluid">
+              <div class="row">
+                <div class="col-12">
+                  <nav class="navigate-panel">
+                    <div class="main-nav-button">
+                      <a [routerLink]="['leadlist']">Лиды</a>
+                      <a class="add_new" [routerLink]="['newlead']"><i class="material-icons">control_point</i></a>
+                    </div>
+                    <div class="main-nav-button">
+                      <a [routerLink]="['alloffers']">Предложения</a>
+                    </div>
+                  </nav>
+                  <div class="wrapper-container">
+                      <router-outlet></router-outlet>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+      </mat-sidenav-content>
+
+  </mat-sidenav-container>
+

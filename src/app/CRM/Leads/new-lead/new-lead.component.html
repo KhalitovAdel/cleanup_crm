@@ -3,16 +3,16 @@
     <button mat-menu-item (click)='createNewLead()'>Создать Лид</button>
     <button mat-menu-item (click)='createNewLeadOffer()'>Создать Лид + Предложение</button>
     <button mat-menu-item (click)='createNewLeadOfferSend()'>Создать Лид + Предложение + отправить</button>
+    <button mat-menu-item (click)='createTestKP()'>Создать тестовое КП</button>
 </mat-menu>
-<button (click)="preparatGroup()">ewdfwef</button>
 
 <section>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-7">
+            <div class="col-12 col-lg-7">
                 <div class="container-fluid" [formGroup]="LeadControl">
                     <div class="row">
-                        <div class="col-4" formGroupName="details">
+                        <div class="col-12 col-lg-4" formGroupName="details">
                 
                                 <mat-form-field appearance="outline">
                                     <input matInput (change)="pars2gis()" type="text" formControlName="link2gis" placeholder="Ссылка 2gis">
@@ -61,7 +61,7 @@
                                 </mat-form-field>
                 
                         </div>
-                        <div class="multipanel col-8" formArrayName="tasks"
+                        <div class="multipanel col-12 col-lg-8" formArrayName="tasks"
                             *ngFor="let phone of LeadControl['controls'].tasks['controls']; let i = index;">
             
                                 <mat-form-field appearance="outline" [formGroupName]="i">
@@ -96,37 +96,43 @@
                 </div>
             </div>
             
-            <div class="col-3" [formGroup]="OfferControl">
+            <div class="col-12 col-lg-5" [formGroup]="OfferControl">
+
+                <mat-icon [matMenuTriggerFor]="menu" class='offer-menu'>more_vert</mat-icon>
+                <mat-menu #menu="matMenu" formGroupName="details">
+                    <button mat-menu-item (click)='createNewObject()'>Добавить объект</button>
+                    <mat-slide-toggle (change)="calculate()" formControlName="fullObj">Совокупность</mat-slide-toggle>
+                </mat-menu>
                 <div class="container-fluid" formArrayName="objects" *ngFor="let x of OfferControl['controls'].objects['controls']; let i = index">
                     <div class="row" [formGroupName]="i">
-
-                        <mat-form-field appearance="outline">
-                            <mat-select (selectionChange)="calculate()" formControlName="regular" placeholder="Регулярность">
-                                <mat-option *ngFor="let x of RegularControl;" [value]="x.days">
-                                    {{x.translate}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-        
-                        <mat-form-field appearance="outline">
-                            <input matInput (change)="calculate()" type="number" formControlName="area" placeholder="Площадь">
-                        </mat-form-field>
-                
-                        <mat-form-field appearance="outline">
-                            <input matInput (change)="calculate()" type="number" formControlName="time" placeholder="Время на объекте">
-                        </mat-form-field>
-        
-                        <mat-checkbox (change)="calculate()" formControlName="twice">Уборка 2 раза в день</mat-checkbox>
-                        
-                        <button (click)='createNewObject()'>Новый</button>
-                        <br>
-                        <button (click)="clearOfferControl()">Значение</button>
-                        <!-- <p *ngIf="OfferControl.value.details.fotOnHand > 1"> Фот: {{OfferControl.value.details.fotOnHand}}</p>
-                        <p *ngIf="OfferControl.value.details.profit > 1">Прибыль: {{OfferControl.value.details.profit}}</p>
-                        <p *ngIf="OfferControl.value.details.itog > 1">Итог: {{OfferControl.value.details.itog}}</p>
-                        <p *ngIf="OfferControl.value.details.itogMaterial > 1">Итог мат: {{OfferControl.value.details.itogMaterial}}</p> -->
-
+                        <div class="col-12">
+                            <mat-form-field appearance="outline">
+                                <mat-select (selectionChange)="calculate()" formControlName="regular" placeholder="Регулярность">
+                                    <mat-option *ngFor="let x of RegularControl;" [value]="x.days">
+                                        {{x.translate}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+            
+                            <mat-form-field appearance="outline">
+                                <input matInput (change)="calculate()" type="number" formControlName="area" placeholder="Площадь">
+                            </mat-form-field>
+                    
+                            <mat-form-field appearance="outline">
+                                <input matInput (change)="calculate()" type="number" formControlName="time" placeholder="Время на объекте">
+                            </mat-form-field>
+    
+                            <mat-slide-toggle (change)="calculate()" formControlName="twice">Уборка 2 раза в день</mat-slide-toggle>
+                            
+                            
+                            
+                            <!-- <p *ngIf="OfferControl.value.details.fotOnHand > 1"> Фот: {{OfferControl.value.details.fotOnHand}}</p>
+                            <p *ngIf="OfferControl.value.objects[i].details.profit > 1">Прибыль: {{OfferControl.value.objects[i].details.profit}}</p>
+                            <p *ngIf="OfferControl.value.objects[i].details.itog > 1">Итог: {{OfferControl.value.objects[i].details.itog}}</p> -->
+                            <p *ngIf="OfferControl.value.objects[i].details.itogMaterial > 1">Итог мат: {{OfferControl.value.objects[i].details.itogMaterial}}</p>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>

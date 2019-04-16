@@ -22,7 +22,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Название </th>
           <td mat-cell *matCellDef="let element"> 
               <a target="_blank" routerLink="{{element.leadId}}">
-                  {{element.firmName}}
+                  {{element.details.firmName}}
               </a>
           </td>
         </ng-container>

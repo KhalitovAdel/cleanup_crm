@@ -93,7 +93,21 @@ export class NewLeadComponent implements OnInit {
       objects: this.fb.array([
         this.addObject()
       ]),
-      details: this.createDetails(),
+      details: this.fb.group({
+        fullObj: false, //Дает нам понять что этот объект состоит из нескольких помещений, то есть совокупность объектов считать по сумме всех итогов
+        employeesCount: Number,
+        managerWage: Number,
+        windowFond: Number,
+        obnalCommission: Number,
+        profit: Number,
+        material: Number,
+        itog: Number,
+        base_nalog_itog: Number,
+        itogMaterial: Number,
+        base_nalog_itog_material: Number,
+        discount: Number,
+        materialToStart: Number
+      }),
       status: '',
       sentingDate: '',
       createdDate: ''
@@ -104,10 +118,10 @@ export class NewLeadComponent implements OnInit {
     //     // (value) => console.log(value)
     //   );
 
-    // this.OfferControl.valueChanges
-    //   .subscribe(
-    //     // (value) => console.log(value)
-    //   );
+    this.OfferControl.valueChanges
+      .subscribe(
+        (value) => console.log(value)
+      );
       
   } //ngOnInit finished
 
@@ -128,6 +142,7 @@ export class NewLeadComponent implements OnInit {
       regular: ['', Validators.required],
       time: '',
       twice: false,
+      details: this.createDetails(),
       employees: this.fb.array([
   
       ]),
@@ -198,7 +213,6 @@ export class NewLeadComponent implements OnInit {
         }
         this.OfferControl.patchValue(data);
         this.canCalculate = false;
-        console.log(this.OfferControl.value)
       }) 
     } 
   }
@@ -298,5 +312,19 @@ export class NewLeadComponent implements OnInit {
       }
     });
   };//Переделать
-  
+  createTestKP() {
+    this.myHttp.postHTTP('/createTestKP', {
+      Lead: {
+        firmName: 'TestFirm',
+        address: 'Kazan'
+      }, 
+      Offer: this.OfferControl.value
+    })
+    .subscribe( (data: any) => {
+      this.alert.openSnackBar( data.message );
+      this.resetAllControls();
+    }, ( err: any ) => {
+      this.alert.openSnackBar( err );
+    })
+  }
 }

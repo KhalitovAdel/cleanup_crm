@@ -232,6 +232,9 @@ export class CalculateService {
           itogMaterial = itogMaterial + obj.details.itogMaterial
           base_nalog_itog_material = base_nalog_itog_material + obj.details.base_nalog_itog_material
         }
+        if (data.details.fullObj != true) {
+          data.details.fullObj = false;
+        }
         data.details.itog = itog;
         data.details.base_nalog_itog = base_nalog_itog;
         data.details.discount = discount;
@@ -247,7 +250,6 @@ export class CalculateService {
       NewOffer.objects[i].employees = this.calculateBlackFot(NewOffer.objects[i]);
     }
     await this.calculateItog(NewOffer);
-    console.log(NewOffer)
     return NewOffer;
   }
 }

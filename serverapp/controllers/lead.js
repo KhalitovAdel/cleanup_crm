@@ -1,6 +1,6 @@
 const passport      = require('passport'),
 mongoose            = require('mongoose'),
-makePDF             = require('../pdfmaker/'),
+makePDF             = require('../pdfmaker/index.1'),
 db                  = require('../config/index'),
 Lead                = require('../models/lead');
 
@@ -73,6 +73,16 @@ module.exports.newLeadOfferSent = function(req, res) {
         .catch(err=> {
             return sendJSONresponse(res, 404, err);
         })
+}
+module.exports.createkp = function(req, res) {
+    makePDF.makePDF(req.body)
+        .then(data => {
+            console.log(data)
+            //return sendJSONresponse(res, 200, {message: 'Успешно'})
+        })
+        .catch(err=> {
+            console.log(err)
+        });
 }
 
 module.exports.getLeadInfo = function(req, res) {

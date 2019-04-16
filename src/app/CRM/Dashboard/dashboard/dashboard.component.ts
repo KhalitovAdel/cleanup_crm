@@ -6,10 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.styl']
 })
 export class DashboardComponent implements OnInit {
+  
+  position:boolean = false;
+  screenWidth: number;
 
-  constructor() { }
+  constructor() {
+    this.screenWidth = window.innerWidth;
+    window.onresize = () => {
+      // set screenWidth on screen size change
+      this.screenWidth = window.innerWidth;
+    };
+  }
 
   ngOnInit() {
+
   }
 
 }
