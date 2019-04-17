@@ -1,14 +1,32 @@
 <mat-chip-list>
   <mat-chip (click)='allLeads()'>Все лиды</mat-chip>
-  <mat-chip (click)="todayTasks()" color="accent">Дела на сегодня</mat-chip>
-  <mat-chip (click)="overDateTasks()" color="primary" selected>Просроченные дела</mat-chip>
+  <mat-chip (click)="todayTasks()" class="todayDate">Дела на сегодня</mat-chip>
+  <mat-chip (click)="overDateTasks()" class="overDate">Просроченные дела</mat-chip>
+  <mat-chip (click)="noTasks()" class="noTasks">Без дел</mat-chip>
 </mat-chip-list>
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-12">
-        <mat-form-field>
+        <!-- <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Поиск лида">
-          </mat-form-field>
+          </mat-form-field> -->
+      <owl-carousel [options]="partnersSliderOption" [carouselClasses]="['owl-theme', 'slip']">
+        <div class="status-wrapper" *ngFor="let x of LeadStatus">
+          <div class="name-box">
+            <p>{{x.translate}} <span *ngIf="x.leads && x.leads.length > 0">({{x.leads.length}})</span><span *ngIf="x.leads && x.leads.length === 0">({{x.leads.length}})</span> </p>
+          </div>
+          <div class="lead-wrapper">
+
+              <div class="lead-card" *ngFor="let y of x.leads" [class.noTasks]="noTasksLead(y)" [class.overDate]="overDateTasksLead(y)" [class.todayDate]="todayTasksLead(y)">
+                <a target="_blank" routerLink="{{y.leadId}}">
+                  <p>{{y.details.firmName}}</p>
+                </a>
+                <span>{{y.createdDate | date:'d MMMM y'}}</span>
+              </div>
+
+          </div>
+        </div>
+      </owl-carousel>   
     </div>
   </div>
 </div>
@@ -16,7 +34,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <!-- <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <ng-container matColumnDef="firmName">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Название </th>
@@ -52,7 +70,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         
       </table>
-      <mat-paginator [pageSize]="10"  [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+      <mat-paginator [pageSize]="10"  [pageSizeOptions]="[5, 10, 20]"></mat-paginator> -->
     </div>
   </div>
 </div>

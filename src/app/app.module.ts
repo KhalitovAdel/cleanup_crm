@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +29,9 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+
 import { B2bregularComponent } from './calculate/b2bregular/b2bregular.component';
 import { CalculateService } from './services/calculate/calculate.service';
 import { myHTTPService } from './services/HTTP/myhttp.service';
@@ -48,6 +51,8 @@ import { ConsumablesComponent } from './CRM/Configuration/consumables/consumable
 import { CommonModule } from '@angular/common';
 import { EmployeesComponent } from './CRM/Contacts/Employees/employees/employees.component';
 import { EmployeesListComponent } from './CRM/Contacts/Employees/employees-list/employees-list.component';
+
+registerLocaleData(localeRu, 'ru');
 
 @NgModule({
   declarations: [
@@ -105,7 +110,8 @@ import { EmployeesListComponent } from './CRM/Contacts/Employees/employees-list/
     myHTTPService, 
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'ru'},
     AuthGuard,
-    CookieService
+    CookieService,
+    { provide: LOCALE_ID, useValue: "ru" }
   ],
   bootstrap: [AppComponent]
 })
