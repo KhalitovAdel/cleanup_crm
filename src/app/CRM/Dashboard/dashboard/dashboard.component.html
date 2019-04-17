@@ -7,7 +7,17 @@
                   <img class="logo" src="./assets/logotype-alt.svg" alt="CleanUp logo">
               </a>
               <button (click)="sidenav.toggle()" style="background-color: white;">{{screenWidth}}</button>
-              <a class="tel" href="tel:+7 (843) 207-02-96">+7 (843) 207-02-96</a>
+              
+              <mat-form-field appearance="outline">
+                  <input type="text" (click)="getLeadList()" placeholder="Поиск лида" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                  <mat-icon matSuffix>search</mat-icon>
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.details.firmName">
+                      <a target="_blank" routerLink="{{option.leadId}}">{{option.details.firmName}}</a>
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
           </div>
       </div>
     </div>

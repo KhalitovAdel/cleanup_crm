@@ -28,6 +28,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { OwlModule } from 'ngx-owl-carousel';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
@@ -102,7 +103,8 @@ registerLocaleData(localeRu, 'ru');
     FlexLayoutModule,
     OwlModule,
     MatSidenavModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatAutocompleteModule
   ],
   entryComponents: [OfferIntoLeadComponent, AlertComponent, BottomSheet],
   providers: [
