@@ -40,7 +40,6 @@ export class DashboardComponent implements OnInit {
     await this.myHttp.getHTTP('/getLeadList')
       .subscribe( (data: [])=> {
         this.options = data;
-        console.log(this.options)
       }, err => {
         console.log('Get all Leads error: ' + err);
       });

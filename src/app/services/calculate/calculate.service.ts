@@ -12,8 +12,8 @@ interface Objects {
 export class CalculateService {
 
     ONE_HOUR_PRICE: number = 59;
-    ONE_METER_PRICE: number = 0.68;//0.455
-    ONE_DAY_PRICE: number = 340;//227
+    ONE_METER_PRICE: number = 0.455;//0.68
+    ONE_DAY_PRICE: number = 277;//340
     MROT: number = 12000;
     
   constructor(private material: MaterialCalculationService) { }
@@ -124,7 +124,7 @@ export class CalculateService {
     var data = this.calculatEmployeesCount(Offer);
     var summ: number = 0;
     for (let i in data.objects) {
-      data.objects[i].details['managerWage'] = ( 500 + 750 * data.objects[i].details.employeesCount ) * 2.4;
+      data.objects[i].details['managerWage'] = ( 500 + 750 * data.objects[i].details.employeesCount );//*2.4
       summ = summ + data.objects[i].details.managerWage;
     }
     data.details.managerWage = summ;
@@ -152,7 +152,7 @@ export class CalculateService {
       }
       data.objects[i].details['obnalCommission'] =  this.beautyPrice( (rash 
                                                     + data.objects[i].details.managerWage
-                                                    + data.objects[i].details.windowFond) *15/85 );
+                                                    + data.objects[i].details.windowFond) * 1.5/98.5 + 100 );
       summ = summ + data.objects[i].details.obnalCommission;
     }
     data.details.obnalCommission = summ;
@@ -166,7 +166,7 @@ export class CalculateService {
       if (data.objects[i].details.employeesCount > 10) {
         data.objects[i].details['profit'] = data.objects[i].details.employeesCount * 2000;
       } else {
-        data.objects[i].details['profit'] = data.objects[i].details.employeesCount * 5000;
+        data.objects[i].details['profit'] = data.objects[i].details.employeesCount * 4000;
       }
       summ = summ + data.objects[i].details.profit;
     }
@@ -195,37 +195,22 @@ export class CalculateService {
           for (let x in obj.employees) {
             Summ =  Summ + obj.employees[x].count * ( obj.employees[x].fotOnHand + obj.employees[x].zpNalog.Summ)          
           }
-        
-          var potentialItog = this.beautyPrice(( Summ + obj.details.managerWage
-            + obj.details.windowFond
-            + obj.details.obnalCommission
-            + obj.details.profit ) );
-          var nalogItog = (obj.details.profit/10 > potentialItog/99)?obj.details.profit/10:potentialItog/99;
           
           obj.details['itog'] = this.beautyPrice(( Summ + obj.details.managerWage
                           + obj.details.windowFond
                           + obj.details.obnalCommission
-                          + obj.details.profit
-                          + nalogItog )*1.1 );
-          obj.details['base_nalog_itog'] = this.beautyPrice(nalogItog);  
+                          + obj.details.profit ) * 100/94 );
+          obj.details['base_nalog_itog'] = this.beautyPrice(obj.details.itog*6/100);  
                                              
-          obj.details['discount'] = Math.round(0.1 * obj.details.itog / 1.1);
+          obj.details['discount'] = 0;// Math.round(0.1 * obj.details.itog / 1.1);
 
-          var potentialItogMaterial = this.beautyPrice(( Summ + obj.details.managerWage
-                            + obj.details.windowFond
-                            + obj.details.obnalCommission
-                            + obj.details.profit 
-                            + obj.details.material) );
-          var nalogItogMaterial = (obj.details.profit/10 > potentialItogMaterial/99)?obj.details.profit/10:potentialItogMaterial/99;
-          
           obj.details['itogMaterial'] = this.beautyPrice(( Summ + obj.details.managerWage
                                   + obj.details.windowFond
                                   + obj.details.obnalCommission
-                                  + obj.details.profit 
-                                  + obj.details.material
-                                  + nalogItogMaterial) + obj.details.discount );
+                                  + obj.details.profit
+                                  + obj.details.material) *100/94 );
           
-          obj.details['base_nalog_itog_material'] = this.beautyPrice(nalogItogMaterial);
+          obj.details['base_nalog_itog_material'] = this.beautyPrice(obj.details.itogMaterial*6/100);
           itog = itog + obj.details.itog
           base_nalog_itog = base_nalog_itog + obj.details.base_nalog_itog
           discount = discount + obj.details.discount

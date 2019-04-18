@@ -52,6 +52,7 @@ import { ConsumablesComponent } from './CRM/Configuration/consumables/consumable
 import { CommonModule } from '@angular/common';
 import { EmployeesComponent } from './CRM/Contacts/Employees/employees/employees.component';
 import { EmployeesListComponent } from './CRM/Contacts/Employees/employees-list/employees-list.component';
+import { CreatingNewComponent } from './CRM/Contacts/Users/creating-new/creating-new.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -73,7 +74,8 @@ registerLocaleData(localeRu, 'ru');
     OutstaffComponent,
     ConsumablesComponent,
     EmployeesComponent,
-    EmployeesListComponent
+    EmployeesListComponent,
+    CreatingNewComponent
   ],
   imports: [
     BrowserModule,
