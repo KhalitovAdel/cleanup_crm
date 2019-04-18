@@ -59,7 +59,7 @@ export class LeadListComponent implements OnInit {
     this.getLeadList();
   }
   async getLeadList() {
-    await this.myHttp.getHTTP('/getLeadList')
+    await this.myHttp.getHTTP('/crm/lead/getLeadList')
       .subscribe( (data: [])=> {
         this.Leads = data;
         this.refreshDataSource(this.Leads);

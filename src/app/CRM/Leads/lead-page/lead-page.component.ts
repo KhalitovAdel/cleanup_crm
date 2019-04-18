@@ -98,7 +98,7 @@ export class LeadPageComponent implements OnInit {
   }
 
   async getLeadInfo() {
-      await this.myHttp.postHTTP('/getLeadInfo', {id: this.id} )
+      await this.myHttp.postHTTP('/crm/lead/getLead', {id: this.id} )
         .subscribe( data=>{
           console.log(data);
           this.Lead = data;
@@ -128,7 +128,7 @@ export class LeadPageComponent implements OnInit {
 
   changeTaskStatus(task) {
     console.log(task);
-      this.myHttp.postHTTP('/changeStatus', {leadId: this.Lead.leadId, changedTask: task} )
+      this.myHttp.postHTTP('/crm/lead/changeTaskStatus', {leadId: this.Lead.leadId, changedTask: task} )
         .subscribe( data=>{
           console.log(data);
           this.Lead = data;
@@ -145,7 +145,7 @@ export class LeadPageComponent implements OnInit {
         description: this.taskDesk.value.description,
         createdDate: new Date
       }
-      this.myHttp.postHTTP('/createNewComment', {leadId: this.Lead.leadId, comment: data})
+      this.myHttp.postHTTP('/crm/lead/newComment', {leadId: this.Lead.leadId, comment: data})
         .subscribe( updatedLead=> {
           this.Lead = updatedLead;
           this.sortTasks();
@@ -163,7 +163,7 @@ export class LeadPageComponent implements OnInit {
         deadLineDate: this.taskDesk.value.deadLineDate,
         createdDate: new Date
       }
-      this.myHttp.postHTTP('/createNewTask', {leadId: this.Lead.leadId, task: data})
+      this.myHttp.postHTTP('/crm/lead/newTask', {leadId: this.Lead.leadId, task: data})
         .subscribe( updatedLead=> {
           this.Lead = updatedLead;
           this.sortTasks();
@@ -176,7 +176,7 @@ export class LeadPageComponent implements OnInit {
   }
 
   changeLeadStatus () {
-    this.myHttp.postHTTP('/changeLeadStatus', 
+    this.myHttp.postHTTP('/crm/lead/changeLeadStatus', 
     {
       leadId: this.Lead.leadId,
       leadStatus: this.Lead.leadStatus
@@ -202,7 +202,7 @@ export class LeadPageComponent implements OnInit {
   }
 
   saveLeadChanges() {
-    this.myHttp.postHTTP('/saveLeadChanges', {
+    this.myHttp.postHTTP('/crm/lead/saveLeadChanges', {
       leadId: this.Lead.leadId,
       firmName: this.Lead.firmName,
       contactPhones: this.Lead.contactPhones,

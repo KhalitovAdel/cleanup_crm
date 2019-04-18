@@ -20,7 +20,7 @@ export class OffersListComponent implements OnInit {
   }
 
   getOfferList() {
-    this.myHttp.getHTTP('/getalloffers')
+    this.myHttp.getHTTP('/crm/offer/getAllOffers')
       .subscribe( (data)=> {
         this.AllOffers = data;
         console.log(this.AllOffers);

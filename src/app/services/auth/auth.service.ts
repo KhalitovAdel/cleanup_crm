@@ -11,10 +11,10 @@ export class AuthService {
   ) { }
 
   registerNewEmployee(employee) {
-    return this.myHttp.postHTTP( '/register', employee );
+    return this.myHttp.postHTTP( '/crm/config/register', employee );
   }
 
   loginByEmployee(employee) {
-    return this.myHttp.postHTTP('/login', employee);
+    return this.myHttp.postHTTP('/crm/config/login', employee);
   }
 }

@@ -26,7 +26,7 @@ export class MaterialCalculationService {
   }
 
   getMaterialList() {
-    const data = this.myhttp.getHTTP('/getMaterialList').toPromise();
+    const data = this.myhttp.getHTTP('/crm/config/getMaterialList').toPromise();
     return data;
   }
 

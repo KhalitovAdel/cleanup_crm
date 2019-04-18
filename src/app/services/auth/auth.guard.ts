@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate():Observable<boolean>|boolean {
-    return this.myHttp.getHTTP('/detect')
+    return this.myHttp.getHTTP('/crm/config/detect')
       .pipe(map( (data: any) => {
         if (data.detect === true) {
           return true;

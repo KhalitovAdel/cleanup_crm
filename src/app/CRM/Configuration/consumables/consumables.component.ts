@@ -45,7 +45,7 @@ export class ConsumablesComponent implements OnInit {
   }
 
   createNewMaterial() {
-    this.myhttp.postHTTP('/createNewMaterial', this.MaterialControl.value)
+    this.myhttp.postHTTP('/crm/config/createNewMaterial', this.MaterialControl.value)
       .subscribe(data=> {
         console.log(data);
         this.MaterialControl.reset();
@@ -56,7 +56,7 @@ export class ConsumablesComponent implements OnInit {
   }
 
   getMaterialList() {
-    this.myhttp.getHTTP('/getMaterialList')
+    this.myhttp.getHTTP('/crm/config/getMaterialList')
       .subscribe( (data: Array<object>)=> {
         console.log(data)
         this.AllMaterial = data;

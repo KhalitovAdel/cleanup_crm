@@ -227,7 +227,7 @@ export class NewLeadComponent implements OnInit {
     if (this.LeadControl.valid) {
       this.preparatGroup();
       var data = this.LeadControl.value;
-      return this.myHttp.postHTTP('/newLead', data)
+      return this.myHttp.postHTTP('/crm/lead/new', data)
         .subscribe( (data: any) => {
           this.alert.openSnackBar( data.message );
           this.resetAllControls();
@@ -247,7 +247,7 @@ export class NewLeadComponent implements OnInit {
       this.preparatGroup();
       var data = this.LeadControl.value;
       this.OfferControl.get('status').setValue('created');
-      return this.myHttp.postHTTP('/newLeadOffer', {Lead: data, Offer: this.OfferControl.value})
+      return this.myHttp.postHTTP('/crm/lead/newLeadOffer', {Lead: data, Offer: this.OfferControl.value})
         .subscribe( (data: any) => {
           this.alert.openSnackBar( data.message );
           this.resetAllControls();
@@ -270,7 +270,7 @@ export class NewLeadComponent implements OnInit {
       var data = this.LeadControl;
       this.OfferControl.get('status').setValue('sent');
       this.OfferControl.get('sentingDate').setValue(new Date);
-      return this.myHttp.postHTTP('/newLeadOfferSend', {Lead: data, Offer: this.OfferControl.value})
+      return this.myHttp.postHTTP('/crm/lead/newLeadOfferSend', {Lead: data, Offer: this.OfferControl.value})
       .subscribe( (data: any) => {
         this.alert.openSnackBar( data.message );
         this.resetAllControls();
@@ -313,7 +313,7 @@ export class NewLeadComponent implements OnInit {
     });
   };//Переделать
   createTestKP() {
-    this.myHttp.postHTTP('/createTestKP', {
+    this.myHttp.postHTTP('/crm/lead/createTestKP', {
       Lead: {
         firmName: 'TestFirm',
         address: 'Kazan'

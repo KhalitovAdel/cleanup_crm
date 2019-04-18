@@ -15,7 +15,7 @@ export class EmployeesListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.myHttp.getHTTP('/getEmployeeList')
+    this.myHttp.getHTTP('/crm/users/getEmployeeList')
       .subscribe( (data: any) => {;
         this.AllEmployees = data;
         console.log(this.AllEmployees)

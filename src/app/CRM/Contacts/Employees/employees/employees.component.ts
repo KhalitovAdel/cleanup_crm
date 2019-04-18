@@ -46,7 +46,7 @@ export class EmployeesComponent implements OnInit {
 
   saveEmployee(): void {
     if (this.EmployeeControl.valid) {
-      this.myHttp.postHTTP('/createNewEmployee', this.EmployeeControl.value)
+      this.myHttp.postHTTP('/crm/users/createNewEmployee', this.EmployeeControl.value)
         .subscribe( (data: any) => {
           this.alert.openSnackBar( data.message );
           this.EmployeeControl.reset();
