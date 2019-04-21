@@ -10,6 +10,7 @@ configRouter.post('/login', ctrlAuth.login);
 configRouter.post('/createNewMaterial', ctrlAuth.mustAuthenticatedMw, ctrlConfig.createNewMaterial);
 
 configRouter.get('/detect', function( req, res) {
+    console.log("Запрос получил")
     if ( req.isAuthenticated() ) {
         res.status(200).send({ detect: true })
     } else {

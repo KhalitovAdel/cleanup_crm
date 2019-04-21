@@ -1,5 +1,5 @@
 const mongoose          = require('mongoose');
-var acl = require('acl');
+var node_acl = require('acl');
 var state = {
   db: null
 };
@@ -19,8 +19,8 @@ exports.connect = function (done) {
     done();
   });
 };
-var conn    = mongoose.connection,
-
+var conn    = mongoose.connection;
+var acl = new node_acl( new node_acl.mongodbBackend(conn, 'acl_') );
 
 
 OfferSchema  = new mongoose.Schema({
@@ -90,5 +90,6 @@ OfferSchema  = new mongoose.Schema({
   }
 });
 
+exports.acl = acl;
 exports.freshConnect = conn;
 exports.Offer = conn.model('Offer', OfferSchema);
