@@ -5,12 +5,10 @@ passport      = require('passport');
 var ctrlConfig  = require('../../../controllers/config'),
 ctrlAuth        = require('../../../controllers/auth');
 
-configRouter.post('/register', ctrlAuth.register);
 configRouter.post('/login', ctrlAuth.login); 
 configRouter.post('/createNewMaterial', ctrlAuth.mustAuthenticatedMw, ctrlConfig.createNewMaterial);
 
 configRouter.get('/detect', function( req, res) {
-    console.log("Запрос получил")
     if ( req.isAuthenticated() ) {
         res.status(200).send({ detect: true })
     } else {

@@ -1,0 +1,42 @@
+<div class="row" style='max-width: 500px; position: relative; padding: 10px;'>
+    <a href="#" (click)='preChangeLead($event, true)' style="position: absolute; top: 10px; right: 10px; z-index: 10">Изменить</a>
+    <div class="col-6">
+        <p *ngIf='!changeIndicator'>ФОТ: {{Offer.details.fotOnHand}} м<sup>2</sup></p>
+        <mat-form-field *ngIf='changeIndicator'>
+            <input matInput placeholder="ФОТ" (change)="calculate()" [(ngModel)]='Offer.details.fotOnHand'>
+        </mat-form-field>
+    </div>
+    <div class="col-6">
+        <p *ngIf='!changeIndicator'>УПР: {{Offer.details.managerWage}} ₽</p>
+        <mat-form-field *ngIf='changeIndicator'>
+            <input matInput placeholder="УПР" (change)="calculate()" [(ngModel)]='Offer.details.managerWage'>
+        </mat-form-field>
+    </div>
+    <div class="col-6">
+        <p>Тинькофф: {{Offer.details.tinkoffCommission}} ₽</p>
+    </div>
+    <div class="col-6">
+        <p>Материалы: {{Offer.details.material}} ₽</p>
+    </div>
+    <div class="col-6">
+        <p *ngIf='!changeIndicator'>Фонд окон: {{Offer.details.windowFond}} ₽</p>
+        <mat-form-field *ngIf='changeIndicator'>
+            <input matInput placeholder="Фонд окон" (change)="calculate()" [(ngModel)]='Offer.details.windowFond'>
+        </mat-form-field>
+    </div>
+    <div class="col-6">
+        <p *ngIf='!changeIndicator'>Прибыль: {{Offer.details.profit}} ₽</p>
+        <mat-form-field *ngIf='changeIndicator'>
+            <input matInput placeholder="Прибыль" (change)="calculate()" [(ngModel)]='Offer.details.profit'>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <button mat-raised-button color="primary" *ngIf='changeIndicator' (click)='saveOfferDetailChanges()'>Сохранить</button>
+    </div>
+    <div class="col-6">
+        <h4 class="main-text-color">Итог: {{Offer.details.itog}} ₽</h4>
+    </div>
+    <div class="col-6">
+        <h4 class="main-text-color">Итог: {{Offer.details.itogMaterial}} ₽</h4>
+    </div>
+</div>

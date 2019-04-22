@@ -36,23 +36,29 @@ import localeRu from '@angular/common/locales/ru';
 import { B2bregularComponent } from './calculate/b2bregular/b2bregular.component';
 import { CalculateService } from './services/calculate/calculate.service';
 import { myHTTPService } from './services/HTTP/myhttp.service';
-import { LeadListComponent } from './CRM/Leads/lead-list/lead-list.component';
-import { LeadPageComponent } from './CRM/Leads/lead-page/lead-page.component';
-import { NewLeadComponent } from './CRM/Leads/new-lead/new-lead.component';
+import { LeadListComponent } from './WORKSPACE/CRM/Leads/lead-list/lead-list.component';
+import { LeadPageComponent } from './WORKSPACE/CRM/Leads/lead-page/lead-page.component';
+import { NewLeadComponent } from './WORKSPACE/CRM/Leads/new-lead/new-lead.component';
 import { FiltersPipeCustom } from './filters.pipe';
-import { OfferIntoLeadComponent, BottomSheet } from './CRM/Offers/offer-into-lead/offer-into-lead.component';
+import { OfferIntoLeadComponent, BottomSheet } from './WORKSPACE/CRM/Offers/offer-into-lead/offer-into-lead.component';
 import { AlertComponent } from './services/alert/alert.service';
-import { LoginComponent } from './CRM/auth/login/login.component';
+import { LoginComponent } from './WORKSPACE/Login/login.component';
 import { AuthGuard } from './services/auth/auth.guard';
 import { RegularComponent } from './Client/b2b/regular/regular.component';
-import { DashboardComponent } from './CRM/Dashboard/dashboard/dashboard.component';
-import { OffersListComponent } from './CRM/Offers/offers-list/offers-list.component';
+import { DashboardComponent } from './WORKSPACE/Main-menu/dashboard.component';
+import { OffersListComponent } from './WORKSPACE/CRM/Offers/offers-list/offers-list.component';
 import { OutstaffComponent } from './Client/b2b/outstaff/outstaff.component';
-import { ConsumablesComponent } from './CRM/Configuration/consumables/consumables.component';
+import { ConsumablesComponent } from './WORKSPACE/Configuration/consumables/consumables.component';
 import { CommonModule } from '@angular/common';
-import { EmployeesComponent } from './CRM/Contacts/Employees/employees/employees.component';
-import { EmployeesListComponent } from './CRM/Contacts/Employees/employees-list/employees-list.component';
-import { CreatingNewComponent } from './CRM/Contacts/Users/creating-new/creating-new.component';
+import { EmployeesComponent } from './WORKSPACE/Employees/employees/employees.component';
+import { EmployeesListComponent } from './WORKSPACE/Employees/employees-list/employees-list.component';
+import { CreatingNewComponent } from './WORKSPACE/Contacts/Users/creating-new/creating-new.component';
+import { EmplDashboardComponent } from './WORKSPACE/Employees/empl-dashboard/empl-dashboard.component';
+import { EmployessPageComponent } from './WORKSPACE/Employees/employess-page/employess-page.component';
+import { RegisterNewComponent } from './Configuration/Register/register-new/register-new.component';
+import { CrmBoardComponent } from './WORKSPACE/CRM/crm-board/crm-board.component';
+import { RegistrationUserComponent } from './WORKSPACE/Configuration/registration-user/registration-user.component';
+import { ConfBoardComponent } from './WORKSPACE/Configuration/conf-board/conf-board.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -75,7 +81,13 @@ registerLocaleData(localeRu, 'ru');
     ConsumablesComponent,
     EmployeesComponent,
     EmployeesListComponent,
-    CreatingNewComponent
+    CreatingNewComponent,
+    EmplDashboardComponent,
+    EmployessPageComponent,
+    RegisterNewComponent,
+    CrmBoardComponent,
+    RegistrationUserComponent,
+    ConfBoardComponent
   ],
   imports: [
     BrowserModule,

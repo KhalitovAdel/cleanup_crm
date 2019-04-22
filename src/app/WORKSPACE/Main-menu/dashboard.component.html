@@ -1,0 +1,44 @@
+<nav class="bg-main">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+          <div class="wrap">
+              <a href="#">
+                  <img class="logo" src="./assets/logotype-alt.svg" alt="CleanUp logo">
+              </a>
+              <button (click)="sidenav.toggle()" style="background-color: white;">{{screenWidth}}</button>
+              
+              <mat-form-field appearance="outline">
+                  <input type="text" (click)="getLeadList()" placeholder="Поиск лида" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                  <mat-icon matSuffix>search</mat-icon>
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.details.firmName">
+                      <a target="_blank" routerLink="{{option.leadId}}">{{option.details.firmName}}</a>
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+          </div>
+      </div>
+    </div>
+  </div>
+</nav>
+  <mat-sidenav-container [hasBackdrop]="false">
+      <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'" [autoFocus]="false">
+        <nav class="sidebar">
+          <ul>
+            <li><a [routerLink]="['crm']">CRM</a></li>
+            <li><a [routerLink]="['employees']">Сотрудники</a></li>
+            <li><a [routerLink]="['configuration']">Настройки</a></li>
+          </ul>
+        </nav>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+
+        <router-outlet></router-outlet>
+
+      </mat-sidenav-content>
+
+  </mat-sidenav-container>
+
