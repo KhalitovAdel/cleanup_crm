@@ -1,9 +1,7 @@
 const mongoose          = require('mongoose');
-var node_acl = require('acl');
 var state = {
   db: null
 };
-
 mongoose.set('useFindAndModify', false);
 exports.connect = function (done) {
   if (state.db) {
@@ -19,9 +17,7 @@ exports.connect = function (done) {
     done();
   });
 };
-var conn    = mongoose.connection;
-var acl = new node_acl( new node_acl.mongodbBackend(conn, 'acl_') );
-
+conn = mongoose.connection;
 
 OfferSchema  = new mongoose.Schema({
   createdDate: Date,
@@ -90,6 +86,5 @@ OfferSchema  = new mongoose.Schema({
   }
 });
 
-exports.acl = acl;
 exports.freshConnect = conn;
 exports.Offer = conn.model('Offer', OfferSchema);

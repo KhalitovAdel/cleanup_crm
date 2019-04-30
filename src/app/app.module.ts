@@ -16,7 +16,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule, MatFormFieldModule } from '@angular/material';
+import { MatPaginatorModule, MatFormFieldModule, MatNativeDateModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -29,6 +29,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDatepickerModule } from '@angular/material/datepicker'
 
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
@@ -57,8 +58,9 @@ import { EmplDashboardComponent } from './WORKSPACE/Employees/empl-dashboard/emp
 import { EmployessPageComponent } from './WORKSPACE/Employees/employess-page/employess-page.component';
 import { RegisterNewComponent } from './Configuration/Register/register-new/register-new.component';
 import { CrmBoardComponent } from './WORKSPACE/CRM/crm-board/crm-board.component';
-import { RegistrationUserComponent } from './WORKSPACE/Configuration/registration-user/registration-user.component';
+import { RegistrationUserComponent } from './WORKSPACE/Configuration/Registration/Invite-user/registration-user.component';
 import { ConfBoardComponent } from './WORKSPACE/Configuration/conf-board/conf-board.component';
+import { RegisterUserComponent } from './WORKSPACE/Configuration/Registration/register-user/register-user.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -87,7 +89,8 @@ registerLocaleData(localeRu, 'ru');
     RegisterNewComponent,
     CrmBoardComponent,
     RegistrationUserComponent,
-    ConfBoardComponent
+    ConfBoardComponent,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,
@@ -118,7 +121,9 @@ registerLocaleData(localeRu, 'ru');
     OwlModule,
     MatSidenavModule,
     MatSlideToggleModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents: [OfferIntoLeadComponent, AlertComponent, BottomSheet],
   providers: [
@@ -127,7 +132,8 @@ registerLocaleData(localeRu, 'ru');
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'ru'},
     AuthGuard,
     CookieService,
-    { provide: LOCALE_ID, useValue: "ru" }
+    { provide: LOCALE_ID, useValue: "ru" },
+    MatDatepickerModule
   ],
   bootstrap: [AppComponent]
 })

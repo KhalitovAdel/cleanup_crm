@@ -16,7 +16,8 @@ import { EmplDashboardComponent } from './WORKSPACE/Employees/empl-dashboard/emp
 import { EmployessPageComponent } from './WORKSPACE/Employees/employess-page/employess-page.component';
 import { CrmBoardComponent } from './WORKSPACE/CRM/crm-board/crm-board.component';
 import { ConfBoardComponent } from './WORKSPACE/Configuration/conf-board/conf-board.component';
-import { RegistrationUserComponent } from './WORKSPACE/Configuration/registration-user/registration-user.component';
+import { RegistrationUserComponent } from './WORKSPACE/Configuration/Registration/Invite-user/registration-user.component';
+import { RegisterUserComponent } from './WORKSPACE/Configuration/Registration/register-user/register-user.component';
 
 const routes: Routes = [
   { path: '', component: RegularComponent, pathMatch: 'full' },
@@ -42,8 +43,10 @@ const routes: Routes = [
       { path: 'configuration/registration', component: RegistrationUserComponent, canActivate: [AuthGuard] },
 
   ] },
-    
-    { path: 'сonsumables', component: ConsumablesComponent, canActivate: [AuthGuard] },
+
+    //PUBLIC
+
+    { path: 'invite/:id', component: RegisterUserComponent},
     { path: 'workspace/login', component: LoginComponent},
     { path: 'outstaff', component: OutstaffComponent},
 ];

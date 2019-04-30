@@ -1,6 +1,6 @@
 const passport      = require('passport'),
 mongoose            = require('mongoose'),
-makePDF             = require('../pdfmaker/index.1'),
+makePDF             = require('../apps/pdfmaker/index'),
 db                  = require('../config/index'),
 Lead                = require('../models/lead');
 

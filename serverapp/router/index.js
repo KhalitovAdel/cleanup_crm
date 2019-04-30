@@ -2,24 +2,27 @@ const express = require('express'),
 router        = express.Router(),
 passport      = require('passport');
 
-var db = require('../config/index');
+var acl       = require('../apps/acl_roles/rols');
 
-var ctrlClient  = require('../controllers/client'),
-    crmRouter   = require('../router/CRM/index'),
-    configurationRouter = require('../router/Configuration/index');
-
-
+var ctrlClient          = require('../controllers/client'),
+    crmRouter           = require('../router/CRM/index'),
+    configurationRouter = require('../router/Configuration/index'),
+    publicRouter        = require('../router/Public/index');
 
 router.post('/sentOfferByClient', ctrlClient.b2bOffer); //???????????
 
 router.use('/crm', checkForPermissions(), crmRouter);
 router.use('/configuration', checkForPermissions(), configurationRouter);
+router.use('/public', publicRouter);
 
 function checkForPermissions() {
+        
     return (req, res, next) => {
         const userId = getUserId(req);
-        db.acl.middleware(2, userId);
-        next();
+        return acl.then(acl=> {
+            acl.middleware(2, userId);
+            next();
+        })
     }
    
 }
@@ -27,7 +30,7 @@ function checkForPermissions() {
 function getUserId(req) {
     if (req.user) {
         return req.session.passport.user;
-    }
+    } 
 }
 
 module.exports = router;

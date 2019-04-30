@@ -2,7 +2,13 @@ const mongoose          = require('mongoose'),
 crypto                  = require('crypto');
 
 UserSchema = new mongoose.Schema({
+    Name: String,
+    Surname: String,
+    BirthDate: Date,
     username: String,
+    role: String,
+    createdDate: Date,
+    status: String,
     hash: String,
     salt: String
   });

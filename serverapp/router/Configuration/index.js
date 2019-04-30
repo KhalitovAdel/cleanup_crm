@@ -2,8 +2,8 @@ const express = require('express'),
 configurationRouter        = express.Router(),
 passport      = require('passport');
 
-var ctrlAuth        = require('../../../controllers/auth');
+var ctrlAuth        = require('../../controllers/auth');
 
-configurationRouter.post('/register', ctrlAuth.register);
+configurationRouter.post('/invite', ctrlAuth.invite);
 
 module.exports = configurationRouter;

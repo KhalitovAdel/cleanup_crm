@@ -1,0 +1,21 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12" [formGroup]="newUser">
+
+      <mat-form-field appearance="outline">
+        <input matInput type="text" formControlName="email" placeholder="email">
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline">
+        <mat-select formControlName="role" placeholder="Должность">
+            <mat-option *ngFor="let x of AllRoles; let i = index" [value]="x">
+                {{x}}
+            </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <button (click)="invite()">Пригласить</button>
+
+    </div>
+  </div>
+</div>

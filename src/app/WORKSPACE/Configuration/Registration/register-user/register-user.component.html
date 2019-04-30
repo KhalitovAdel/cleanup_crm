@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12" [formGroup]="newUser">
+
+      <mat-form-field appearance="outline">
+        <input matInput type="text" formControlName="Name" placeholder="Имя">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput type="text" formControlName="Surname" placeholder="Фамилия">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput [matDatepicker]="picker" formControlName="BirthDate" placeholder="Дата рождения">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput type="password" formControlName="password" placeholder="Пароль к порталу">
+      </mat-form-field>
+      
+      <button (click)="finishUserRegistration()">Зарегистрироваться</button>
+
+    </div>
+  </div>
+</div>
