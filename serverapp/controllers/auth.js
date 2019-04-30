@@ -7,8 +7,8 @@ var sendJSONresponse = function(res, status, content) {
     res.status(status);
     res.json(content);
 }
-var db = require('../config/index')
-var mailer = require('../apps/mailer/index')
+var acl = require('../apps/acl_roles/rols');
+var mailer = require('../apps/mailer/index');
 
 module.exports.mustAuthenticatedMw = function(req, res, next) {
     if ( !req.isAuthenticated() ) {
@@ -60,14 +60,17 @@ module.exports.finishUserRegistration = function(req, res) {
         {new: true}, 
         function(err, data) {
             console.log(data)
-            db.acl.addUserRoles(data._id.toString(), data.role, err => {
-                if (err) {
-                    console.log(err);
-                    sendJSONresponse(res, 400, err); 
-                }
-              });
-            db.acl.roleUsers('admin', function(err, users) {
-                console.log(users)
+            
+            acl.then(acl=>{
+                acl.addUserRoles(data._id.toString(), data.role, err => {
+                    if (err) {
+                        console.log(err);
+                        sendJSONresponse(res, 400, err); 
+                    }
+                });
+                acl.roleUsers('admin', function(err, users) {
+                    console.log(users)
+                })
             })
         })
 };
