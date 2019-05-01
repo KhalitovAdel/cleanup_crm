@@ -36,9 +36,19 @@ export class LeadPageComponent implements OnInit {
   Lead: any = {
     leadId: String,
     leadStatus: String,
-    contactPhones: [],
     comments: [],
-    tasks: [] = []
+    tasks: [] = [],
+    details: {
+      contactPhones: [],
+      address:'',
+      contactEmail:'',
+      contactName:'',
+      firmName:'',
+      leadStatus:'',
+      link2gis:'',
+      lprsName:'',
+      position:''
+    }
   };
 
   taskDesk: FormGroup;
