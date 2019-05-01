@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
   }
 
   async getLeadList() {
-    await this.myHttp.getHTTP('/getLeadList')
+    await this.myHttp.getHTTP('/crm/lead/getLeadList')
       .subscribe( (data: [])=> {
         this.options = data;
       }, err => {

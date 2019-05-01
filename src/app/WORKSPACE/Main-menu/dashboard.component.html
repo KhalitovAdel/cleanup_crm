@@ -13,8 +13,9 @@
                   <mat-icon matSuffix>search</mat-icon>
                   <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option.details.firmName">
-                      <a target="_blank" routerLink="{{option.leadId}}">{{option.details.firmName}}</a>
-                    </mat-option>
+                      <a target="_blank" routerLink="/workspace/crm/leadlist/{{option.leadId}}" routerLinkActive="active"
+                      [routerLinkActiveOptions]="{exact:true}">{{option.details.firmName}}</a>
+                    </mat-option> 
                   </mat-autocomplete>
                 </mat-form-field>
 
