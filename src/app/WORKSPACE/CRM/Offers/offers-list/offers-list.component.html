@@ -1,4 +1,4 @@
 <button (click)="changeAllDetails()">Изменить все</button>
 <ul>
-  <li *ngFor="let i of AllOffers"><a href="http://localhost:4200/crm/leadlist/{{i.leadLink}}">Лид </a> {{i.details.profit}}-{{i.details.itog}} <button (click)="newDetails(i)">New</button></li>
+  <li *ngFor="let i of AllOffers"><a href="http://localhost:4200/workspace/crm/leadlist/{{i.leadLink}}">Лид </a> {{i.details.profit}}-{{i.details.itog}} <button (click)="newDetails(i)">New</button></li>
 </ul>

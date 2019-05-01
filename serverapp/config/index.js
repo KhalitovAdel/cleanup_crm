@@ -44,6 +44,10 @@ OfferSchema  = new mongoose.Schema({
         obnalCommission: Number,
         profit: Number,
         windowFond: Number,
+        accountantWage: Number,
+        holidaysWage: Number,
+        NZ: Number,
+        thirteenthWage: Number
       },
       employees: [
         {
@@ -54,6 +58,7 @@ OfferSchema  = new mongoose.Schema({
           timeToWorkPerDay: Number,
           whiteFot: Number,
           workDayPerMonth: Number,
+          thirteenthWage: Number,
           zpNalog: {
             MS: Number,
             NDFL: Number,
@@ -83,6 +88,10 @@ OfferSchema  = new mongoose.Schema({
     obnalCommission: Number,
     profit: Number,
     windowFond: Number,
+    accountantWage: Number,
+    holidaysWage: Number,
+    NZ: Number,
+    thirteenthWage: Number
   }
 });
 

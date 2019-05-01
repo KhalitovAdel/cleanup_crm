@@ -106,7 +106,11 @@ export class NewLeadComponent implements OnInit {
         itogMaterial: Number,
         base_nalog_itog_material: Number,
         discount: Number,
-        materialToStart: Number
+        materialToStart: Number,
+        accountantWage: Number,
+        holidaysWage: Number,
+        NZ: Number,
+        thirteenthWage: Number
       }),
       status: '',
       sentingDate: '',
@@ -164,7 +168,11 @@ export class NewLeadComponent implements OnInit {
       itogMaterial: Number,
       base_nalog_itog_material: Number,
       discount: Number,
-      materialToStart: Number
+      materialToStart: Number,
+      accountantWage: Number,
+      holidaysWage: Number,
+      NZ: Number,
+      thirteenthWage: Number
     })
   }
   createNewEmployeesGroup() {
@@ -176,7 +184,8 @@ export class NewLeadComponent implements OnInit {
       fotOnHand: Number,
       whiteFot: Number,
       blackFot: Number,
-      zpNalog: Object
+      zpNalog: Object,
+      thirteenthWage: Number
     })
   }
   createNewObject() {

@@ -120,8 +120,26 @@ export class CalculateService {
     return Offer;
   }
 
+  calculateThirteenthWage(Offer) {
+    var data = this.calculatEmployeesCount(Offer)
+    var summ_thirteenthWage: number = 0;
+      for (let i in data.objects) {
+        var empl = data.objects[i].employees;
+        var summ: number = 0;
+        for (let y in empl) {
+          empl[y]['thirteenthWage'] = this.beautyPrice( (empl[y].fotOnHand
+                                      + empl[y].zpNalog.Summ) /12 );
+          summ = summ + empl[y].thirteenthWage * empl[y].count;
+        }
+        data.objects[i].details['thirteenthWage'] = summ;
+        summ_thirteenthWage = summ_thirteenthWage + summ;
+      }
+      data.details.thirteenthWage = summ_thirteenthWage;
+    return data;
+  }
+
   calculateManagerWage(Offer)  {
-    var data = this.calculatEmployeesCount(Offer);
+    var data = this.calculateThirteenthWage(Offer);
     var summ: number = 0;
     for (let i in data.objects) {
       data.objects[i].details['managerWage'] = ( 500 + 750 * data.objects[i].details.employeesCount );//*2.4
@@ -130,10 +148,32 @@ export class CalculateService {
     data.details.managerWage = summ;
     return data;
   }
+  
+  calculateHolidaysWage(Offer) {
+    var data = this.calculateManagerWage(Offer);
+    var summ: number = 0;
+    for (let i in data.objects) {
+      data.objects[i].details['holidaysWage'] = this.beautyPrice(data.objects[i].details.employeesCount * 1000/12);
+      summ = summ + data.objects[i].details.holidaysWage;
+    }
+    data.details.holidaysWage = summ;
+    return data;
+  }
+
+  calculateAccountantWage(Offer) {
+    var data = this.calculateHolidaysWage(Offer);
+    var summ: number = 0;
+    for (let i in data.objects) {
+      data.objects[i].details['accountantWage'] = 500;
+      summ = summ + data.objects[i].details.accountantWage;
+    }
+    data.details.accountantWage = summ;
+    return data;
+  }
 
   calculateWindowsFond(Offer)  {
     var summ: number = 0;
-    var data = this.calculateManagerWage(Offer);
+    var data = this.calculateAccountantWage(Offer);
     for (let i in Offer.objects) {
       data.objects[i].details['windowFond'] = this.beautyPrice( 450 * ((Offer.objects[i]['area']/300 < 1)?1:(Offer.objects[i]['area']/400) ) )
       summ = summ + data.objects[i].details.windowFond;
@@ -151,7 +191,10 @@ export class CalculateService {
         rash = rash + Offer.objects[i].employees[x].blackFot * Offer.objects[i].employees[x].count;
       }
       data.objects[i].details['obnalCommission'] =  this.beautyPrice( (rash 
+                                                    + data.objects[i].details.accountantWage
                                                     + data.objects[i].details.managerWage
+                                                    + data.objects[i].details.holidaysWage
+                                                    + data.objects[i].details.thirteenthWage/2
                                                     + data.objects[i].details.windowFond) * 1.5/98.5 + 100 );
       summ = summ + data.objects[i].details.obnalCommission;
     }
@@ -163,10 +206,25 @@ export class CalculateService {
     var data = this.calculateTinkoffCommission(Offer);
     var summ: number = 0;
     for (let i in Offer.objects) {
-      if (data.objects[i].details.employeesCount > 10) {
-        data.objects[i].details['profit'] = data.objects[i].details.employeesCount * 2000;
+      var obj = data.objects[i];
+      var zp_rash: number = 0;
+      for (let x in obj.employees) {
+        zp_rash =  zp_rash + obj.employees[x].count * ( obj.employees[x].fotOnHand + obj.employees[x].zpNalog.Summ)          
+      }
+      var summ_rash = ( zp_rash 
+      + obj.details.accountantWage
+      + obj.details.managerWage
+      + obj.details.holidaysWage
+      + obj.details.thirteenthWage
+      + obj.details.windowFond
+      + obj.details.obnalCommission );
+        console.log(summ_rash)
+      var minProfit: number = 3000;
+
+      if ( (15 * summ_rash / 100) > minProfit) {
+        data.objects[i].details['profit'] = this.beautyPrice( 15 * summ_rash / 100 );
       } else {
-        data.objects[i].details['profit'] = data.objects[i].details.employeesCount * 4000;
+        data.objects[i].details['profit'] = minProfit;
       }
       summ = summ + data.objects[i].details.profit;
     }
@@ -187,7 +245,8 @@ export class CalculateService {
             base_nalog_itog: number = 0,
             discount: number = 0,
             itogMaterial: number = 0,
-            base_nalog_itog_material: number = 0;
+            base_nalog_itog_material: number = 0,
+            summ_NZ: number = 0;
 
         for (let i in data.objects) {
           var Summ = 0;
@@ -195,27 +254,53 @@ export class CalculateService {
           for (let x in obj.employees) {
             Summ =  Summ + obj.employees[x].count * ( obj.employees[x].fotOnHand + obj.employees[x].zpNalog.Summ)          
           }
-          
-          obj.details['itog'] = this.beautyPrice(( Summ + obj.details.managerWage
-                          + obj.details.windowFond
-                          + obj.details.obnalCommission
-                          + obj.details.profit ) * 100/94 );
-          obj.details['base_nalog_itog'] = this.beautyPrice(obj.details.itog*6/100);  
-                                             
-          obj.details['discount'] = 0;// Math.round(0.1 * obj.details.itog / 1.1);
 
-          obj.details['itogMaterial'] = this.beautyPrice(( Summ + obj.details.managerWage
-                                  + obj.details.windowFond
-                                  + obj.details.obnalCommission
-                                  + obj.details.profit
-                                  + obj.details.material) *100/94 );
+          obj.details['NZ'] = this.beautyPrice(
+            (Summ 
+            + obj.details.accountantWage
+            + obj.details.managerWage
+            + obj.details.holidaysWage
+            + obj.details.thirteenthWage
+            + obj.details.windowFond
+            + obj.details.obnalCommission
+            + obj.details.profit) / 100
+          );
+
+          obj.details['discount'] = this.beautyPrice(obj.details.NZ * 10);
+
+          var potential_itog = this.beautyPrice(( Summ 
+            + obj.details.accountantWage
+            + obj.details.managerWage
+            + obj.details.holidaysWage
+            + obj.details.thirteenthWage
+            + obj.details.windowFond
+            + obj.details.obnalCommission
+            + obj.details.NZ
+            + obj.details.profit ) * 100/94);
+
+          var potential_itog_material = this.beautyPrice(( Summ 
+            + obj.details.accountantWage
+            + obj.details.managerWage
+            + obj.details.holidaysWage
+            + obj.details.thirteenthWage
+            + obj.details.windowFond
+            + obj.details.obnalCommission
+            + obj.details.NZ
+            + obj.details.profit 
+            + obj.details.material ) * 100/94);
+
+          obj.details['itog'] = this.beautyPrice(potential_itog + obj.details.discount );
+          obj.details['base_nalog_itog'] = this.beautyPrice(potential_itog*6/100); 
+
+          obj.details['itogMaterial'] = this.beautyPrice(potential_itog_material + obj.details.discount );
           
-          obj.details['base_nalog_itog_material'] = this.beautyPrice(obj.details.itogMaterial*6/100);
+          obj.details['base_nalog_itog_material'] = this.beautyPrice(potential_itog_material*6/100);
           itog = itog + obj.details.itog
           base_nalog_itog = base_nalog_itog + obj.details.base_nalog_itog
           discount = discount + obj.details.discount
           itogMaterial = itogMaterial + obj.details.itogMaterial
           base_nalog_itog_material = base_nalog_itog_material + obj.details.base_nalog_itog_material
+          summ_NZ = summ_NZ + obj.details.NZ
         }
         if (data.details.fullObj != true) {
           data.details.fullObj = false;
@@ -225,6 +310,7 @@ export class CalculateService {
         data.details.discount = discount;
         data.details.itogMaterial = itogMaterial;
         data.details.base_nalog_itog_material = base_nalog_itog_material;
+        data.details.NZ = summ_NZ;
         return data;
       })
   }
