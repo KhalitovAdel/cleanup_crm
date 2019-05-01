@@ -20,7 +20,10 @@ module.exports.mustAuthenticatedMw = function(req, res, next) {
 module.exports.getUser = function(req, res) {
     User.findOne({_id: req.body.id})
         .then(data=> {
-            sendJSONresponse(res, 200, data);
+            if (data.salt.length > 5) {
+               return sendJSONresponse(res, 200, false);
+            }
+            return sendJSONresponse(res, 200, data);
         })
         .catch(err=> {
             return sendJSONresponse(res, 404, err);
@@ -42,10 +45,18 @@ module.exports.invite = function(req, res) {
 
     user.save()
     .then(data=> {
-          mailer.sendSomeMessage(data.username, 'https://'+req.headers.host +'/invite/'+ data._id, 'Вас пригласили');
-          sendJSONresponse(res, 200, {
-                message: 'Успешно'
-            }); 
+        mailer.sendSomeMessage(data.username, 'https://'+req.headers.host +'/invite/'+ data._id, 'Вас пригласили');
+        sendJSONresponse(res, 200, {
+            message: 'Успешно'
+        });
+        return data;
+        
+    })
+    .then(data=> {
+        User.findByIdAndUpdate({_id: data._id},
+        {$set: {status: 'invited'} },
+        {new: true}, 
+        function(err, data) {})
     })
     .catch(err=> {
         console.log(err)
@@ -56,7 +67,7 @@ module.exports.finishUserRegistration = function(req, res) {
     var qsalt = crypto.randomBytes(16).toString('hex');
     var qhash = crypto.pbkdf2Sync(req.body.user.password, qsalt, 1000, 64, 'sha512').toString('hex');
     User.findOneAndUpdate({_id: req.body.id},
-        {$set: {hash: qhash, salt: qsalt, Name: req.body.user.Name, Surname: req.body.user.Surname, BirthDate: req.body.user.BirthDate } },
+        {$set: {status: 'registered', hash: qhash, salt: qsalt, Name: req.body.user.Name, Surname: req.body.user.Surname, BirthDate: req.body.user.BirthDate } },
         {new: true}, 
         function(err, data) {
             console.log(data)

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
@@ -15,12 +15,15 @@ export class RegisterUserComponent implements OnInit {
     private route: ActivatedRoute,
     private myHttp: myHTTPService,
     private fb: FormBuilder,
+    private _router: Router,
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
+    
+    this.getUser();
 
     this.newUser = this.fb.group({
       Name: ['Адель', Validators.required],
@@ -28,14 +31,14 @@ export class RegisterUserComponent implements OnInit {
       BirthDate: ['', Validators.required],
       password: ['adelADEL131', Validators.required]
     });
-
-    this.getUser();
       
   }
   getUser() {
     this.myHttp.postHTTP('/public/getUser', { id: this.id})
       .subscribe(data=> {
-        
+        if (data === false) {
+          this._router.navigate(['/workspace/login']);
+        }
       }, err => {
         console.log(err)
       })
