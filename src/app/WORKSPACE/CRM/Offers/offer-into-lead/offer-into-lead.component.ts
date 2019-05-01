@@ -30,9 +30,7 @@ export class OfferIntoLeadComponent implements OnInit {
 
   OfferControl: FormGroup;
 
-  Offers: Array<any> = [
-    {details: Object}
-  ];
+  Offers: Array<any> = [];
 
   Result: calculateResult = {
     whiteFot: 0,
