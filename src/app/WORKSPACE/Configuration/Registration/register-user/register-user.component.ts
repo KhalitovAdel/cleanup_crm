@@ -22,14 +22,14 @@ export class RegisterUserComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
-    
+
     this.getUser();
 
     this.newUser = this.fb.group({
-      Name: ['Адель', Validators.required],
-      Surname: ['Халитов', Validators.required],
+      Name: ['', Validators.required],
+      Surname: ['', Validators.required],
       BirthDate: ['', Validators.required],
-      password: ['adelADEL131', Validators.required]
+      password: ['', Validators.required]
     });
       
   }
