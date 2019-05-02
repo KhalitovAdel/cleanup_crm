@@ -162,6 +162,9 @@ export class LeadListComponent implements OnInit {
        if ( (y.status != 'started') ) {
         hasornot = 1;
        }
+       if (y.status === 'started') {
+         break;
+       }
        counter = counter + 1;
        if (counter == x.tasks.length && hasornot > 0) {
         array.push(x);
@@ -179,6 +182,9 @@ export class LeadListComponent implements OnInit {
        if ( (y.status != 'started') ) {
         hasornot = 1;
        }
+       if (y.status === 'started') {
+          break;
+        }
        counter = counter + 1;
        if (counter == lead.tasks.length && hasornot > 0) {
         return true;
