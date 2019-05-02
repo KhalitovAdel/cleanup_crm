@@ -12,7 +12,7 @@
           </mat-form-field> -->
       <owl-carousel [options]="partnersSliderOption" [carouselClasses]="['owl-theme', 'slip']">
         <div *ngFor="let x of LeadStatus">
-          <div class="status-wrapper" *ngIf="x.leads && x.leads.length > 1">
+          <div class="status-wrapper">
             <div class="name-box">
               <p>{{x.translate}} <span *ngIf="x.leads && x.leads.length > 0">({{x.leads.length}})</span><span *ngIf="x.leads && x.leads.length === 0">({{x.leads.length}})</span> </p>
             </div>

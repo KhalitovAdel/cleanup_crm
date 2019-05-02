@@ -75,7 +75,7 @@ export class LeadListComponent implements OnInit {
       this.LeadStatus[x]['leads'] = [];
       for (let y in data) {
         if (this.LeadStatus[x].status === data[y].details.leadStatus) {
-          this.LeadStatus[x].leads.push(data[y]);
+          this.LeadStatus[x]['leads'].push(data[y]);
         }
       }
     }
