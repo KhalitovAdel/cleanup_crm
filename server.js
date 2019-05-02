@@ -23,9 +23,10 @@ app.use( session({
     mongooseConnection: db.freshConnect,
     collection: 'session'
   }),
-  resave: false,
+  resave: true,
+  rolling: true,
   saveUninitialized: false,
-  cookie : { httpOnly: false, secure : false, maxAge : ( 24 * 60 * 60 * 1000 * 180 ), }, 
+  cookie : { httpOnly: false, secure : false, maxAge : ( 24 * 60 * 60 * 1000 * 5 ), }, 
 }));
 app.use( passport.initialize() );
 app.use( passport.session() );

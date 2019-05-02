@@ -88,7 +88,6 @@ module.exports.finishUserRegistration = function(req, res) {
 };
 
 module.exports.login = function(req, res) {
-    console.log(req.session);
     if(!req.body.email || !req.body.password) {
         sendJSONresponse(res, 400, {
             message: 'Все поля обязательны'
@@ -104,6 +103,7 @@ module.exports.login = function(req, res) {
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
             })
+            res.cookie('cart', {Name: user.Name, Surname: user.Surname, role: user.role})
             sendJSONresponse(res, 200, {
                 message: 'Удачной работы!'
             })

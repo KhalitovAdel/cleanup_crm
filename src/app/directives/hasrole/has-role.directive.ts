@@ -1,26 +1,22 @@
 import { Directive, OnInit, ViewContainerRef, Input, TemplateRef } from '@angular/core';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Directive({
   selector: '[hasRole]'
 })
 export class HasRoleDirective implements OnInit {
   @Input() hasRole: Array<string>;
-  
   constructor(
     private viewContainerRef: ViewContainerRef,
     private template: TemplateRef<any>,
-    private myHttp: myHTTPService
+    private myHttp: myHTTPService,
+    private cookieService: CookieService
     ) { }
 
     ngOnInit(): void {
-      this.getRoles()
-        .subscribe( (data: any)=> {
-          this.checkRoles(data.role);
-        }, err=> {
-          console.log(err);
-        })
-      
+      var cookie: any = JSON.parse(this.cookieService.get('cart').replace('j:',''));
+      this.checkRoles(cookie.role)
     }
 
     checkRoles(userRole: string) {
@@ -32,6 +28,7 @@ export class HasRoleDirective implements OnInit {
     }
 
     getRoles() { // Делает каждый раз запрос на сервер
+      console.log("делаю запрос")
       return this.myHttp.getHTTP('/public/hasRole');
     }
 

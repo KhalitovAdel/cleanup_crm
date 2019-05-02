@@ -3,6 +3,7 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +11,11 @@ import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
   styleUrls: ['./dashboard.component.styl']
 })
 export class DashboardComponent implements OnInit {
-  
+  Profile: Object = {
+    Name: String,
+    Surname: String,
+    role: String
+  };
   myControl = new FormControl();
   options: any = [];
   filteredOptions: Observable<string[]>;
@@ -19,7 +24,8 @@ export class DashboardComponent implements OnInit {
   screenWidth: number;
 
   constructor(
-    private myHttp: myHTTPService
+    private myHttp: myHTTPService,
+    private cookieService: CookieService
   ) {
     this.screenWidth = window.innerWidth;
     window.onresize = () => {
@@ -34,6 +40,7 @@ export class DashboardComponent implements OnInit {
         startWith(''),
         map(value => this._filter(value))
       );
+    this.Profile = JSON.parse(this.cookieService.get('cart').replace('j:',''));
   }
 
   async getLeadList() {
