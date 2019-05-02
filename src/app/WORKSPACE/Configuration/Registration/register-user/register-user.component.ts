@@ -29,9 +29,13 @@ export class RegisterUserComponent implements OnInit {
       Name: ['', Validators.required],
       Surname: ['', Validators.required],
       BirthDate: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      // photo: ['', Validators.required],
     });
-      
+    this.newUser.valueChanges
+    .subscribe(
+      (value) => console.log(value)
+    );
   }
   getUser() {
     this.myHttp.postHTTP('/public/getUser', { id: this.id})

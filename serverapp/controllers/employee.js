@@ -30,3 +30,13 @@ module.exports.getEmployeeList = function(req, res) {
             return sendJSONresponse(res, 404, err);
         });
 }
+
+module.exports.getEmploye = function(req, res) {
+    Employee.findOne({_id: req.body.id})
+        .then(data => {
+            return sendJSONresponse(res, 200, data);
+        })
+        .catch(err=> {
+            return sendJSONresponse(res, 404, err);
+        });
+}

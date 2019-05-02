@@ -52,7 +52,7 @@ import { OffersListComponent } from './WORKSPACE/CRM/Offers/offers-list/offers-l
 import { OutstaffComponent } from './Client/b2b/outstaff/outstaff.component';
 import { ConsumablesComponent } from './WORKSPACE/Configuration/consumables/consumables.component';
 import { CommonModule } from '@angular/common';
-import { EmployeesComponent } from './WORKSPACE/Employees/employees/employees.component';
+import { EmployeesComponent } from './WORKSPACE/Employees/new-employees/employees.component';
 import { EmployeesListComponent } from './WORKSPACE/Employees/employees-list/employees-list.component';
 import { CreatingNewComponent } from './WORKSPACE/Contacts/Users/creating-new/creating-new.component';
 import { EmplDashboardComponent } from './WORKSPACE/Employees/empl-dashboard/empl-dashboard.component';
@@ -125,7 +125,7 @@ registerLocaleData(localeRu, 'ru');
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatExpansionModule
+    MatExpansionModule,
   ],
   entryComponents: [OfferIntoLeadComponent, AlertComponent, BottomSheet],
   providers: [

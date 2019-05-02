@@ -10,7 +10,7 @@ import { DashboardComponent } from './WORKSPACE/Main-menu/dashboard.component';
 import { OffersListComponent } from './WORKSPACE/CRM/Offers/offers-list/offers-list.component';
 import { OutstaffComponent } from './Client/b2b/outstaff/outstaff.component';
 import { ConsumablesComponent } from './WORKSPACE/Configuration/consumables/consumables.component';
-import { EmployeesComponent } from './WORKSPACE/Employees/employees/employees.component';
+import { EmployeesComponent } from './WORKSPACE/Employees/new-employees/employees.component';
 import { EmployeesListComponent } from './WORKSPACE/Employees/employees-list/employees-list.component';
 import { EmplDashboardComponent } from './WORKSPACE/Employees/empl-dashboard/empl-dashboard.component';
 import { EmployessPageComponent } from './WORKSPACE/Employees/employess-page/employess-page.component';
@@ -33,9 +33,8 @@ const routes: Routes = [
 
     { path: 'employees', component: EmplDashboardComponent, canActivate: [AuthGuard], children:[
       { path: 'new', component: EmployeesComponent, canActivate: [AuthGuard] },
-      { path: 'list', component: EmployeesListComponent, canActivate: [AuthGuard], children:[
-        { path: 'list/:id', component: EmployessPageComponent, canActivate: [AuthGuard] },
-      ] },
+      { path: 'list', component: EmployeesListComponent, canActivate: [AuthGuard]},
+      { path: 'list/:id', component: EmployessPageComponent, canActivate: [AuthGuard] },
     ] },
 
     { path: 'configuration', component: ConfBoardComponent, canActivate: [AuthGuard]},

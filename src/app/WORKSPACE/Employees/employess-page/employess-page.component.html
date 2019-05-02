@@ -1,3 +1,17 @@
-<p>
-  employess-page works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="employe-card">
+        <p><span class="font-weight-bold">Имя: </span> {{Employe.details.fullName}}</p>
+        <ul>
+          <li *ngFor="let w of Employe.details.contactPhone"><a href="tel:{{w}}">{{w}}</a></li>
+        </ul>
+        <p><span class="font-weight-bold">Адресс проживания: </span> {{Employe.details.homeAddress}}</p>
+        <p><span class="font-weight-bold">Дата рождения: </span> {{Employe.details.birthDate | date:'d MMMM y'}}</p>
+        <p><span class="font-weight-bold">Возможные районы работы: </span> <span *ngFor="let q of Employe.details.workAdresses">{{q}}, </span> </p>
+        <p><span class="font-weight-bold">Свободное время: </span> {{Employe.details.workGrah}}</p>
+        <p><span class="font-weight-bold">Где работала: </span> {{Employe.details.workHistory}}</p>
+      </div>
+    </div>
+  </div>
+</div>

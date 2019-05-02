@@ -1,3 +1,19 @@
-<p>
-  empl-dashboard works!
-</p>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <nav class="navigate-panel">
+              <div class="main-nav-button">
+                <a [routerLink]="['new']">Создать</a>
+              </div>
+              <div class="main-nav-button">
+                <a [routerLink]="['list']">Список</a>
+              </div>
+            </nav>
+            <div class="wrapper-container">
+                <router-outlet></router-outlet>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>

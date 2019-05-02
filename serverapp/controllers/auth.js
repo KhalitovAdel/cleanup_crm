@@ -20,7 +20,7 @@ module.exports.mustAuthenticatedMw = function(req, res, next) {
 module.exports.getUser = function(req, res) {
     User.findOne({_id: req.body.id})
         .then(data=> {
-            if (data.salt.length > 5) {
+            if (data.salt) {
                return sendJSONresponse(res, 200, false);
             }
             return sendJSONresponse(res, 200, data);
@@ -45,7 +45,7 @@ module.exports.invite = function(req, res) {
 
     user.save()
     .then(data=> {
-        mailer.sendSomeMessage(data.username, 'https://'+req.headers.host +'/invite/'+ data._id, 'Вас пригласили');
+        mailer.sendSomeMessage(data.username, req.headers.origin +'/invite/'+ data._id, 'Вас пригласили');
         sendJSONresponse(res, 200, {
             message: 'Успешно'
         });
@@ -64,6 +64,7 @@ module.exports.invite = function(req, res) {
 };
 
 module.exports.finishUserRegistration = function(req, res) {
+    console.log(req.files)
     var qsalt = crypto.randomBytes(16).toString('hex');
     var qhash = crypto.pbkdf2Sync(req.body.user.password, qsalt, 1000, 64, 'sha512').toString('hex');
     User.findOneAndUpdate({_id: req.body.id},

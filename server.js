@@ -5,7 +5,8 @@ cors          = require('cors'),
 session       = require("express-session"),
 passport      = require('passport'),
 MongoStore    = require('connect-mongo')(session),
-cookieParser  = require('cookie-parser');
+cookieParser  = require('cookie-parser'),
+fileUpload = require('express-fileupload');
 
 var app         = express(),
 db              = require('./serverapp/config/index'),
@@ -13,6 +14,7 @@ router          = require('./serverapp/router/index');
 
 require('./serverapp/passport/index')(passport);
 
+app.use( fileUpload() );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: false }) );
 app.use( session({
