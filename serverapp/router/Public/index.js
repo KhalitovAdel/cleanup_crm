@@ -9,4 +9,7 @@ publicRouter.post('/invite', ctrlAuth.invite);
 publicRouter.post('/getUser', ctrlAuth.getUser);
 
 publicRouter.put('/finishUserRegistration', ctrlAuth.finishUserRegistration);
+
+publicRouter.get('/hasRole', ctrlAuth.hasRole);
+
 module.exports = publicRouter;

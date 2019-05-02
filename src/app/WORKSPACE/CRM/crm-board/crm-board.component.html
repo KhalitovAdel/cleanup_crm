@@ -4,11 +4,11 @@
         <div class="col-12">
           <nav class="navigate-panel">
             <div class="main-nav-button">
-              <a [routerLink]="['leadlist']">Лиды</a>
-              <a class="add_new" [routerLink]="['newlead']"><i class="material-icons">control_point</i></a>
+              <a *hasRole="['admin', 'manager']" [routerLink]="['leadlist']" >Лиды</a>
+              <a *hasRole="['admin', 'manager']" class="add_new" [routerLink]="['newlead']"><i class="material-icons">control_point</i></a>
             </div>
             <div class="main-nav-button">
-              <a [routerLink]="['alloffers']">Предложения</a>
+              <a *hasRole="['admin', 'manager']" [routerLink]="['alloffers']">Предложения</a>
             </div>
           </nav>
           <div class="wrapper-container">

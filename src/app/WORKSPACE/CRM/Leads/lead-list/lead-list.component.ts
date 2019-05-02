@@ -63,7 +63,6 @@ export class LeadListComponent implements OnInit {
       .subscribe( (data: [])=> {
         this.Leads = data;
         this.refreshDataSource(this.Leads);
-        console.log(this.LeadStatus)
         return;
       }, err => {
         console.log('Get all Leads error: ' + err);

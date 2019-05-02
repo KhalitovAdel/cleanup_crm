@@ -114,6 +114,16 @@ module.exports.login = function(req, res) {
 };
 
 
+module.exports.hasRole = function(req, res) {
+    User.findOne({_id: req.user._id})
+        .then(data=> {
+            return sendJSONresponse(res, 200, {role: data.role});
+        })
+        .catch(err=> {
+            return sendJSONresponse(res, 404, err);
+        });
+}
+
 // module.exports.register = function(req, res) {
 //     if(!req.body.email || !req.body.password) {
 //         sendJSONresponse(res, 400, {

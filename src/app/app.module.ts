@@ -62,6 +62,7 @@ import { CrmBoardComponent } from './WORKSPACE/CRM/crm-board/crm-board.component
 import { RegistrationUserComponent } from './WORKSPACE/Configuration/Registration/Invite-user/registration-user.component';
 import { ConfBoardComponent } from './WORKSPACE/Configuration/conf-board/conf-board.component';
 import { RegisterUserComponent } from './WORKSPACE/Configuration/Registration/register-user/register-user.component';
+import { HasRoleDirective } from './directives/hasrole/has-role.directive';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -91,7 +92,8 @@ registerLocaleData(localeRu, 'ru');
     CrmBoardComponent,
     RegistrationUserComponent,
     ConfBoardComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    HasRoleDirective,
   ],
   imports: [
     BrowserModule,

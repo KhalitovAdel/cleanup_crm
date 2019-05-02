@@ -54,9 +54,9 @@
         
         <nav class="sidebar">
           <ul>
-            <li><a [routerLink]="['crm']">CRM</a></li>
-            <li><a [routerLink]="['employees']">Сотрудники</a></li>
-            <li><a [routerLink]="['configuration']">Настройки</a></li>
+            <li><a *hasRole="['admin', 'manager']" [routerLink]="['crm']">CRM</a></li>
+            <li><a *hasRole="['admin']" [routerLink]="['employees']">Сотрудники</a></li>
+            <li><a *hasRole="['admin']" [routerLink]="['configuration']">Настройки</a></li>
           </ul>
         </nav>
         <button (click)="sidenav.toggle()" style="background-color: white;">{{screenWidth}}</button>
