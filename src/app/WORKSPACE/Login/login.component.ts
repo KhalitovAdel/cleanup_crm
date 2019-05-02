@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     return this.auth.loginByEmployee(this.User)
       .subscribe( (data: any) => {
         console.log('Переадресую');
-        this._routes.navigate(['/newlead']);
+        this._routes.navigate(['workspace/crm/leadlist']); 
       }, err => {
         this.alert.openSnackBar(err);
       })

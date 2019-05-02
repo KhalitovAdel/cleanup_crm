@@ -32,7 +32,6 @@ export class HasRoleDirective implements OnInit {
     }
 
     getRoles() { // Делает каждый раз запрос на сервер
-      console.log("do")
       return this.myHttp.getHTTP('/public/hasRole');
     }
 
