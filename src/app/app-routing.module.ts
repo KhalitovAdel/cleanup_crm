@@ -32,6 +32,7 @@ const routes: Routes = [
     ] },
 
     { path: 'employees', component: EmplDashboardComponent, canActivate: [AuthGuard], children:[
+      { path: '', pathMatch: 'full', redirectTo: 'list' },
       { path: 'new', component: EmployeesComponent, canActivate: [AuthGuard] },
       { path: 'list', component: EmployeesListComponent, canActivate: [AuthGuard]},
       { path: 'list/:id', component: EmployessPageComponent, canActivate: [AuthGuard] },
