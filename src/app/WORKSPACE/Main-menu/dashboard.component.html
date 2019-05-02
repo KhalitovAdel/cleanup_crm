@@ -5,9 +5,7 @@
           <div class="wrap">
               <a href="#">
                   <img class="logo" src="./assets/logotype-alt.svg" alt="CleanUp logo">
-              </a>
-              <button (click)="sidenav.toggle()" style="background-color: white;">{{screenWidth}}</button>
-              
+              </a>              
               <mat-form-field appearance="outline">
                   <input type="text" (click)="getLeadList()" placeholder="Поиск лида" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
                   <mat-icon matSuffix>search</mat-icon>
@@ -26,6 +24,34 @@
 </nav>
   <mat-sidenav-container [hasBackdrop]="false">
       <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'" [autoFocus]="false">
+          <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <div class="w-100 profile">
+                  <img src="https://habrastorage.org/r/w60/files/d18/bf3/a8f/d18bf3a8f304435f9dc3710b9153f5b5.JPG" alt="SaveLolliPoP">
+                  <p class="fio"><span class="name">Адель </span> <span class="surname">Халитов</span> </p>
+                </div>
+              </mat-expansion-panel-header>
+              
+                <div class="profile-menu">
+                  <a href="">
+                    <i class="material-icons">
+                        settings
+                      </i>
+                      <p>Настройки</p>
+                  </a>
+                </div>
+
+                <div class="profile-menu">
+                    <a href="">
+                        <i class="material-icons">
+                            exit_to_app
+                            </i>
+                        <p>Выход</p>
+                    </a>
+                  </div>
+              
+            </mat-expansion-panel>
+        
         <nav class="sidebar">
           <ul>
             <li><a [routerLink]="['crm']">CRM</a></li>
@@ -33,6 +59,7 @@
             <li><a [routerLink]="['configuration']">Настройки</a></li>
           </ul>
         </nav>
+        <button (click)="sidenav.toggle()" style="background-color: white;">{{screenWidth}}</button>
       </mat-sidenav>
 
       <mat-sidenav-content>

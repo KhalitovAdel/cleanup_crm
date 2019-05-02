@@ -29,7 +29,8 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
@@ -123,7 +124,8 @@ registerLocaleData(localeRu, 'ru');
     MatSlideToggleModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatExpansionModule
   ],
   entryComponents: [OfferIntoLeadComponent, AlertComponent, BottomSheet],
   providers: [
