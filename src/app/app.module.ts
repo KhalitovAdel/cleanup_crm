@@ -63,6 +63,7 @@ import { RegistrationUserComponent } from './WORKSPACE/Configuration/Registratio
 import { ConfBoardComponent } from './WORKSPACE/Configuration/conf-board/conf-board.component';
 import { RegisterUserComponent } from './WORKSPACE/Configuration/Registration/register-user/register-user.component';
 import { HasRoleDirective } from './directives/hasrole/has-role.directive';
+import { CalcComponent } from './Client/stuff/calculate/calc/calc.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -94,6 +95,7 @@ registerLocaleData(localeRu, 'ru');
     ConfBoardComponent,
     RegisterUserComponent,
     HasRoleDirective,
+    CalcComponent,
   ],
   imports: [
     BrowserModule,

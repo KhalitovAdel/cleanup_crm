@@ -18,6 +18,7 @@ import { CrmBoardComponent } from './WORKSPACE/CRM/crm-board/crm-board.component
 import { ConfBoardComponent } from './WORKSPACE/Configuration/conf-board/conf-board.component';
 import { RegistrationUserComponent } from './WORKSPACE/Configuration/Registration/Invite-user/registration-user.component';
 import { RegisterUserComponent } from './WORKSPACE/Configuration/Registration/register-user/register-user.component';
+import { CalcComponent } from './Client/stuff/calculate/calc/calc.component';
 
 const routes: Routes = [
   { path: '', component: RegularComponent, pathMatch: 'full' },
@@ -45,7 +46,9 @@ const routes: Routes = [
   ] },
 
     //PUBLIC
-
+    
+    { path: 'stuff/calculate', component: CalcComponent},
+    
     { path: 'invite/:id', component: RegisterUserComponent},
     { path: 'workspace/login', component: LoginComponent},
     { path: 'outstaff', component: OutstaffComponent},

@@ -56,10 +56,16 @@ export class CalculateService {
   calculateFot(object):object {
     var counteResult = this.getWorkersCounte(object)
     for (let i in counteResult) {
+      var potentialFot = counteResult[i].workDayPerMonth * (this.ONE_DAY_PRICE + counteResult[i].metersPerDay * this.ONE_METER_PRICE);
+      
+      if (counteResult[i].workDayPerMonth < 5 && potentialFot/counteResult[i].workDayPerMonth < 500) {
+        potentialFot = counteResult[i].workDayPerMonth * 500;
+      }
+
       if (object.twice === false) {
-        counteResult[i]['fotOnHand'] = this.beautyPrice( counteResult[i].workDayPerMonth * (this.ONE_DAY_PRICE + counteResult[i].metersPerDay * this.ONE_METER_PRICE) );
+        counteResult[i]['fotOnHand'] = this.beautyPrice( potentialFot );
       } else {
-        counteResult[i]['fotOnHand'] = this.beautyPrice( 1.5 * counteResult[i].workDayPerMonth * (this.ONE_DAY_PRICE + counteResult[i].metersPerDay * this.ONE_METER_PRICE) );
+        counteResult[i]['fotOnHand'] = this.beautyPrice( 1.5 * potentialFot );
       }
     }
     return counteResult;
@@ -127,8 +133,9 @@ export class CalculateService {
         var empl = data.objects[i].employees;
         var summ: number = 0;
         for (let y in empl) {
-          empl[y]['thirteenthWage'] = this.beautyPrice( (empl[y].fotOnHand
-                                      + empl[y].zpNalog.Summ) /12 );
+          empl[y]['thirteenthWage'] = 0;
+          // empl[y]['thirteenthWage'] = this.beautyPrice( (empl[y].fotOnHand
+          //                             + empl[y].zpNalog.Summ) /12 );
           summ = summ + empl[y].thirteenthWage * empl[y].count;
         }
         data.objects[i].details['thirteenthWage'] = summ;
@@ -164,7 +171,7 @@ export class CalculateService {
     var data = this.calculateHolidaysWage(Offer);
     var summ: number = 0;
     for (let i in data.objects) {
-      data.objects[i].details['accountantWage'] = 500;
+      data.objects[i].details['accountantWage'] = 0; //500
       summ = summ + data.objects[i].details.accountantWage;
     }
     data.details.accountantWage = summ;
@@ -218,10 +225,11 @@ export class CalculateService {
       + obj.details.thirteenthWage
       + obj.details.windowFond
       + obj.details.obnalCommission );
-        console.log(summ_rash)
+        // console.log(summ_rash)
       var minProfit: number = 3000;
-
-      if ( (15 * summ_rash / 100) > minProfit) {
+      if (summ_rash < 6000) {
+        data.objects[i].details['profit'] = 2000;
+      } else if ( (15 * summ_rash / 100) > minProfit) {
         data.objects[i].details['profit'] = this.beautyPrice( 15 * summ_rash / 100 );
       } else {
         data.objects[i].details['profit'] = minProfit;
@@ -266,7 +274,7 @@ export class CalculateService {
             + obj.details.profit) / 100
           );
 
-          obj.details['discount'] = this.beautyPrice(obj.details.NZ * 10);
+          obj.details['discount'] = 0; //this.beautyPrice(obj.details.NZ * 10);
 
           var potential_itog = this.beautyPrice(( Summ 
             + obj.details.accountantWage

@@ -5,8 +5,6 @@ import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 import { Guid } from "guid-typescript";
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert/alert.service';
-import { Offer, OfferInterface } from 'interfacess/OfferInterface';
-import { MaterialCalculationService } from 'src/app/services/calculate/Material/material-calculation.service';
 
 
 @Component({
@@ -51,8 +49,7 @@ export class NewLeadComponent implements OnInit {
     private alert: AlertService,
     private fb: FormBuilder,
     private svc: CalculateService,
-    private myHttp: myHTTPService,
-    private material: MaterialCalculationService
+    private myHttp: myHTTPService
     ) {}
 
   ngOnInit() {
