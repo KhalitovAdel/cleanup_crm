@@ -9,7 +9,7 @@ import { RegularComponent } from './Client/b2b/regular/regular.component';
 import { DashboardComponent } from './WORKSPACE/Main-menu/dashboard.component';
 import { OffersListComponent } from './WORKSPACE/CRM/Offers/offers-list/offers-list.component';
 import { OutstaffComponent } from './Client/b2b/outstaff/outstaff.component';
-import { ConsumablesComponent } from './WORKSPACE/Configuration/consumables/consumables.component';
+import { ConsumablesComponent } from './WORKSPACE/Configuration/Consumables/consumables.component';
 import { EmployeesComponent } from './WORKSPACE/Employees/new-employees/employees.component';
 import { EmployeesListComponent } from './WORKSPACE/Employees/employees-list/employees-list.component';
 import { EmplDashboardComponent } from './WORKSPACE/Employees/empl-dashboard/empl-dashboard.component';

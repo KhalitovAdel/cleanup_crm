@@ -9,7 +9,7 @@ import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 })
 export class EmployessPageComponent implements OnInit {
   id: String; //Полученный id из url
-  Employe: Object = {
+  Employe: any = {
     details: {
       birthDate: new Date,
       contactPhone: [],

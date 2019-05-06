@@ -11,7 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./dashboard.component.styl']
 })
 export class DashboardComponent implements OnInit {
-  Profile: Object = {
+  Profile = {
     Name: String,
     Surname: String,
     role: String
