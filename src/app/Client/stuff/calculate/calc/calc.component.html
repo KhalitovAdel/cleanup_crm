@@ -1,13 +1,13 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-12" [formGroup]="OfferControl">
-      <mat-icon [matMenuTriggerFor]="menu" class='offer-menu'>more_vert</mat-icon>
+      <mat-icon [matMenuTriggerFor]="menu" class='offer-menu menu'>more_vert</mat-icon>
       <mat-menu #menu="matMenu" formGroupName="details">
           <button mat-menu-item (click)='createNewObject()'>Добавить объект</button>
           <mat-slide-toggle (change)="calculate()" formControlName="fullObj">Совокупность</mat-slide-toggle>
           <button mat-menu-item (click)='resetForm()'>Сбросить формы</button>
       </mat-menu>
-      <div class="container-fluid" formArrayName="objects" *ngFor="let x of OfferControl['controls'].objects['controls']; let i = index">
+      <div class="container-fluid menu" formArrayName="objects" *ngFor="let x of OfferControl['controls'].objects['controls']; let i = index">
           <div class="row" [formGroupName]="i">
               <div class="col-12">
                   <mat-form-field appearance="outline">
@@ -32,9 +32,198 @@
           </div>
 
       </div>
+
+      <div class="col-12 no-print">
+            <header class="container-fluid">
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="https://cleanupcleaning.bitrix24.ru/docs/pub/1c52d017f773422b92b43aca90df18fe/showFile/?&token=hef0h3skp9sh" alt="logo" class="img-fluid logo">
+                        </div>
+                        <div class="col-6">
+                            <address>Республика Татарстан, г. Казань</address>
+                            <address>Тел. +7 (843) 207-02-96</address>
+                            <address>ООО «КЛИН АП»</address>
+                        </div>
+                    </div>
+            </header>
+                <div class="container-fluid mt">
+                    <div class="row">
+                        <div class="col-12">
+                                <p class="text-center">Клининговая компания <span class="firm-color header">«КЛИН АП»</span> на рынке с 2013 года. 
+                                    Наш основной профиль — это регулярная уборка деловых центров и 
+                                    развлекательных заведений.</p>
+                        </div>
+                        <div class="col-12">
+                            <p class="header text-center">Постоянные клиенты нашего сервиса:</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-3 partners">
+                            <img src="https://cleanupcleaning.bitrix24.ru/docs/pub/ba1b7dab82a2c30797f63a5f7a2a7032/showFile/?&token=0d445q6eovta" alt="biluar" class="img-fluid">
+                        </div>
+                        <div class="col-3 partners">
+                            <img src="https://cleanupcleaning.bitrix24.ru/docs/pub/26653030bf4ec37565ac11af6f8739c3/showFile/?&token=vsbni6t34smj" alt="prospect" class="img-fluid">
+                        </div>
+                        <div class="col-3 partners">
+                            <img src="https://cleanupcleaning.bitrix24.ru/docs/pub/a56ff378fbccac5ef2718fdd8d4ece6a/showFile/?&token=lcwtg3crek64" alt="tatspirtprom" class="img-fluid">
+                        </div>
+                        <div class="col-3 partners">
+                            <img src="https://cleanupcleaning.bitrix24.ru/docs/pub/a0b0af723db8d59582fd86aa6d39994e/showFile/?&token=ahli3qelvv4c" alt="aktash" class="img-fluid">
+                        </div>
+                        <div class="col-3 partners">
+                            <img src="https://cleanupcleaning.bitrix24.ru/docs/pub/0eadf0f2a23c6dd31aba63180f7c1b69/showFile/?&token=tx4zmrq2wo0z" alt="port" class="img-fluid">
+                        </div>
+                        <div class="col-3 partners">
+                            <img src="https://cleanupcleaning.bitrix24.ru/docs/pub/28927689e85d51086ad37bfe6d3888cf/showFile/?&token=926p27r02zii" alt="arishmae" class="img-fluid">
+                        </div>
+                        <div class="col-3 partners">
+                            <img src="https://cleanupcleaning.bitrix24.ru/docs/pub/25509ef92643889947d80cb72992e814/showFile/?&token=faruf4rrg3b5" alt="xfit" class="img-fluid">
+                        </div>
+                        <div class="col-3 partners">
+                            <img src="https://cleanupcleaning.bitrix24.ru/docs/pub/bd7c431246803f9bb19d7d87590e9116/showFile/?&token=aqtlmemwdekj" alt="augustina" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid" style="page-break-after: always;">
+                    <div class="row table" style="margin-top: 10px;">
+            
+                        <div class="col-1 text-center font-weight-bold">
+                            #
+                        </div>
+                        <div class="col-8 text-center font-weight-bold">
+                            Перечень услуг по уборке помещений
+                        </div>
+                        <div class="col-3 text-center font-weight-bold">
+                            Периодичность
+                        </div>
+            <!-- {{!-- 1 --}} -->
+                        <div class="col-1 text-center">
+                            1
+                        </div>
+                        <div class="col-8">
+                            Сухая и влажная уборка пола c приминением моющих средств
+                        </div>
+                        <div class="col-3 text-center">
+                            1 раз в день
+                        </div>
+            <!-- {{!-- 2 --}} -->
+                        <div class="col-1 text-center">
+                            2
+                        </div>
+                        <div class="col-8">
+                            Вынос мусора из мусорных корзин, замена полиэтиленовых пакетов
+                        </div>
+                        <div class="col-3 text-center">
+                            1 раз в день
+                        </div>
+            <!-- {{!-- 3 --}} -->
+                        <div class="col-1 text-center">
+                            3
+                        </div>
+                        <div class="col-8">
+                            Протирка металлических перил и поручней
+                        </div>
+                        <div class="col-3 text-center">
+                            1 раз в день
+                        </div>
+            <!-- {{!-- 4 --}} -->
+                        <div class="col-1 text-center">
+                            4
+                        </div>
+                        <div class="col-8">
+                            Мытье сан. узла <br> (чистка зеркал, дезинфекция унитазов, раковин, уборка пола)
+                        </div>
+                        <div class="col-3 text-center">
+                            1 раз в день
+                        </div>
+            <!-- {{!-- 5 --}} -->
+                        <div class="col-1 text-center">
+                            5
+                        </div>
+                        <div class="col-8">
+                            Удаление пыли с твердых поверхностей <br>(подоконники, верхние фасады шкафов, дверные блоки)
+                        </div>
+                        <div class="col-3 text-center">
+                            1 раз в неделю
+                        </div>
+            <!-- {{!-- 6 --}} -->
+                        <div class="col-1 text-center">
+                            6
+                        </div>
+                        <div class="col-8">
+                            Чистка настенной кафельной плитки
+                        </div>
+                        <div class="col-3 text-center">
+                            1 раз в неделю
+                        </div>
+            <!-- {{!-- 7 --}} -->
+                        <div class="col-1 text-center">
+                            7
+                        </div>
+                        <div class="col-8">
+                            Мытье микроволновой печи
+                        </div>
+                        <div class="col-3 text-center">
+                            1 раз в неделю
+                        </div>
+            <!-- {{!-- 8 --}} -->
+                        <div class="col-1 text-center">
+                            8
+                        </div>
+                        <div class="col-8">
+                            Удаление пыли с розеток, оргтехники, плинтусов, ножек столов и стульев
+                        </div>
+                        <div class="col-3 text-center">
+                            1 раз в неделю
+                        </div>
+            <!-- {{!-- 9 --}} -->
+                        <div class="col-1 text-center">
+                            9
+                        </div>
+                        <div class="col-8">
+                            Мытье холодильника <br> (В случае если он не требует разморозки)
+                        </div>
+                        <div class="col-3 text-center">
+                            1 раз в месяц
+                        </div>
+            
+            <!-- {{!-- 10 --}} -->
+                        <div class="col-1 text-center">
+                            10
+                        </div>
+                        <div class="col-8">
+                            Мытье окон
+                        </div>
+                        <div class="col-3 text-center">
+                            2 раза в год
+                        </div>
+                        
+                    </div>
+            
+                    <div class="row" style="margin-top: 10px;">
+            
+                        <div class="col-12">
+                            <p class="font-weight-bold">Инвентарь и оборудование, используемые при работах</p>
+                        <ol>
+                            <li>Уборочный инвентарь</li>
+                            <li>Средство для мытья пола D-Concentrate PRO-Brite</li>
+                            <li>Средство для мытья сантехники Asin Pro-Brite</li>
+                        </ol>
+                        </div>
+                        
+                    </div>
+                </div>
+      </div>
+
       <div class="col-12" [formGroup]="OfferControl">
         <div class="container-fluid" *ngIf="OfferControl.value.details.itog > 0">
-          
+            <div class="row no-print">
+                <div class="col-12">
+                    <p class="header text-uppercase text-center mt">КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ</p>
+                </div>
+            </div>
           <div class="row">
               <div class="col-12">
                   <div class="table row">
@@ -68,12 +257,12 @@
 
           <div class="row">
               <div class="col-12">
-                <p class="font-weight-bold">* При заключении договора, будет проведена полная генеральная уборка, на сумму не превышающую 20% от стоимости объекта. (За исключением послестроительной уборки)</p>
+                <p class="font-weight-bold">* При заключении договора, будет проведена полная генеральная уборка</p>
               </div>
             </div>
         </div>
 
-        <div class="container-fluid" *ngIf="OfferControl.value.details.itog > 0">
+        <div class="container-fluid menu" *ngIf="OfferControl.value.details.itog > 0">
           <div class="row">
             <div class="col-12">
                 <div class="container-fluid" style="page-break-after: always;">
@@ -208,6 +397,27 @@
             </div>
           </div>
         </div>
+
+        <div class="container-fluid no-print">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="header">В стоимость услуг не включено: </p>
+                        <p>Мыло(жидкое/твердое), туалетная бумага, салфетки для рук, освежитель воздуха, пакеты, порошок и т.п.</p>
+                    </div>
+                </div>
+            </div>
+        
+        
+            <div class="container-fluid no-print" style="margin-top: 5rem;">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="header">Директор</p>
+                    </div>
+                    <div class="col-6 podpis">
+                        <p style="text-align: right;">______________/ А.Э. Валеев</p>
+                    </div>
+                </div>
+            </div>
       </div>
     </div>
   </div>

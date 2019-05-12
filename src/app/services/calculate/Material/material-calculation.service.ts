@@ -26,7 +26,7 @@ export class MaterialCalculationService {
   }
 
   getMaterialList() {
-    const data = this.myhttp.getHTTP('/crm/config/getMaterialList').toPromise();
+    const data = this.myhttp.getHTTP('/crm/config/getMaterialList');
     return data;
   }
 
@@ -100,6 +100,9 @@ export class MaterialCalculationService {
         }
         return Offer;
       })
+      .catch(e => {
+        console.log(e);
+      });
         
   }
 
@@ -134,5 +137,8 @@ export class MaterialCalculationService {
         Offer.details['materialToStart'] = sumToStart;
         return Offer;
       })
+      .catch(e => {
+        console.log(e);
+      });
   }
 }

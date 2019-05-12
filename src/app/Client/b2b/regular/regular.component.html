@@ -17,8 +17,8 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-          <h1 class="text-center">Уборка офиса по цене штатного сотрудника  </h1>
-          <p class="description">Попробуй 5 дней регулярной уборки до конца месяца, получи генеральную уборку в подарок</p>
+          <h1 class="text-center">Уборка офиса в Казани</h1>
+          <p class="description">При заключении договора до конца месяца генеральная уборка в подарок</p>
       </div>
     </div>
   </div>
@@ -38,13 +38,11 @@
           </mat-form-field>
       </div>
       <div class="col-12 col-sm-6 col-lg-3">
-        <div class="dropdown">
           <mat-form-field appearance="outline">
             <mat-select formControlName='regular' placeholder="Регулярность" class="dropdown-select">
               <mat-option *ngFor="let x of RegularControl;" [value]="x.days">{{x.translate}}</mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
       </div>
       <div class="col-12 col-sm-6 col-lg-3">
         <mat-form-field appearance="outline">

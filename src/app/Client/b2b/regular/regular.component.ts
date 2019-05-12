@@ -126,7 +126,7 @@ export class RegularComponent implements OnInit {
   sentOffer() {
     this.valid(this.CalculateControl)
     if ( this.CalculateControl.valid && !this.CalculateControl.get('phone').value.includes("_") ) {
-      this.myHttp.postHTTP('http://localhost:3000/sentOfferByClient', {data: this.CalculateControl.value})
+      this.myHttp.postHTTP('/public/sentOfferByClient', {data: this.CalculateControl.value})
         .subscribe( (data: any) => {
           this.alert.openSnackBar( data.message );
         }, ( err: any ) => {

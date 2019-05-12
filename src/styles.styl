@@ -5,7 +5,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import 'style/varibles.styles.styl';
 body
-    background-color: $body-color;
+    //background-color: $body-color;
     font-family: 'Roboto', sans-serif;
     color:$main-tect-color
 h1, h2, h3, h4, h5, h6, .description
@@ -40,6 +40,7 @@ h4
 .base-button
     background-color $button-color
     color: $insert-text-color
+    padding: 4px 20px!important;
 .p-0
     padding: 0;    
 .text-center
@@ -143,4 +144,23 @@ mat-slide-toggle
 ::-webkit-scrollbar-thumb:hover {
     background: $button-color; 
 }
+.no-print
+    display none!important
+@media print
+    @page 
+        size: auto;
+        margin: 0;
+        margin-bottom 0
+    body
+        margin 0!important
+        margin-top 20px!important
+    .container
+        width 100%!important
+    .no-print
+        display block!important
+    #header, #nav, .noprint, #footer
+        display: none!important
+    #printable
+        display: block;
+
 @import 'style/media.styles.styl';
