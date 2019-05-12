@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
         startWith(''),
         map(value => this._filter(value))
       );
-    this.Profile = JSON.parse(this.cookieService.get('cart').replace('j:',''));
+    this.Profile = JSON.parse(localStorage.getItem('UserBio'));
   }
 
   async getLeadList() {

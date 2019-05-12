@@ -3,7 +3,8 @@ configRouter        = express.Router(),
 passport      = require('passport');
 
 var ctrlConfig  = require('../../../controllers/config'),
-ctrlAuth        = require('../../../controllers/auth');
+ctrlAuth        = require('../../../controllers/auth'),
+User            = require('../../../models/user');
 
 configRouter.post('/login', ctrlAuth.login); 
 configRouter.post('/createNewMaterial', ctrlAuth.mustAuthenticatedMw, ctrlConfig.createNewMaterial);

@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   login(){
     return this.auth.loginByEmployee(this.User)
       .subscribe( (data: any) => {
-        console.log('Переадресую');
+        localStorage.setItem('UserBio', JSON.stringify(data) );
         this._routes.navigate(['workspace/crm/leadlist']); 
       }, err => {
         this.alert.openSnackBar(err);

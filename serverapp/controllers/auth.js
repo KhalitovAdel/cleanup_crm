@@ -94,7 +94,7 @@ module.exports.login = function(req, res) {
         });
         return;
     }
-    passport.authenticate('local', function(err, user, info) {
+    passport.authenticate('local', async function(err, user, info) {
         if(err) {
             sendJSONresponse(res, 404, err);
             return;
@@ -103,16 +103,19 @@ module.exports.login = function(req, res) {
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
             })
-            res.cookie('cart', {Name: user.Name, Surname: user.Surname, role: user.role})
-            sendJSONresponse(res, 200, {
-                message: 'Удачной работы!'
-            })
+            var UserInfo = await User.findOne({_id: req.user._id})
+                .then(data => {
+                    return {Name: data.Name, Surname: data.Surname, role: data.role}
+                })
+                .catch(err=> {
+                    console.log(err)
+                })
+            sendJSONresponse(res, 200, UserInfo)
         } else {
             sendJSONresponse(res, 401, info)
         }
     })(req, res);
 };
-
 
 module.exports.hasRole = function(req, res) {
     User.findOne({_id: req.user._id})

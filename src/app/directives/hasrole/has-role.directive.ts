@@ -15,7 +15,7 @@ export class HasRoleDirective implements OnInit {
     ) { }
 
     ngOnInit(): void {
-      var cookie: any = JSON.parse(this.cookieService.get('cart').replace('j:',''));
+      var cookie: any = JSON.parse(localStorage.getItem('UserBio') );
       this.checkRoles(cookie.role)
     }
 
