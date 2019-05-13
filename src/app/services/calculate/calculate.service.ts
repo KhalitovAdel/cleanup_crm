@@ -58,14 +58,16 @@ export class CalculateService {
     for (let i in counteResult) {
       var potentialFot = counteResult[i].workDayPerMonth * (this.ONE_DAY_PRICE + counteResult[i].metersPerDay * this.ONE_METER_PRICE);
       
-      if (counteResult[i].workDayPerMonth < 5 && potentialFot/counteResult[i].workDayPerMonth < 500) {
+      if (counteResult[i].workDayPerMonth === 1 && potentialFot/counteResult[i].workDayPerMonth < 1000) {
+        potentialFot = counteResult[i].workDayPerMonth * 1000;
+      } else if (counteResult[i].workDayPerMonth < 5 && potentialFot/counteResult[i].workDayPerMonth < 500) {
         potentialFot = counteResult[i].workDayPerMonth * 500;
       }
 
-      if (object.twice === false) {
-        counteResult[i]['fotOnHand'] = this.beautyPrice( potentialFot );
-      } else {
+      if (object.twice === true) {
         counteResult[i]['fotOnHand'] = this.beautyPrice( 1.5 * potentialFot );
+      } else {
+        counteResult[i]['fotOnHand'] = this.beautyPrice( potentialFot );
       }
     }
     return counteResult;
@@ -74,7 +76,6 @@ export class CalculateService {
   getOfficialFot(object):object {
     var calculateFotResult = this.calculateFot(object);
     for (let i in calculateFotResult) {
-
       var potentialOfficialFot = this.beautyPrice( calculateFotResult[i].workDayPerMonth * calculateFotResult[i].timeToWorkPerDay / 2 * ( (this.MROT /(30/7) )/40 ) );
       calculateFotResult[i]['whiteFot'] = (potentialOfficialFot> 6000)?6000:potentialOfficialFot;
     }
@@ -227,12 +228,10 @@ export class CalculateService {
       + obj.details.obnalCommission );
         // console.log(summ_rash)
       var minProfit: number = 3000;
-      if (summ_rash < 6000) {
-        data.objects[i].details['profit'] = 2000;
-      } else if ( (15 * summ_rash / 100) > minProfit) {
-        data.objects[i].details['profit'] = this.beautyPrice( 15 * summ_rash / 100 );
+      if (obj.area < 101 && obj.regular < 15) {
+        data.objects[i].details['profit'] = 1500;
       } else {
-        data.objects[i].details['profit'] = minProfit;
+        data.objects[i].details['profit'] = this.beautyPrice( ( (15 * summ_rash / 100) < minProfit )?minProfit:(15 * summ_rash / 100) );
       }
       summ = summ + data.objects[i].details.profit;
     }

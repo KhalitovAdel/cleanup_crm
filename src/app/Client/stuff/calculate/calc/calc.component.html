@@ -238,7 +238,8 @@
                             <div class="col-9">
                                 <p class="text-center">Уборка помещения ~{{OfferControl.value.objects[i].area}} м<sup>2</sup>
                                   <span *ngFor="let m of RegularControl"><span *ngIf="m.days === OfferControl.value.objects[i].regular">, в графике {{m.translate}}</span></span>
-                                  <span>, ~время уборки {{OfferControl.value.objects[i].employees[0].timeToWorkPerDay | number:'1.0-0'}} час(а)</span>
+                                  <span *ngIf="OfferControl.value.objects[i].employees[0].timeToWorkPerDay >= 1">, ~время уборки {{OfferControl.value.objects[i].employees[0].timeToWorkPerDay | number:'1.0-0'}} час(а)</span>
+                                  <span *ngIf="OfferControl.value.objects[i].employees[0].timeToWorkPerDay < 1">, ~время уборки 1 час</span>
                                   <br><span>Уборочный инвентарь и химия приобретается Заказчиком</span>
                                   
                     
