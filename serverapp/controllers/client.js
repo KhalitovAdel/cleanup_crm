@@ -9,16 +9,12 @@ var sendJSONresponse = function(res, status, content) {
     res.status(status).json(content);
 }
 
-module.exports.b2bOffer = function(req, res) {
-    text = `<p>Площадь: ${req.body.data.area} м<sup>2</sup><p>
-            <p>Регулярность: ${req.body.data.regular}<p>
-            <p>Номер: ${req.body.data.phone}<p>
-            `
-    Mailer.sendSomeMessage(undefined, text, undefined)
+module.exports.order = function(req, res) {
+    Mailer.sendSomeMessage(req.body.email, req.body.text, req.body.subject)
         .then(data => {
-            return sendJSONresponse(res, 200, {message: 'Мы не смогли рассчитать автоматический. Сейчас рассчитаем и пришлем результат!🤟'});
+            return sendJSONresponse(res, 200, true);
         })
         .catch(err => {
-            return sendJSONresponse(res, 404, {message: 'У нас произошла ошибка, пожалуйста позвоните нам! Мы ценим каждое обращение!'});
+            return sendJSONresponse(res, 404, false);
         })
 }

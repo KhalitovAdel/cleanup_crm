@@ -19,9 +19,15 @@ import { ConfBoardComponent } from './WORKSPACE/Configuration/conf-board/conf-bo
 import { RegistrationUserComponent } from './WORKSPACE/Configuration/Registration/Invite-user/registration-user.component';
 import { RegisterUserComponent } from './WORKSPACE/Configuration/Registration/register-user/register-user.component';
 import { CalcComponent } from './Client/stuff/calculate/calc/calc.component';
+import { ChemistryComponent } from './Client/b2c/chemistry/chemistry.component';
+import { MainMenuComponent } from './Client/main-menu/main-menu.component';
 
 const routes: Routes = [
-  { path: '', component: RegularComponent, pathMatch: 'full' },
+  { path: '', component: MainMenuComponent, children:[
+    { path: '', pathMatch: 'full', component: RegularComponent },
+    { path: 'chemistry', component: ChemistryComponent },
+  ] },
+
   { path: 'workspace', component: DashboardComponent, canActivate: [AuthGuard], children: [
     { path: '', pathMatch: 'full', redirectTo: 'crm' },
     { path: 'crm', component: CrmBoardComponent, canActivate: [AuthGuard], children:[
@@ -48,7 +54,6 @@ const routes: Routes = [
     //PUBLIC
     
     { path: 'stuff/calculate', component: CalcComponent},
-    
     { path: 'invite/:id', component: RegisterUserComponent},
     { path: 'workspace/login', component: LoginComponent},
     { path: 'outstaff', component: OutstaffComponent},

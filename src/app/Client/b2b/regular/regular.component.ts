@@ -4,6 +4,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Title } from '@angular/platform-browser';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 import { AlertService } from 'src/app/services/alert/alert.service';
+import { MatDialog } from '@angular/material';
+import { DialogComponent } from '../../components/dialog/dialog.component';
 
 
 @Component({
@@ -12,8 +14,6 @@ import { AlertService } from 'src/app/services/alert/alert.service';
   styleUrls: ['./regular.component.styl']
 })
 export class RegularComponent implements OnInit {
-  CalculateControl: FormGroup;
-  phoneMask = [ '+','7',' ','(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
   mySlideOptions = {items: 1, dots: true, nav: false, autoHeight:true};
   partnersSliderOption = {
@@ -36,31 +36,13 @@ export class RegularComponent implements OnInit {
             items:5
         }
     }
-  }; 
-  partners = [
-    {img: './assets/img/b2b/partners/taif1.png'},
-    {img: './assets/img/b2b/partners/bilyar.svg'},
-    {img: './assets/img/b2b/partners/marani.png'},
-    {img: './assets/img/b2b/partners/neofit.png'},
-    {img: './assets/img/b2b/partners/big_funny.png'},
-    {img: './assets/img/b2b/partners/aktash.svg'},
-    {img: './assets/img/b2b/partners/augustina.svg'},
-    {img: './assets/img/b2b/partners/sberbank.svg'},
-  ]
-  myCarouselOptions = {items: 3, dots: true, nav: true};
-
-  Result: any = {
-    fot: Number,
-    itog: Number,
-    itogMaterial: Number,
-    managerWage: Number,
-    material: Number,
-    profit: Number,
-    tinkoffCommission: Number,
-    windowFond: Number,
   };
-  displayeditog: String;
-  displayeditogLast: String;
+  b2b_otzovi = [
+    {img: './assets/img/b2b/otzovi/kulick.jpg', comment: 'Тетя Люба, которая раньше убирала у нас в офисе, перестала справляться, да и болеть часто стала. Было принято решение обратиться в клининговую компанию. Выбор пал на эту (отзывы в интернете хорошие были). Все чисто, все быстро и недорого. Благодарим и надеемся на тесное сотрудничество в дальнейшем!', name: 'Лариса Кулик'},
+    {img: './assets/img/b2b/otzovi/sitnikov.jpg', comment: 'У нас порядка 1500 квадратных метров. Довольно приличная по размеру площадь. Сейчас такое время, что все, что возможно, частный бизнес отдаёт на аутсорсинг. Мы тоже идем в ногу со временем. Помимо этого, у нас полностью белый бизнес и нам важно показывать расходы. Клининг – одна из статей, которую мы закладываем в бюджет. Сотрудника нанимать – не вижу смысла. Считаю, это прошлый век и лишние ресурсозатраты по управлению. Думаю, коллеги мои меня сейчас понимают. Компанию CleanUp от себя лично могу советовать – с работой справляются на ура.', name: 'Сергей Сытников'},
+    {img: './assets/img/b2b/otzovi/kolvasheva.jpg', comment: 'Клиентом компании CleanUp мы являемся уже более года. Меня, как владельца компании все устраивает. Клинеры приходят вовремя, никогда не мешают моим сотрудникам работать. До этого у нас была уборщица, но, так как метраж площади у нас сравнительно небольшой 400 метров – мы отказались от этой вакансии и отдали чистоту нашего офиса на аутсорсинг. В моей ситуации это выгоднее, чем платить сотруднику. Да и меньше нерабочих разговоров в офисе.', name: 'Злата Колвашева'},
+  ]
+
   Objects = [
     {photo: './assets/img/b2b/objects/technoavia.jpg',
     name: 'Казань, Декабристов 203, Техноавиа-Казань',
@@ -87,73 +69,30 @@ export class RegularComponent implements OnInit {
   },
 
   ];
-  RegularControl: Array<Object> = [
-    {days: '30', translate: 'Без выходных'},
-    {days: '25.8', translate: '6/1 - сб полный'},
-    {days: '23.7', translate: '6/1 - сб не полный'},
-    {days: '21.5', translate: '5/2'},
-    {days: '15', translate: '2/2'},
-    {days: '13', translate: '3 раза в неделю'},
-    {days: '8.6', translate: '2 раза в неделю'},
-    {days: '4.3', translate: 'Раз в неделю'},
-    {days: '1', translate: 'Раз в месяц'}
-  ];
+
   constructor(
-    private fb: FormBuilder,
     private sanitization: DomSanitizer,
     private titleService: Title,
-    private myHttp: myHTTPService,
-    private alert: AlertService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
     this.titleService.setTitle('Уборка офисов в Казани | CleanUp service');
-
-    this.CalculateControl = this.fb.group({
-      area: ['', Validators.required],
-      regular: ['', Validators.required],
-      time: '',
-      twice: false,
-      phone: ['', Validators.required]
-    });
-
-    this.CalculateControl.valueChanges
-    .subscribe(
-      (value) => value
-    );
   }
-
-  sentOffer() {
-    this.valid(this.CalculateControl)
-    if ( this.CalculateControl.valid && !this.CalculateControl.get('phone').value.includes("_") ) {
-      this.myHttp.postHTTP('/public/sentOfferByClient', {data: this.CalculateControl.value})
-        .subscribe( (data: any) => {
-          this.alert.openSnackBar( data.message );
-        }, ( err: any ) => {
-          this.alert.openSnackBar( err );
-        })
-    } else {
-      this.alert.openSnackBar('Нужно заполнить все поля!');
-    }
-  }
-  valid(group: FormGroup) {
-    var copeLead: Object = group.controls;
-    Object.keys(copeLead).forEach(key => {
-      if (copeLead[key] instanceof FormControl) {
-        copeLead[key].markAsTouched();
-      } else {
-        for (var x of copeLead[key].controls) {
-            x.markAsTouched();
-            for (let y in x.controls) {
-              x.controls[y].markAsTouched();
-            }
-        }
-      }
-    });
-  };
 
   dangerFile(img) {
     return this.sanitization.bypassSecurityTrustStyle( `transparent url(${img}) 50% 50% no-repeat /cover` );
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      //width: '250px',
+      //data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      //this.animal = result;
+    });
   }
 
 }

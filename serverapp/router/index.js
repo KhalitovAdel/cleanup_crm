@@ -10,7 +10,7 @@ var ctrlClient          = require('../controllers/client'),
     publicRouter        = require('../router/Public/index')
     employessRouter     = require('../router/Employess/index');
 
-router.post('/sentOfferByClient', ctrlClient.b2bOffer); //???????????
+//router.post('/sentOfferByClient', ctrlClient.b2bOffer); //???????????
 
 router.use('/crm', checkForPermissions(), crmRouter);
 router.use('/configuration', checkForPermissions(), configurationRouter);

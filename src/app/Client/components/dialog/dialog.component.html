@@ -1,0 +1,20 @@
+<div class="wrap">
+    <i class="material-icons" (click)="onNoClick()">clear</i>
+    <h5 mat-dialog-title class="font-weight-bold">Закажите звонок</h5>
+    <div mat-dialog-content>
+      <p class="mb-0 descript">Свяжемся в течение 15 минут.</p>
+      <mat-form-field appearance="outline">
+        <span matPrefix>+7 &nbsp;</span>
+        <input matInput type="tel" [(ngModel)]="phone" [textMask]="{mask: phoneMask}" placeholder="(___) ___-____">
+      </mat-form-field>
+      <button mat-raised-button class="base-button w-100" (click)="sentOffer()">Заказать звонок</button>
+      <a class="policy" href="#" target="_blank"><p class="text-center mb-0">Отправляя заявку, вы соглашаетесь c политикой конфиденциальности</p></a>
+      <hr>
+    </div>
+    <div mat-dialog-actions class="wrap-flex-col-center">
+      <p class="text-center mb-0">Или позвоните нам</p>
+      <a href="tel: +7 (843) 207-02-96" class="font-weight-bold"><p class="text-center w-100">+7 (843) 207-02-96</p></a>
+      <!-- <button mat-button>No Thanks</button>
+      <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button> -->
+    </div>
+</div>

@@ -9,7 +9,7 @@ publicRouter.post('/invite', ctrlAuth.invite);
 
 publicRouter.post('/getUser', ctrlAuth.getUser);
 
-publicRouter.post('/sentOfferByClient', ctrlClient.b2bOffer);
+publicRouter.post('/order', ctrlClient.order);
 
 publicRouter.put('/finishUserRegistration', ctrlAuth.finishUserRegistration);
 

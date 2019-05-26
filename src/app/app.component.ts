@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.styl']
 })
 export class AppComponent {
-  title = 'CleanUpCRM';
+  title = 'CleanUp cleaning service';
 
   constructor () {}
 

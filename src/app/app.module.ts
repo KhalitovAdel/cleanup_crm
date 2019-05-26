@@ -31,6 +31,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MetrikaModule } from 'ng-yandex-metrika';
 
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
@@ -64,6 +65,13 @@ import { ConfBoardComponent } from './WORKSPACE/Configuration/conf-board/conf-bo
 import { RegisterUserComponent } from './WORKSPACE/Configuration/Registration/register-user/register-user.component';
 import { HasRoleDirective } from './directives/hasrole/has-role.directive';
 import { CalcComponent } from './Client/stuff/calculate/calc/calc.component';
+import { ChemistryComponent } from './Client/b2c/chemistry/chemistry.component';
+import { MainMenuComponent } from './Client/main-menu/main-menu.component';
+import { DialogComponent } from './Client/components/dialog/dialog.component';
+import { StatisticComponent } from './Client/blocks/statistic/statistic.component';
+import { AboutComponent } from './Client/blocks/about/about.component';
+import { OtzoviComponent } from './Client/blocks/otzovi/otzovi.component';
+import { FinalyOfferComponent } from './Client/blocks/finaly-offer/finaly-offer.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -96,6 +104,13 @@ registerLocaleData(localeRu, 'ru');
     HasRoleDirective,
     CalcComponent,
     ConsumablesComponent,
+    ChemistryComponent,
+    MainMenuComponent,
+    DialogComponent,
+    StatisticComponent,
+    AboutComponent,
+    OtzoviComponent,
+    FinalyOfferComponent,
   ],
   imports: [
     BrowserModule,
@@ -130,8 +145,11 @@ registerLocaleData(localeRu, 'ru');
     MatDatepickerModule,
     MatNativeDateModule,
     MatExpansionModule,
+    MetrikaModule.forRoot(
+      {id: 49626625, webvisor: true},
+    ),
   ],
-  entryComponents: [OfferIntoLeadComponent, AlertComponent, BottomSheet],
+  entryComponents: [OfferIntoLeadComponent, AlertComponent, BottomSheet, DialogComponent],
   providers: [
     CalculateService, 
     myHTTPService, 
@@ -141,6 +159,7 @@ registerLocaleData(localeRu, 'ru');
     { provide: LOCALE_ID, useValue: "ru" },
     MatDatepickerModule
   ],
+  exports: [ DialogComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

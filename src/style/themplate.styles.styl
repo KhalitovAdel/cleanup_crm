@@ -1,0 +1,115 @@
+@import 'varibles.styles.styl';
+    
+.main-b2b-calc
+    width: 100%
+    height: 70vh
+    min-height: 350px
+    padding: 0;
+    position relative
+    display: flex
+    flex-direction: column
+    justify-content: center
+    & .col-*
+        display: flex
+        flex-direction: column
+        justify-content: center
+.calculate
+    width: 100%
+    padding 10px 0
+    background-color rgb(179, 192, 211)
+    & .row
+        align-items: center
+owl-carousel
+    & .object
+        min-height: 500px!important
+        display: flex!important
+        flex-direction: row!important
+        justify-content: space-evenly!important
+        & .image
+            width 45%!important
+        & .wrapp
+            width 35%!important
+            display: flex!important
+            flex-direction: column!important
+            justify-content: center!important
+            align-content: center!important   
+    & .comments
+        & .image
+            width 250px!important
+            height 250px!important
+            border-radius: 50%!important
+        & .wrapp
+            width 50%!important
+            & .name 
+                font-size: 1.5rem!important
+                font-weight bold!important
+    & .partners
+        width: 200px!important
+        height 200px!important
+        display: flex!important
+        flex-direction: column!important
+        flex-wrap: wrap!important
+        justify-content: center!important
+        align-items: center!important
+        margin 0 auto!important
+        margin-top 5rem!important
+owl-carousel
+    & .owl-dots
+        display flex!important
+        flex-direction: row!important
+        justify-content: center!important
+        align-content: center!important
+        position relative!important
+        bottom: -10px!important
+        & button.owl-dot
+            min-width 0!important
+            max-width: 20px!important
+            max-height 20px!important
+            margin 0 3px!important
+            & span 
+                margin 0!important
+                border-radius: 0!important
+                border 1px solid #004!important
+                background-color #fff!important
+            &.active
+                width: 20px!important
+                height 20px!important
+                & span
+                    width: 20px!important
+                    height 20px!important
+                    background-color #004!important
+@media (max-width: 768px)
+    owl-carousel
+        & .object
+            position relative!important
+            min-height: 500px!important
+            display: flex!important
+            flex-direction: row!important
+            justify-content: space-evenly!important
+            & .image
+                position: absolute!important
+                top 0!important
+                left 0!important
+                width 100%!important
+                height: 100%!important
+                &:after
+                    content: ''!important
+                    position: absolute!important
+                    top: 0!important
+                    left: 0!important
+                    width: 100%!important
+                    height 100%!important
+                    background-color rgba(255,255,255, 0.65)!important
+            & .wrapp
+                width 95%!important
+                display: flex!important
+                flex-direction: column!important
+                justify-content: center!important
+                align-content: center!important
+                z-index: 1!important
+        & .owl-dots
+            margin-top 0!important
+            position relative!important
+        & .comments
+            & .wrapp
+                width: 100%!important

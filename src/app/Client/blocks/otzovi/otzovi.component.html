@@ -1,0 +1,33 @@
+<section id="otzovi">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+          <div class="head-wrapper">
+            <h2 class="title text-center">Отзывы клиентов</h2>
+          </div>
+      </div>
+
+      <div class="col-12">
+          <owl-carousel [options]="mySlideOptions" [carouselClasses]="['owl-theme', 'slip']">
+
+              <div class="comments" *ngFor="let q of human_reviews; let i = index"> 
+                <div class="image" [style.background-image]="getImage(q.img)"></div>
+                <div class="wrapp">
+                  <h2 class="title"></h2>
+                  <p class="text-center">{{q.comment}}</p>
+                  <p class="name">{{q.name}}</p>
+                </div>
+              </div>
+
+            </owl-carousel>
+      </div>
+      <div class="col-12" *ngIf="has_partners!=false">
+          <owl-carousel [options]="partnersSliderOption" [carouselClasses]="['owl-theme', 'slip']">
+            <div class="partners" *ngFor="let i of partners">
+              <img src="{{i.img}}" alt="CleanUp partner">
+            </div>
+          </owl-carousel>
+      </div>
+    </div>    
+  </div>
+</section>

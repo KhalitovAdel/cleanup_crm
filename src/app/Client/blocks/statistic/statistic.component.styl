@@ -1,0 +1,30 @@
+#statistic
+    & .container
+        & .wrap
+            display: flex
+            flex-direction: row
+            & i.material-icons
+                font-size: 3rem
+                margin-right 10px
+            & .details
+                margin-bottom 10px
+                & .number
+                    font-size: 2rem
+                    font-weight bold
+                    margin-bottom 0
+                & .description
+                    color inherit
+                    font-weight normal 
+                    text-shadow: none
+                    font-size: 1rem
+                    text-align: left
+@media (max-width: 984px)
+    #statistic
+        & .container
+            & i.material-icons
+                font-size: 1.5rem
+            & .details
+                & .number
+                    font-size: 1.3rem
+                & .description
+                    font-size: 0.8rem

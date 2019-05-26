@@ -4,19 +4,29 @@
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import 'style/varibles.styles.styl';
+@import 'style/themplate.styles.styl';
 body
     //background-color: $body-color;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Rubik', sans-serif;
     color:$main-tect-color
-h1, h2, h3, h4, h5, h6, .description
+    position relative
+    &:after
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 35%;
+        z-index: -1;
+        background: #0d7ada;
+        opacity: .1;
+h1, h2, h3, h4, h5, h6
     line-height 1.1
     margin-bottom 1rem
     z-index: 1
-    font-weight bold
+    font-weight 600
 h1, .description
-    color: $insert-text-color
-    text-shadow: 1px 1px 3px #000
-    text-align: center
+    color: $main-tect-color
 h2
     margin-bottom 2rem
 h4
@@ -38,60 +48,44 @@ h4
         width: 10px;
         background-color: $secondary-color;
 .base-button
-    background-color $button-color
+    font-family: $font-family
+    background-color $secondary-color
     color: $insert-text-color
-    padding: 4px 20px!important;
+    font-size: 1.1rem
+    padding: 4px 20px!important
 .p-0
-    padding: 0;    
+    padding: 0;
+.mb-0
+    margin-bottom 0!important   
+.mt
+    margin-top 1rem 
 .text-center
     text-align: center!important
 .w-100
     width 100%!important
 .font-weight-bold
-    font-weight: 800!important
+    font-weight: 700!important
+.img-responsive
+    width 100%;
+    height: auto
+.wrap-flex-col-center
+    height 100%
+    display: flex
+    flex-direction: column
+    justify-content: center
+.wrap-flex-center-center
+    align-items: center
+.text-white
+    color: white!important
+.text-focus
+    color $secondary-color
 .bg-secondary
-    background-color $secondary-color!important;
+    background-color $body-color!important;
 .bg-main
     background-color $main-color!important;
-nav 
-    padding: 10px 10px
-    & i.material-icons
-        color: $insert-text-color
-    & .tel
-        font-weight bold
-        color: $insert-text-color
-        &:hover
-            text-decoration: none
-    & .wrap
-        width: 100
-        display: flex
-        flex-direction: row
-        justify-content: space-between
-        align-items: center
-
 section 
     padding 2rem 0px
     display block
-footer 
-    padding: 2rem 0
-    & img.logo
-        width 120px
-        margin-bottom 20px
-    & i.material-icons
-        color $secondary-color
-        font-size: 1.5rem
-    & address, a, p
-        margin 0 0 0 10px
-        color: $insert-text-color
-        font-weight bold
-        &:hover
-            text-decoration none
-            cursor pointer
-            color $insert-text-color
-    & .wrap
-        margin-bottom 10px
-        display: flex
-        flex-direction: row
 .form-container 
     display: flex
     flex-direction: column
@@ -114,6 +108,8 @@ mat-form-field
                 & button 
                     & mat-icon
                         font-size: 1rem
+            & .mat-form-field-prefix
+                top 0
         & .mat-form-field-infix
             padding: 5px 0 12px 0
             & .mat-select-arrow-wrapper
@@ -162,5 +158,13 @@ mat-slide-toggle
         display: none!important
     #printable
         display: block;
-
+mat-accordion
+    & .mat-expansion-panel-header-title
+        font-weight 700!important
+        font-family $font-family!important
+        color $main-tect-color!important
+    & .mat-expansion-panel-content
+        & .mat-expansion-panel-body
+            font-family $font-family!important
+            color $main-tect-color!important
 @import 'style/media.styles.styl';

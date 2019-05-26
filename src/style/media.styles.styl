@@ -4,11 +4,16 @@
 // @media only screen and (max-width: 992px)
 // 	/**/
 // /* Small Devices, Tablets */
-// @media only screen and (max-width: 768px)
+@media only screen and (max-width: 768px)
 // /* Extra Small Devices, Phones */
+    .hidden-md
+        display none
 @media only screen and (max-width: 576px)
     input, button, .dropdown
-        width: 80%
+        width: 100%
+    mat-panel-title.mat-expansion-panel-header-title
+        font-size: .8rem
+
 // /* Custom, iPhone Retina */
 // @media only screen and (max-width: 320px)
 // 	/**/
@@ -59,9 +64,7 @@
 // /* Medium Devices, Desktops */
 @media only screen and (min-width: 992px)
     h1
-        font-size: 3rem
-    .description
-        font-size: 1.5rem
+        font-size: 2.8rem
     h2
         font-size: 2.2rem
     h3

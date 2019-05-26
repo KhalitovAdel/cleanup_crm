@@ -1,0 +1,122 @@
+
+<section class="main-b2b-calc">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-7">
+        <div class="wrap-flex-col-center">
+            <h1>Химчистка мягкой мебели в Казани <span class="text-focus">от 1.690₽</span></h1>
+            <p class="description">Используем профессиональные и гипоаллергенные средства</p>
+            <div class="wrap">
+                <button mat-raised-button (click)="openDialog()" class="base-button">Заказать звонок менеджера</button>
+            </div>
+        </div>
+      </div>
+      <div class="col-5 hidden-md">
+        <img src="assets/img/b2c/chemistry/base_bg.jpg" alt="" class="img-responsive">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-secondary">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+          
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="w-100 text-center">
+          <img src="assets/img/b2c/chemistry/chemistry.svg" style="width: 250px; height: 250px" alt="CleanUp logo">
+        </div>
+        <p class="font-weight-bold text-center">Гипоаллергенные моющие средства</p>
+        <p>Пользуемся средствами Российского производителя под названием Pro-Brite, Karcher. Средства сертифицированные, гипоаллергенные и биоразлагаемые. Это значит, что наши средства безвредны для людей и животных и выветриваются вместе с влагой при высыхании.</p>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="w-100 text-center">
+          <img src="assets/img/b2c/chemistry/stains.svg" style="width: 250px; height: 250px" alt="CleanUp logo">
+        </div>
+        <p class="font-weight-bold text-center">Трудновыводимые пятна</p>
+        <p>Невозможно дать 100% гарантию на то, что пятно получится вывести. Учитывая наш опыт работы и компетенцию в этой сфере, мы приложим все усилия для того, чтобы удалить загрязнения разного характера.</p>
+      </div>
+      <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-0">
+        <div class="w-100 text-center">
+          <img src="assets/img/b2c/chemistry/clean.svg" style="width: 250px; height: 250px" alt="CleanUp logo">
+        </div>
+        <p class="font-weight-bold text-center">Время высыхания</p>
+        <p>Мы не проводим сушку мебели после химчистки с помощью турбины, на резкое высыхание ворс плохо реагирует. К тому же, химия биоразлогаемая - это значит, что при разлагании, которое занимает определенное время, удаляются неприятные запахи. Вы сможете эксплуатировать мебель по истечению 24 часов (полный цикл высыхания 48 часов).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="head-wrapper">
+          <h2 class="text-center title">
+            Часто задаваемые вопросы
+          </h2>
+        </div>
+      </div>
+      <div class="col-12 col-md-8 offset-md-2">
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let q of faq">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <!-- header -->
+                  {{q.qestion}}
+                </mat-panel-title>
+                <!-- <mat-panel-description>
+                  Type your name and age
+                </mat-panel-description> -->
+              </mat-expansion-panel-header>
+              <!-- body -->
+              {{q.answer}}
+            </mat-expansion-panel>
+          </mat-accordion>
+      </div>
+      <div class="col-12 text-center">
+        <p class="font-weight-bold text-center mt">Остались вопросы?</p>
+        <button mat-raised-button (click)="openDialog()" class="base-button">Заказать звонок менеджера</button>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<app-statistic></app-statistic>
+
+<section class="bg-secondary">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+          <div class="head-wrapper">
+            <h2 class="text-center title">
+              Результаты наших работ
+            </h2>
+          </div>
+      </div>
+
+      <div class="col-12">
+        <owl-carousel [options]="mySlideOptions" [carouselClasses]="['owl-theme', 'slip']"> 
+          <div style="padding: 20px 0" *ngFor="let i of Cases;" class="wrap-flex-col-center wrap-flex-center-center"> 
+            <img src="{{i}}" alt="Химчистка мягкой мебели в Казани" style="max-width: 500px" class="img-responsive">
+          </div> 
+        </owl-carousel>
+      </div>
+
+      <div class="col-12 text-center">
+        <p class="font-weight-bold text-center mt">Хотите так же?</p>
+        <button mat-raised-button (click)="openDialog()" class="base-button">Оставить заявку на химчистку</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<app-about></app-about>
+
+<app-otzovi [has_partners]="false" [human_reviews]='human_reviews'></app-otzovi>
+
+<app-finaly-offer [Offer]="'Подушки от дивана и выдвижные части очистим бесплатно'"></app-finaly-offer>
