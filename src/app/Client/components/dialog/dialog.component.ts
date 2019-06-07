@@ -31,6 +31,7 @@ export class DialogComponent implements OnInit {
           this.alert.openSnackBar( 'Успешно отправлено' );
           this.metrika.fireEvent('form-default');
         }, ( err: any ) => {
+          console.log(err)
           this.alert.openSnackBar( 'У нас какие то проблемы, пожалуйста позвоните нам, мы не получим ваше обращение' );
         })
     } else {

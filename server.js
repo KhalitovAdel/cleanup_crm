@@ -33,6 +33,9 @@ app.use( passport.session() );
 
 var originsWhitelist = [
   'http://localhost:4200',
+  'http://xn--80apfeln.xn--p1ai',
+  'https://xn--80apfeln.xn--p1ai',
+  'http://localhost:3001'
 ];
 
 var corsOptions = {

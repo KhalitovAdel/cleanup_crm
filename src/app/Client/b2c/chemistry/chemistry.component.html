@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-12 col-md-7">
         <div class="wrap-flex-col-center">
-            <h1>Химчистка мягкой мебели в Казани <span class="text-focus">от 1.690₽</span></h1>
+            <h1>Химчистка <span>{{UTPGenerationFrame.type}}</span> в Казани <span class="text-focus">от {{UTPGenerationFrame.price}}₽</span></h1>
             <p class="description">Используем профессиональные и гипоаллергенные средства</p>
             <div class="wrap">
                 <button mat-raised-button (click)="openDialog()" class="base-button">Заказать звонок менеджера</button>
@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="col-5 hidden-md">
-        <img src="assets/img/b2c/chemistry/base_bg.jpg" alt="" class="img-responsive">
+        <img src="{{UTPGenerationFrame.img}}" alt="" class="img-responsive">
       </div>
     </div>
   </div>
@@ -49,7 +49,7 @@
   </div>
 </section>
 
-<section>
+<section id="faq">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -87,7 +87,7 @@
 
 <app-statistic></app-statistic>
 
-<section class="bg-secondary">
+<section class="bg-secondary" id="cases">
   <div class="container">
     <div class="row">
       <div class="col-12">

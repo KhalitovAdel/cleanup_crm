@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Title } from '@angular/platform-browser';
-import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
-import { AlertService } from 'src/app/services/alert/alert.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogComponent } from '../../components/dialog/dialog.component';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-chemistry',
@@ -13,6 +11,16 @@ import { DialogComponent } from '../../components/dialog/dialog.component';
   styleUrls: ['./chemistry.component.styl']
 })
 export class ChemistryComponent implements OnInit {
+  generateUTP: any = [
+    {name: 'матраса', gropus: ['72966466298', '72966466538', '3833434809', '3833434812'], price: '1.290', img: 'assets/img/b2c/chemistry/matras_bg.jpg'},
+    {name: 'дивана', gropus: ['72966466458', '72966466698', '3833434810', '3833434813'], price: '2.490', img: 'assets/img/b2c/chemistry/base_bg.jpg'},
+  ]
+  UTPGenerationFrame = {
+    type: 'мягкой мебели',
+    price: '1.690',
+    img: 'assets/img/b2c/chemistry/base_bg.jpg'
+  }
+  
   mySlideOptions = {items: 1, dots: true, nav: false, autoHeight:true};
   Cases: Array<string> = [
     '../../../assets/img/b2c/chemistry/cases/1.jpg',
@@ -48,8 +56,11 @@ export class ChemistryComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private titleService: Title,
-    public dialog: MatDialog
-    ) { }
+    public dialog: MatDialog,
+    @Inject(DOCUMENT) private document: Document
+    ) {
+
+    }
 
   ngOnInit() {
     this.titleService.setTitle('Химчистка мягкой мебели в Казани | CleanUp service');
@@ -57,8 +68,23 @@ export class ChemistryComponent implements OnInit {
     this.CalculateControl = this.fb.group({
       phone: ['', Validators.required]
     });
+    this.genUTP()
   }
 
+  genUTP() {
+    for (let q of this.generateUTP) {
+      for (let w of q.gropus) {
+        if (this.document.location.href.indexOf(w) != -1) {
+          console.log(this.document.location.href)
+          console.log(w)
+          this.UTPGenerationFrame.type = q.name;
+          this.UTPGenerationFrame.price = q.price;
+          this.UTPGenerationFrame.img = q.img;
+          break;
+        }
+      }
+    }
+  }
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       //width: '250px',

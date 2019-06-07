@@ -15,6 +15,7 @@ module.exports.order = function(req, res) {
             return sendJSONresponse(res, 200, true);
         })
         .catch(err => {
-            return sendJSONresponse(res, 404, false);
+            console.log(err)
+            return sendJSONresponse(res, 404, err);
         })
 }
