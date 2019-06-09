@@ -8,7 +8,7 @@
         <input matInput type="tel" [(ngModel)]="phone" [textMask]="{mask: phoneMask}" placeholder="(___) ___-____">
       </mat-form-field>
       <button mat-raised-button class="base-button w-100" (click)="sentOffer()">Заказать звонок</button>
-      <a class="policy" href="#" target="_blank"><p class="text-center mb-0">Отправляя заявку, вы соглашаетесь c политикой конфиденциальности</p></a>
+      <a class="policy" [routerLink]="['policy']" target="_blank"><p class="text-center mb-0">Отправляя заявку, вы соглашаетесь c политикой конфиденциальности</p></a>
       <hr>
     </div>
     <div mat-dialog-actions class="wrap-flex-col-center">

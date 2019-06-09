@@ -10,7 +10,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./main-menu.component.styl']
 })
 export class MainMenuComponent implements OnInit {
-
+  myDate = new Date();
   constructor(
     private metrika: Metrika,
     private router: Router,

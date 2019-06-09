@@ -72,6 +72,7 @@ import { StatisticComponent } from './Client/blocks/statistic/statistic.componen
 import { AboutComponent } from './Client/blocks/about/about.component';
 import { OtzoviComponent } from './Client/blocks/otzovi/otzovi.component';
 import { FinalyOfferComponent } from './Client/blocks/finaly-offer/finaly-offer.component';
+import { PolicyComponent } from './Client/policy/policy.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -111,6 +112,7 @@ registerLocaleData(localeRu, 'ru');
     AboutComponent,
     OtzoviComponent,
     FinalyOfferComponent,
+    PolicyComponent,
   ],
   imports: [
     BrowserModule,

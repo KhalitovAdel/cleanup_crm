@@ -21,6 +21,7 @@ import { RegisterUserComponent } from './WORKSPACE/Configuration/Registration/re
 import { CalcComponent } from './Client/stuff/calculate/calc/calc.component';
 import { ChemistryComponent } from './Client/b2c/chemistry/chemistry.component';
 import { MainMenuComponent } from './Client/main-menu/main-menu.component';
+import { PolicyComponent } from './Client/policy/policy.component';
 
 const routes: Routes = [
   { path: '', component: MainMenuComponent, children:[
@@ -52,7 +53,7 @@ const routes: Routes = [
   ] },
 
     //PUBLIC
-    
+    { path: 'policy', component: PolicyComponent},
     { path: 'stuff/calculate', component: CalcComponent},
     { path: 'invite/:id', component: RegisterUserComponent},
     { path: 'workspace/login', component: LoginComponent},
