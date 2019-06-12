@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { myHTTPService } from 'src/app/services/HTTP/myhttp.service';
 import { AlertService } from 'src/app/services/alert/alert.service';
-import { Metrika } from 'ng-yandex-metrika';
+import { Angulartics2 } from 'angulartics2';
 
 @Component({
   selector: 'app-dialog',
@@ -16,7 +16,7 @@ export class DialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogComponent>,
     private myHttp: myHTTPService,
     private alert: AlertService,
-    private metrika: Metrika
+    private angulartics2: Angulartics2
     //@Inject(MAT_DIALOG_DATA) public data: DialogData
   ) { }
 
@@ -29,7 +29,9 @@ export class DialogComponent implements OnInit {
       this.myHttp.order(`<p><span style="font-weight: 700">Номер телефона: </span>${this.phone}</p>`)
         .subscribe( (data: any) => {
           this.alert.openSnackBar( 'Успешно отправлено' );
-          this.metrika.fireEvent('form-default');
+          this.angulartics2.eventTrack.next({
+            action: 'send_form',
+          })
         }, ( err: any ) => {
           console.log(err)
           this.alert.openSnackBar( 'У нас какие то проблемы, пожалуйста позвоните нам, мы не получим ваше обращение' );

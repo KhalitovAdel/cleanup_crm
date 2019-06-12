@@ -24,6 +24,7 @@
     "@angular/router": "~7.2.0",
     "acl": "^0.4.11",
     "angular2-text-mask": "^9.0.0",
+    "angulartics2": "^7.5.2",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
     "connect-mongo": "^2.0.3",

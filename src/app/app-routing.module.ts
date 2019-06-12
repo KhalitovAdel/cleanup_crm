@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
+
+import { Angulartics2Module } from 'angulartics2';
+
 import { NewLeadComponent } from './WORKSPACE/CRM/Leads/new-lead/new-lead.component';
 import { LeadListComponent } from './WORKSPACE/CRM/Leads/lead-list/lead-list.component';
 import { LeadPageComponent } from './WORKSPACE/CRM/Leads/lead-page/lead-page.component';
@@ -61,7 +65,11 @@ const routes: Routes = [
 ];
 // component: LoginComponent,
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(routes),
+    Angulartics2Module.forRoot(),
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

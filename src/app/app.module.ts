@@ -31,7 +31,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MetrikaModule } from 'ng-yandex-metrika';
 
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
@@ -147,9 +146,6 @@ registerLocaleData(localeRu, 'ru');
     MatDatepickerModule,
     MatNativeDateModule,
     MatExpansionModule,
-    MetrikaModule.forRoot(
-      {id: 49626625, webvisor: true},
-    ),
   ],
   entryComponents: [OfferIntoLeadComponent, AlertComponent, BottomSheet, DialogComponent],
   providers: [

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Metrika } from 'ng-yandex-metrika';
-import { Router, NavigationEnd } from '@angular/router';
-import { Location } from '@angular/common';
-import { filter } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { Angulartics2GoogleTagManager } from 'angulartics2/gtm';
+
 
 @Component({
   selector: 'app-main-menu',
@@ -12,20 +11,9 @@ import { filter } from 'rxjs/operators';
 export class MainMenuComponent implements OnInit {
   myDate = new Date();
   constructor(
-    private metrika: Metrika,
-    private router: Router,
-    private location: Location
+    angulartics2GoogleTagManager: Angulartics2GoogleTagManager
   ) {
-    let prevPath = this.location.path();
-    this.router
-      .events.pipe( filter(event => (event instanceof NavigationEnd)) )
-      .subscribe(() => {
-        const newPath = this.location.path();
-        this.metrika.hit(newPath, {
-          referer: prevPath,
-        });
-        prevPath = newPath;
-      });
+    angulartics2GoogleTagManager.startTracking();
   }
 
   ngOnInit() {
