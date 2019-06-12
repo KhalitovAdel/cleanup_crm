@@ -11,6 +11,8 @@ publicRouter.post('/getUser', ctrlAuth.getUser);
 
 publicRouter.post('/order', ctrlClient.order);
 
+publicRouter.post('/login', ctrlAuth.login);
+
 publicRouter.put('/finishUserRegistration', ctrlAuth.finishUserRegistration);
 
 publicRouter.get('/hasRole', ctrlAuth.hasRole);

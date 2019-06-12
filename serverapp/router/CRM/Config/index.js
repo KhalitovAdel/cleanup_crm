@@ -6,7 +6,6 @@ var ctrlConfig  = require('../../../controllers/config'),
 ctrlAuth        = require('../../../controllers/auth'),
 User            = require('../../../models/user');
 
-configRouter.post('/login', ctrlAuth.login); 
 configRouter.post('/createNewMaterial', ctrlAuth.mustAuthenticatedMw, ctrlConfig.createNewMaterial);
 
 configRouter.get('/detect', function( req, res) {

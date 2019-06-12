@@ -15,6 +15,6 @@ export class AuthService {
   }
 
   loginByEmployee(employee) {
-    return this.myHttp.postHTTP('/crm/config/login', employee);
+    return this.myHttp.postHTTP('/public/login', employee);
   }
 }

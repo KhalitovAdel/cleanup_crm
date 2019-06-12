@@ -23,11 +23,14 @@ app.use( session({
     mongooseConnection: db.freshConnect,
     collection: 'session'
   }),
-  resave: true,
+  name : 'papapapapa',
+  resave: false,
   rolling: true,
+  proxy: true,
   saveUninitialized: false,
-  cookie : { httpOnly: false, secure : false, maxAge : ( 24 * 60 * 60 * 1000 * 5 ), }, 
+  cookie : { httpOnly: true, secure : false, maxAge : ( 24 * 60 * 60 * 1000 * 5 ), }, 
 }));
+app.set('trust proxy', true)
 app.use( passport.initialize() );
 app.use( passport.session() );
 

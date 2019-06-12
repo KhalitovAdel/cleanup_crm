@@ -35,12 +35,12 @@ const routes: Routes = [
 
   { path: 'workspace', component: DashboardComponent, canActivate: [AuthGuard], children: [
     { path: '', pathMatch: 'full', redirectTo: 'crm' },
-    { path: 'crm', component: CrmBoardComponent, canActivate: [AuthGuard], children:[
+    { path: 'crm', component: CrmBoardComponent, children:[
       { path: '', pathMatch: 'full', redirectTo: 'leadlist' },
-      { path: 'leadlist', component: LeadListComponent, canActivate: [AuthGuard] },
-      { path: 'leadlist/:id', component: LeadPageComponent, canActivate: [AuthGuard] },
-      { path: 'newlead', component: NewLeadComponent, canActivate: [AuthGuard] },
-      { path: 'alloffers', component: OffersListComponent, canActivate: [AuthGuard] },
+      { path: 'leadlist', component: LeadListComponent },
+      { path: 'leadlist/:id', component: LeadPageComponent },
+      { path: 'newlead', component: NewLeadComponent },
+      { path: 'alloffers', component: OffersListComponent },
     ] },
 
     { path: 'employees', component: EmplDashboardComponent, canActivate: [AuthGuard], children:[
@@ -68,7 +68,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
-    Angulartics2Module.forRoot(),
+    Angulartics2Module.forRoot({developerMode: false}),
   ],
   exports: [RouterModule]
 })
