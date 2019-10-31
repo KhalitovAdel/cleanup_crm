@@ -44,7 +44,7 @@
     "jquery": "^3.4.0",
     "jsonwebtoken": "^8.5.0",
     "moment": "^2.24.0",
-    "mongoose": "^5.4.12",
+    "mongoose": "^5.7.5",
     "ng-pick-datetime": "^7.0.0",
     "ng-yandex-metrika": "^3.0.2",
     "ngx-cookie-service": "^2.1.0",
