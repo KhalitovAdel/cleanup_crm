@@ -43,7 +43,7 @@
     "handlebars": "^4.1.2",
     "jquery": "^3.4.0",
     "jsonwebtoken": "^8.5.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.4.12",
     "ng-pick-datetime": "^7.0.0",
     "ng-yandex-metrika": "^3.0.2",
